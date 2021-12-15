@@ -42,7 +42,7 @@ class Solution:
         pre = cur
         cur = nex
       return pre
-   # 将两个节点交叉融合
+   # 将两个链表依次连接
     def mergeList(self, head1, head2):
       dummy = head1
       l1 = head1
