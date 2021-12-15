@@ -55,4 +55,5 @@ class Solution:
         l1 = nex1
         l2.next = l1
         l2 = nex2
+      # 可写可不写
       return dummy
