@@ -12,7 +12,8 @@ class Solution:
     def middleNode(self, head: ListNode) -> ListNode:
       slow = head
       fast = head
-      while fast and fast.next:
+     # 获取（右中点）     
+      while fast and fast.next:   # while fast.next and fast.next.next:  获取左中点
         slow = slow.next
         fast = fast.next.next
       return slow
