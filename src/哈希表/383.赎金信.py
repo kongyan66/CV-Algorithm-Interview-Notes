@@ -24,7 +24,7 @@ class Solution2:
       
       for i in ransomNote:
         value = hashmap.get(i)
-        if value == 0 or value is None:
+        if value == 0 or value is None:   # value==0 这个条件不好想, badcase特殊, 比如(aa, ab) 此时就会出现Value=0的情况
           return False
         else:
           hashmap[i] -= 1
