@@ -14,8 +14,8 @@ class Solution:
         target = -nums[i]   # 左指针
         left = i+1
         right = n -1
-        # 去除nums中的重复元素，比如[-1,-1,0,1,2],我们需要从第二个位置开始找，以免结果重复
-        if i > 0 and nums[i-1] == nums[i]:
+        # 去除nums中的重复元素，比如[-1,-1,0,1,2],我们需要从第二个位置开始找，后一个数与前一个数比较
+        if i > 0 and nums[i-1] == nums[i]:  
           continue
         # 双指针移动条件
         while left < right:
