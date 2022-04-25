@@ -1,7 +1,7 @@
 # 题目：请实现一个函数，把字符串 s 中的每个空格替换成"%20"。
 # 讲解：https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/solution/mian-shi-ti-05-ti-huan-kong-ge-ji-jian-qing-xi-tu-/
 
-# 暴力解法，重新开辟一段内存去保存结果，最简单，空间复杂度O(N) 时间复杂度O(N)
+# 暴力解法，使用辅助空间，最简单，空间复杂度O(N) 时间复杂度O(N)
 class Solution1:
     def replaceSpace(self, s: str) -> str:
       res = []
