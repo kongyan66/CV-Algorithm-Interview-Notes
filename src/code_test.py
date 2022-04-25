@@ -1,3 +1,3 @@
-a = 'stsss'
-a[0], a[1] = a[1], a[0]
-print(a)
+a = [1, 2, 3]
+for i in range(0, len(a), 2):
+    print(a[i])
