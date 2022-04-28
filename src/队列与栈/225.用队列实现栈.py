@@ -1,6 +1,7 @@
 # 题目：请你仅使用两个队列实现一个后入先出（LIFO）的栈，并支持普通栈的全部四种操作（push、top、pop 和 empty）
-# 思路：一个队列进行数据保存，另一个在pop进行数据复制
-class MyStack:
+
+# 思路1：采用两个队列，一个队列进行数据保存，另一个在pop进行数据复制(保证顺序）
+class MyStack1:
     from collections import deque  #双向队列，popleft():向左出列  pop():向右出列  append(x):进列
     def __init__(self):
         self.queue_in = deque()
@@ -32,3 +33,38 @@ class MyStack:
 
     def empty(self) -> bool:
         return len(self.queue_in) == 0
+ 
+# 思路2： 采用一个队列，通过popleft保证输出顺序
+class MyStack:
+    from collections import deque
+    def __init__(self):
+        self.queue = deque()
+    
+
+    def push(self, x: int) -> None:
+        self.queue.append(x)
+
+    def pop(self) -> int:
+        if self.empty():
+            return None
+        for i in range(len(self.queue)-1):
+            self.queue.append(self.queue.popleft())
+        return self.queue.popleft()
+        
+    def top(self) -> int:
+        if self.empty():
+            return None
+        return self.queue[-1]
+
+
+    def empty(self) -> bool:
+        return not self.queue
+
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
