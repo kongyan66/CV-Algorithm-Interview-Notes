@@ -11,13 +11,13 @@ class MyStack1:
         self.queue_in.append(x)
 
     def pop(self) -> int:
-      ‘’‘
+      '''
         1. 首先判断是否为空
         2. 先把queue_in中的所有元素（除了最后一个），依次出列放进queue_out
         3. 交换in和out，此时out里只有一个元素
         4. 把out中的pop出来，即是原队列的最后一个
       
-      ’‘’
+      '''
         if self.empty():
             return None
         for i in range(len(self.queue_in)-1):
