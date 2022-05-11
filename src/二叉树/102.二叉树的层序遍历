@@ -21,3 +21,5 @@ class Solution:
                     que.append(node.right)
             results.append(result)
         return results
+
+# 递归法
