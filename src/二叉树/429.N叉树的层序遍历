@@ -1,0 +1,29 @@
+# 题目：给定一个 N 叉树，返回其节点值的层序遍历。（即从左到右，逐层遍历），树的序列化输入是用层序遍历，每组子节点都由 null 值分隔
+# 说明：这里的N叉树和之前树节点有些区别，首先看下定义
+#   cur.children 是 Node 对象组成的列表，也可能为 None
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        from collections import deque
+        results = []
+        if root is None:
+            return results
+        que = deque([root])
+        while que:
+           result = []
+           size = len(que)
+           for _ in range(size):
+               cur = que.popleft()
+               result.append(cur.val)
+               # 唯一变的地方
+               if cur.children:
+                   que.extend(cur.children)  # 用extend说明cur.children 是一个列表
+           results.append(result)
+        return results
