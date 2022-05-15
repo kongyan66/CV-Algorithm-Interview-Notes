@@ -20,7 +20,7 @@ class Solution1:
                 return False
             # 每次循环入四个节点，说明出的比入的慢，慢慢查嘛，总能干完
             que.append(left_cur.left)      # 这里之前有个疑惑：就是这个循环怎么停的，一直append不就一直有吗，其实节点Node为None时，
-            que.append(right_cur.right)    # append(Node.left)就停止了。
+            que.append(right_cur.right)    # 由于前面的判断条件，append(Node.left)就停止了。
             que.append(left_cur.right)
             que.append(right_cur.left)
         return True
