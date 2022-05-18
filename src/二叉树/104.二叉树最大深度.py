@@ -8,7 +8,7 @@ class Solution:
         que = [root]
         count = 0
         while que:
-            for i in range(len(que)):
+            for _ in range(len(que)):
                 cur = que.pop(0)
                 if cur.left:
                     que.append(cur.left)
