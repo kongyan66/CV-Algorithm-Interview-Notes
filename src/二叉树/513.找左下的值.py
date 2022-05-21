@@ -1,6 +1,8 @@
 # 题目：给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
+# 思路:之前理解错了，以为最底层最左边节点一定是左子树，其实就是该层的最右边节点，纠结好久
+# 所以只要要层序遍历，每次保存该层最左边一个节点即可。
 
-# 思路:层序遍历
+# 解法一：迭代法：层序遍历（比较推荐）
 class Solution:
     def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
         if root != None:
@@ -16,3 +18,5 @@ class Solution:
                 if cur.right:
                     que.append(cur.right)
         return result
+    
+# 解法二：迭代法（比较难理解）
