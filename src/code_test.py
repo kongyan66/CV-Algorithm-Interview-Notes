@@ -1,9 +1,4 @@
-import copy
-old = [1,[1,2,3],3]
-new = copy.deepcopy(old)
- 
-new[0] = 3
-new[1][0] =3
-
-print(old)
-print(new)
+a = [1, 2, 3]
+index = a.index(2)
+print(index)
+print(a[:index])
