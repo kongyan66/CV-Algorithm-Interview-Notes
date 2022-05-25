@@ -18,3 +18,33 @@ class Solution:
         root1.right =  self.mergeTrees(root1.right, root2.right)
 
         return root1
+
+# 解法二：迭代法 前序遍历  
+class Solution:
+    def mergeTrees(self, root1: TreeNode, root2: TreeNode) -> TreeNode:
+        if not root1:
+            return root2
+        if not root2:
+            return root1
+
+        que =[]
+        que.append(root1)
+        que.append(root2)
+
+        while que:
+            node1 = que.pop(0)
+            node2 = que.pop(0)
+            # 我们选择node1作为合并的树(节省空间)
+            node1.val += node2.val
+            if node1.left and node2.left:
+                que.append(node1.left)
+                que.append(node2.left)
+            if node1.right and node2.right:
+                que.append(node1.right)
+                que.append(node2.right)
+            # 考虑node1为空，node2不为空，那就借用node2的子树
+            if not node1.left and node2.left:
+                node1.left = node2.left
+            if not node1.right and node2.right:
+                node1.right = node2.right
+        return root1
