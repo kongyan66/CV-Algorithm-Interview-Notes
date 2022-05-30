@@ -5,14 +5,12 @@
 #         self.left = left
 #         self.right = rightS
 # 图解见 基础知识.md
+# 解法一：迭代法 标准写法
 class Solution1:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-      if not root:
-        return []
       result = []
       stack = []
       cur = root
-
       while cur or stack:
         # 先迭代访问最底层的左子树结点
         if cur:          
@@ -24,6 +22,8 @@ class Solution1:
           result.append(cur.val)
           cur = cur.right
       return result
+
+      
 # 统一写法：标记法
 # 要处理的节点放入栈之后，紧接着放入一个空指针作为标记
 # 简单记： 中序遍历：左中右 -> 入栈顺序：右中左
