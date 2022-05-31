@@ -21,4 +21,9 @@
 在**112.路径之和**-解法二中，我想保存每个节点的路径，如果不知道这个坑，路径会重复（左右子叶都有），使用**list.copy()**就避免这个问题。这里涉及数组拷贝问题，可见[赋值-浅拷贝-深拷贝](https://blog.csdn.net/qq_24502469/article/details/104185122) 
 注：这个不注意，矩阵运算时候很容易出重大BUG。
 
+- list、dict排序问题
+[sort使用指南](https://wenku.baidu.com/view/3a39e64b081c59eef8c75fbfc77da26925c5966d.html)
+[1.8 字典的操作](https://python3-cookbook.readthedocs.io/zh_CN/latest/c01/p08_calculating_with_dict.html)
+在默认情况下sort和sorted函数接收的参数是元组时，它将会先按元组的第一个元素进行排序再按第二个元素进行排序，再按第三个、第四个…依次排序。
+在501.二叉搜索中解法一就用到的list/dict 的排序问题，默认用法无法对特定数进行排序，需要对key进行操作，然后就涉及lambda函数的使用了
 

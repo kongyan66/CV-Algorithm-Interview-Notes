@@ -3,7 +3,7 @@
 # 思路：最简单就是遍历所有节点，用map保存节点值及频率，最后再排序
 
 # 解法一： 迭代法 通用写法   写法还是很臃肿
-class Solution:
+class Solution1:
     def findMode(self, root: TreeNode) -> List[int]:
         stack = []
         record = {}
@@ -31,3 +31,37 @@ class Solution:
             if result[i][1] == result[-1][1]:
                 output.append(result[i][0])
         return output   
+
+# 解法二： 迭代法 考虑二叉搜索树特性  
+# 得到是有序数组，所以如果重复出现的值必然是相邻的，所以count实时记录当前值出现的次数，把节点值先放入res中，如果出现频率更大的值，就清空res重新来
+class Solution2:
+    def findMode(self, root: TreeNode) -> List[int]:
+        stack = []
+        pre = None
+        cur = root
+        maxCount = 0 # 记最大频率
+        count = 0  # 记当前值的最大频率
+        res = []
+       # 还是中序遍历
+        while stack or cur:
+            if cur:
+                stack.append(cur)
+                cur = cur.left
+            else:
+                cur = stack.pop()
+                if pre == None:    # 第一次count记1
+                    count = 1
+                elif pre.val == cur.val:
+                    count += 1
+                else :
+                    count = 1
+                if count == maxCount:
+                    res.append(cur.val)
+                if count > maxCount:
+                    maxCount = count
+                    res.clear()
+                    res.append(cur.val)
+
+                pre = cur
+                cur = cur.right
+        return res
