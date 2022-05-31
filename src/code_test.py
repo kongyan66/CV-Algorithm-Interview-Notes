@@ -1,4 +1,4 @@
-a = [1, 2, 3]
-index = a.index(2)
-print(index)
-print(a[:index])
+a = [(1, 2), (2, 1)]
+# sorted(a, key=lambda x:x[1])
+a.sort(key = lambda x:x[1])
+print(a)
