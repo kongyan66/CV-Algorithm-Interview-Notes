@@ -1,6 +1,7 @@
 # 题目：给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变
 
 # 思路：先找到要删除节点的位置，再根据其左右子树的情况进行删除
+# https://leetcode.cn/problems/delete-node-in-a-bst/solution/miao-dong-jiu-wan-shi-liao-by-terry2020-tc0o/
 # 疑问： 对递归的返回参数不是很理解
 # 解法1： 递归
 class Solution:
