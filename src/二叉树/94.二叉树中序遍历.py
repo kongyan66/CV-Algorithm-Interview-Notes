@@ -5,23 +5,27 @@
 #         self.left = left
 #         self.right = rightS
 # 图解见 基础知识.md
+# 因为要访问的元素和要处理的元素顺序是不一致的，所以写法和前序遍历有区别
 # 解法一：迭代法 标准写法
-class Solution1:
+class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-      result = []
-      stack = []
-      cur = root
-      while cur or stack:
-        # 先迭代访问最底层的左子树结点
-        if cur:          
-          stack.append(cur)
-          cur = cur.left
-        # 到达最左结点后处理栈顶结点
-        else:
-          cur = stack.pop()
-          result.append(cur.val)
-          cur = cur.right
-      return result
+        stack = []
+        res = []
+        cur = root
+        while stack or cur:
+            # 利用cur去获得节点路径（定位）
+            # cur 不为空就添加最右侧节点，直到最底层
+            if cur:
+                stack.append(cur)
+                cur = cur.left
+            # 处理节点值（存值）
+            else:
+                # 保存节点值
+                node = stack.pop()
+                res.append(node.val)
+                # cur指向右节点，这点很重要
+                cur = node.right
+        return res
 
       
 # 统一写法：标记法
@@ -49,3 +53,18 @@ class Solution2:
                 node = stack.pop()   #  重新取出栈中元素
                 result.append(node.val)
         return result
+
+# 解法三： 递归法 和前序遍历，后序遍历写法统一
+
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        self.recursion(root, res)
+        return res
+
+    def recursion(self, node, res):
+        if node is None:
+            return 
+        self.recursion(node.left, res)
+        res.append(node.val)
+        self.recursion(node.right, res)
