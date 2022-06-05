@@ -10,17 +10,26 @@
 # 递归遍历
 class Solution:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-      result = []
+        # 局部变量存放节点值
+        res = []
+        self.recursion(root, res)
+        return res
 
-      def traversal(root):
-        if root is None:        # 该层递归停止条件
-          return
-        result.append(root.val)
-        traversal(root.left)     # root.left 获取下一个节点的值
-        traversal(root.right)
-      
-      traversal(root)  
-      return result
+    # 因为入参与上面函数不一致，所以只能分开写，后面会遇到很多合一起的
+    # 1.确定入参与返回值
+    # 入参就是欲处理的节点了（只去考虑一个节点，递归一次我们只处理一个节点）
+    # 无返回值，因为我们需要的节点的值保存在一个单独的列表（局部变量）中，所以不需要返回任何值
+    def recursion(self, node, res):
+        # 2.确定终止条件
+        # 因为无有效返回值，所以为了让递归停下来，我们返回一个空值。
+        # 一方面保证递归及时停下来，这样后面的逻辑才不会报错；另一方面防止爆栈
+        if node is None:
+            return 
+        # 3.确定单层递归逻辑
+        # 前序遍历是中左右的循序，所以在单层递归的逻辑，是要先取中节点的数值，然后是左右
+        res.append(node.val)
+        self.recursion(node.left, res)
+        self.recursion(node.right, res)
 
 # 小结
 # 前序遍历：中左右  后序遍历：左右中 中序遍历：左中右
