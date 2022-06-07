@@ -5,10 +5,10 @@
 # 解法一：迭代法
 class Solution:
     def minDepth(self, root: TreeNode) -> int:
-        if not root:
-            return 0
-        que = [root]
         count = 0
+        if not root:
+            return count
+        que = [root]
         while que:
             count += 1
             for _ in range(len(que)):
@@ -17,7 +17,8 @@ class Solution:
                     que.append(cur.left)
                 if cur.right:
                     que.append(cur.right)
-                if cur.left == None and cur.right == None:
+                # 遇到无子节点的就返回
+                if not cur.left and not cur.right:
                     return count
 
 # 解法二：递归法
@@ -43,6 +44,6 @@ class Solution:
         # 如果右子叶为空，就看左子叶为空
         elif node.right != None and node.left == None:
             return right_depth + 1
-        # 看左右子叶的最小深度
+        # 如果左右子节点均存在，看左右子叶的最小深度
         else:
             return min(left_depth, right_depth) + 1
