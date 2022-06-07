@@ -28,3 +28,21 @@ class Solution1:
                     break
                 cur.next = que[0]      # 指向它相邻右边的节点
         return root
+
+# review-2
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        if not root:
+            return None
+        que = [root]
+        while que:
+            width = len(que)
+            for i in range(width):
+                cur = que.pop(0)
+                if cur.left:
+                    que.append(cur.left)
+                if cur.right:
+                    que.append(cur.right)
+                if i < width-1:
+                    cur.next = que[0] 
+        return root
