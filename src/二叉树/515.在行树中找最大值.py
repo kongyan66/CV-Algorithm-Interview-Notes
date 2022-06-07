@@ -22,4 +22,21 @@ class Solution1:
             results.append(result[-1])
         return results
 
-# 思路二:借助数的大小排列关系来得到最大值，空间复杂度：  时间复杂度：
+# review-2
+class Solution:
+    def largestValues(self, root: Optional[TreeNode]) -> List[int]:
+        results = []
+        if not root:
+            return results
+        que = [root]
+        while que:
+            res = []
+            for _ in range(len(que)):
+                cur = que.pop(0)
+                res.append(cur.val)
+                if cur.left:
+                    que.append(cur.left)
+                if cur.right:
+                    que.append(cur.right)
+            results.append(max(res))
+        return results
