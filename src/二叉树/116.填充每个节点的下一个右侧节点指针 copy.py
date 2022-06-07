@@ -18,3 +18,22 @@ class Solution:
                 if cur.right:
                     queue.append(cur.right) 
         return root
+# review-2
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root:
+            return None 
+        que = [root]
+        while que:
+            res = []
+            size = len(que) 
+            for i in range(size):
+                cur = que.pop(0)
+                if cur.left:
+                    que.append(cur.left)
+                if cur.right:
+                    que.append(cur.right)
+                # 只需要把同一层节点连起来就行
+                if i < size-1:
+                    cur.next = que[0]   
+        return root
