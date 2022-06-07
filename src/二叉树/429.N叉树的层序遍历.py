@@ -27,3 +27,20 @@ class Solution:
                    que.extend(cur.children)  # 用extend说明cur.children 是一个列表
            results.append(result)
         return results
+
+# re-2
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        results = []
+        if not root:
+            return results
+        que = [root]
+        while que:
+            res = []
+            for _ in range(len(que)):
+                cur = que.pop(0)
+                res.append(cur.val)
+                if cur.children:
+                    que.extend(cur.children)
+            results.append(res)
+        return results
