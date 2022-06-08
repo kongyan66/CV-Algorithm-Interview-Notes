@@ -5,39 +5,42 @@
 1.确定入参与返回值
 2.确定终止条件
 3.确定单层递归逻辑
+   这里其实干了两件事：1.该层逻辑实现 2.将递归传递下去
+
 ## 疑惑点
-- [] 如果把递归函数看做一个黑箱，怎么确定其功能（入参与出参）
-- [] 递归逻辑不同题之间差异很大，也不好想
+- [ ] 如果把递归函数看做一个黑箱，怎么确定其功能（入参与出参）
+- [ ] 递归逻辑不同题之间差异很大，也不好想
 
 ## 题目
 - 144.二叉树前序遍历
-'''pyhton
-class Solution:
+  
+  ```python
+  class Solution:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        # 局部变量存放节点值
-        res = []
-        self.recursion(root, res)
-        return res
-
-    # 因为入参与上面函数不一致，所以只能分开写，后面会遇到很多合一起的
-    # 1.确定入参与返回值
-    # 入参就是欲处理的节点了（只去考虑一个节点，递归一次我们只处理一个节点）
-    # 无返回值，因为我们需要的节点的值保存在一个单独的列表（局部变量）中，所以不需要返回任何值
+       # 局部变量存放节点值
+  ​      res = []
+  ​      self.recursion(root, res)
+  ​      return res
+  
+  # 因为入参与上面函数不一致，所以只能分开写，后面会遇到很多合一起的
+  # 1.确定入参与返回值
+  # 入参就是欲处理的节点了（只去考虑一个节点，递归一次我们只处理一个节点）
+  # 无返回值，因为我们需要的节点的值保存在一个单独的列表（局部变量）中，所以不需要返回任何值
     def recursion(self, node, res):
-        # 2.确定终止条件
-        # 因为无有效返回值，所以为了让递归停下来，我们返回一个空值。
-        # 一方面保证递归及时停下来，这样后面的逻辑才不会报错；另一方面防止爆栈
-        if node is None:
-            return 
-        # 3.确定单层递归逻辑
-        # 前序遍历是中左右的循序，所以在单层递归的逻辑，是要先取中节点的数值，然后是左右
-        res.append(node.val)
-        self.recursion(node.left, res)
-        self.recursion(node.right, res)
-'''
+         # 2.确定终止条件
+         # 因为无有效返回值，所以为了让递归停下来，我们返回一个空值。
+         # 一方面保证递归及时停下来，这样后面的逻辑才不会报错；另一方面防止爆栈
+  ​      if node is None:
+  ​          return 
+         # 3.确定单层递归逻辑
+         # 前序遍历是中左右的循序，所以在单层递归的逻辑，是要先取中节点的数值，然后是左右
+  ​      res.append(node.val)
+  ​      self.recursion(node.left, res)
+  ​      self.recursion(node.right, res)
+  ```
 - 104.二叉树最大深度
-'''python
-class Solution:
+  ```python
+  class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         return self.recursion(root)
     # 1.确定入参与返回值
@@ -45,19 +48,19 @@ class Solution:
     def recursion(self, node):
         # 2.确定终止条件
         # 此题有返回值，故终止的时候也要有返回值（空节点深度为0）
-        if not node:
-            return 0
+  ​      if not node:
+  ​          return 0
         # 3.确定单层递归逻辑
         # 分别求左右子树的深度，至于为啥不需要判断节点是否存在了，不存在深度就为0呗
-        left_depth = self.recursion(node.left)
-        right_depth = self.recursion(node.right)
+  ​      left_depth = self.recursion(node.left)
+  ​      right_depth = self.recursion(node.right)
         # 这里需要注意下，是从当前节点往下看，所以最终深度需要+1
-        return max(left_depth, right_depth)+1
-'''
+  ​      return max(left_depth, right_depth)+1
+  ```
 
 - 111.二叉树最小深度
-需要讨论三种情况
-'''python
+   需要讨论三种情况
+  ```python
 class Solution:
     def minDepth(self, root: TreeNode) -> int:
         if not root:
@@ -82,4 +85,45 @@ class Solution:
         # 如果左右子节点均存在，看左右子叶的最小深度
         else:
             return min(left_depth, right_depth) + 1
-'''
+  ```
+
+- 101.对称二叉树
+
+  ```python
+  class Solution:
+      def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+          if not root:
+              return True
+          # 1.确定入参和返回值
+          # 入参就是两个树的根节点了
+          # 返回值是判断当前节点是否镜像对称的bool值
+          return self.recursion(root.left, root.right)
+  
+      def recursion(self, left_node, right_node):
+          # 2.确定终止条件
+          # 有必然四种情况需要考虑
+          if not left_node and not right_node:
+              return True
+          elif not left_node and right_node:
+              return False
+          elif left_node and  not right_node:
+              return False
+          elif left_node.val != right_node.val:
+              return False
+          # 3.确定单层递归逻辑
+          # 说白了就是继续往下比较（这样递归才能传递下去）
+          outside = self.recursion(left_node.left, right_node.right)
+          inside = self.recursion(left_node.right, right_node.left)
+          return outside and inside
+      
+          # 之前错误写法
+          # 说明对递归的返回值没有真正理解，这是两颗逐步变深的树，指导最后回溯告诉你，其左侧与也测是否对称（bool）
+          # 只有左右侧都对称，才说明两个树镜像对称
+          self.recursion(left_node.left, right_node.right)
+          self.recursion(left_node.right, right_node.left)
+          return True
+          
+  ```
+
+  
+

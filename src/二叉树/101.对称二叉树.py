@@ -31,24 +31,35 @@ class Solution1:
 # 2.确定终止条件：节点为空和值不相等
 # 3.确定单层递归的逻辑：比较左右子树节点外侧和内侧是否相等
 
-class Solution2:
+class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         if not root:
             return True
-        # 1.递归的入参与出参
-        return self.compare( root.left, root.right)
-    def compare(self, left, right):
-        # 2.递归停止条件
-        # 首先排除空节点的情况
-        if left == None and right != None: return False
-        elif left != None and right == None: return False
-        elif left == None and right == None: return True
-        # 再排除值不相等的情况
-        # 其他情况就是不为空，且值相等，就可以继续递归了
-        elif left.val != right.val: return False
-        
-        # 3.确定单层递归的逻辑
-        # 分别比较外侧和内侧是否相等
-        outside = self.compare(left.left, right.right)
-        inside = self.compare(left.right, right.left)
+        # 1.确定入参和返回值
+        # 入参就是两个树的根节点了
+        # 返回值是判断当前节点是否镜像对称的bool值
+        return self.recursion(root.left, root.right)
+
+    def recursion(self, left_node, right_node):
+        # 2.确定终止条件
+        # 有必然四种情况需要考虑
+        if not left_node and not right_node:
+            return True
+        elif not left_node and right_node:
+            return False
+        elif left_node and  not right_node:
+            return False
+        elif left_node.val != right_node.val:
+            return False
+        # 3.确定单层递归逻辑
+        # 说白了就是继续往下比较（这样递归才能传递下去）
+        outside = self.recursion(left_node.left, right_node.right)
+        inside = self.recursion(left_node.right, right_node.left)
         return outside and inside
+    
+        # 之前错误写法
+        # 说明对递归的返回值没有真正理解，这是两颗逐步变深的树，指导最后回溯告诉你，其左侧与也测是否对称（bool）
+        # 只有左右侧都对称，才说明两个树镜像对称
+        self.recursion(left_node.left, right_node.right)
+        self.recursion(left_node.right, right_node.left)
+        return True
