@@ -18,18 +18,18 @@ class Solution1:
                     que.append(cur.right)
         return root
 # 解法二：前序遍历：中左右
-class Solution2:
+class Solution:
     def invertTree(self, root: TreeNode) -> TreeNode:
-        que = []
-        if root:
-           que = [root]
-        while que:
-           cur = que.pop(0)
-           cur.left, cur.right = cur.right, cur.left
-           if cur.left:
-               que.append(cur.left)
-           if cur.right:
-               que.append(cur.right)
+        if not root:
+            return None
+        stack = [root]
+        while stack:
+            cur = stack.pop()
+            cur.left, cur.right = cur.right, cur.left
+            if cur.right:
+                stack.append(cur.right)
+            if cur.left:
+                stack.append(cur.left)
         return root
 
 # 解法三：后序遍历：左右中
