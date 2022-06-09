@@ -62,4 +62,4 @@ class Solution:
         # 只有左右侧都对称，才说明两个树镜像对称
         self.recursion(left_node.left, right_node.right)
         self.recursion(left_node.right, right_node.left)
-        return True
+        return True 

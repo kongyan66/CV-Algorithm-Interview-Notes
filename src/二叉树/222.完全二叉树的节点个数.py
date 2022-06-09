@@ -22,8 +22,6 @@ class Solution:
 # 解法二：递归法（终于第一次自己写出了递归了，值得庆祝）
 class Solution:
     def countNodes(self, root: TreeNode) -> int:
-        if root is None:
-            return 0 
         # 1.确定入参和出参
         return self.getcount(root)
 
