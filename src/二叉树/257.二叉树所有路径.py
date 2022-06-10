@@ -24,3 +24,34 @@ class Solution:
         return result
 
 # 解法一:递归法
+# 这里首次自己写了回溯，用于path的更新，避免重复（其实有递归必然有回溯，归嘛，只是这一步由系统自送完成，我们看不到而已）
+class Solution:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        path = []
+        result = []
+        if not root:
+            return result
+        self.recursion(root, path, result)
+        return result
+    
+
+    # 1.确定递归的返回值与参数
+    def recursion(self, node, path, result):
+        # 处理中节点（前序遍历）,为了方便回溯（使用pop）,我们用list来保存路径，但->需要单独处理
+        path.append(node.val)
+   
+        # 2.确定终止条件
+        if not node.left and not node.right:
+            tem = ''
+            for i in range(len(path)):
+                tem += str(path[i]) + '->'
+            result.append(tem[:-2])    # 最后一个->多余了
+            return 
+        # 3.单程递归逻辑
+        
+        if node.left:
+            self.recursion(node.left, path, result) # 递归
+            path.pop() # 回溯
+        if node.right:
+            self.recursion(node.right, path, result) # 递归
+            path.pop() # 回溯
