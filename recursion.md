@@ -37,21 +37,27 @@
 ## 一般步骤
 
 1.确定返回值与参数
-在定义一个递归函数前，我们必须清楚用这个递归函数干什么，我们得到是什么(返回值)，函数规模有多大（参数）
-- 返回值  函数的含义，代表了递归函数能为我们解决什么样的问题
-- 函数的参数 代表了递归函数求解的问题的规模
+   在定义一个递归函数前，我们必须清楚用这个递归函数干什么，我们得到是什么(返回值)，函数规模有多大（参数）
+
+	   -  返回值  函数的含义，代表了递归函数能为我们解决什么样的问题
+	   -  函数的参数 代表了递归函数求解的问题的规模
 
 2.确定终止条件
 3.确定单层递归逻辑
    这里其实干了两件事：1.该层逻辑实现 2.将递归传递下去
 
+当然这只是一般顺序，也会有顺序混乱的情况，比如`257.二叉树所有路径` 
+
 ## 疑惑点
 - [ ] 如果把递归函数看做一个黑箱，怎么确定其功能（入参与出参）
 - [ ] 递归逻辑不同题之间差异很大，也不好想
+- [ ] 什么时候有返回值，什么时候没有
 
 ## 递归与迭代（还不深刻）
 
 归和迭代其实是天生一对的，本质是一样的，迭代只是`我们自己模拟了递归的调用栈而已`，因此迭代一般会用到`栈`这样的数据结构
+
+`257.二叉树所有路径` 能反应这个道理.
 
 ## 相关题目
 - 144.二叉树前序遍历
@@ -165,6 +171,42 @@ class Solution:
           self.recursion(left_node.right, right_node.left)
           return True
           
+  ```
+
+- 257.二叉树所有路径
+
+  此题终止条件特殊些，且用到了回溯法
+
+  ```python
+  # 这里首次自己写了回溯，用于path的更新，避免重复（其实有递归必然有回溯，归嘛，只是这一步由系统自送完成，我们看不到而已）
+  class Solution:
+      def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+          path = []
+          result = []
+          if not root:
+              return result
+          self.recursion(root, path, result)
+          return result
+      # 1.确定递归的返回值与参数
+      def recursion(self, node, path, result):
+          # 处理中节点（前序遍历）,为了方便回溯（使用pop）,我们用list来保存路径，但->需要单独处理
+          path.append(node.val)
+     
+          # 2.确定终止条件
+          if not node.left and not node.right:
+              tem = ''
+              for i in range(len(path)):
+                  tem += str(path[i]) + '->'
+              result.append(tem[:-2])    # 最后一个->多余了
+              return 
+          # 3.单程递归逻辑
+          
+          if node.left:
+              self.recursion(node.left, path, result) # 递归
+              path.pop() # 回溯
+          if node.right:
+              self.recursion(node.right, path, result) # 递归
+              path.pop() # 回溯
   ```
 
   
