@@ -33,8 +33,6 @@ class Solution:
             return result
         self.recursion(root, path, result)
         return result
-    
-
     # 1.确定递归的返回值与参数
     def recursion(self, node, path, result):
         # 处理中节点（前序遍历）,为了方便回溯（使用pop）,我们用list来保存路径，但->需要单独处理

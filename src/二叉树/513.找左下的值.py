@@ -8,9 +8,10 @@ class Solution:
         if root != None:
             que = [root]
         result = 0
+        
         while que:
             for i in range(len(que)):
-                if i == 0:                 # 这地方我始终没看明白
+                if i == 0:                 # 取每一层最左侧节点的值
                     result = que[i].val
                 cur = que.pop(0)
                 if cur.left:
@@ -18,5 +19,19 @@ class Solution:
                 if cur.right:
                     que.append(cur.right)
         return result
+# re-2
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        que = [root]
+        while que:
+            res = []
+            for i in range(len(que)):
+                cur = que.pop(0)
+                res.append(cur.val)
+                if cur.left:
+                    que.append(cur.left)
+                if cur.right:
+                    que.append(cur.right)
+        return res[0]
     
-# 解法二：迭代法（比较难理解）
+# 解法二：递归法（比较难理解）
