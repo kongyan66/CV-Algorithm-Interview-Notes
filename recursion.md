@@ -213,5 +213,39 @@ class Solution:
               path.pop() # 回溯
   ```
 
-  
 
+- 112.路径之和
+
+  ```python
+  class Solution:
+      def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+          if not root:
+              return False
+          else:
+              return self.recursion(root, targetSum - root.val)
+      # 1.确定入参与返回值
+      # 入参：node, targetsum 返回值：bool
+      def recursion(self, node, sum):
+          # 2.确定终止条件
+          # 当到达子叶节点且路径和==target时，返回True
+          if not node.left and not node.right and sum == 0:
+              return True
+          # 否则返回false
+          if not node.left and not node.right:
+              return False
+          # 3.确定递归逻辑 
+          # 其实还是DFS，顺序这并不重要
+          if node.left:
+              sum -= node.left.val
+              if self.recursion(node.left, sum):
+                  return True
+              sum += node.left.val  # 回溯
+          if node.right:
+              sum -= node.right.val
+              if self.recursion(node.right, sum):
+                  return True
+              sum += node.right.val # 回溯
+          return False
+  ```
+
+  

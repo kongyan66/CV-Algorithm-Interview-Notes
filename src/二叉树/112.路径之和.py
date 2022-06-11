@@ -45,4 +45,57 @@ class Solution:
             if cur.left == None and cur.right == None and sum(path) == targetSum:
                 return True  
         return False
+# re-2
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if root is None:
+            return False
+        st = [(root, [root.val])]
+        while st:
+            cur, path = st.pop()
+            # 前序遍历
+            if cur.right:
+                # 这里必须对path.copy()赋值指向一个新变量，不能直接进行append()操作
+                path_right = path.copy()
+                path_right.append(cur.right.val)
+                st.append((cur.right, path_right))
+            if cur.left:
+                path_left = path.copy()
+                path_left.append(cur.left.val)
+                st.append((cur.left, path_left))
+            # 判断是否满足条件
+            if not cur.left and  not cur.right:
+                if sum(path) == targetSum:
+                    return True
+        return False
 
+# 解法二： 递归法
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        else:
+            return self.recursion(root, targetSum - root.val)
+    # 1.确定入参与返回值
+    # 入参：node, targetsum 返回值：bool
+    def recursion(self, node, sum):
+        # 2.确定终止条件
+        # 当到达子叶节点且路径和==target时，返回True
+        if not node.left and not node.right and sum == 0:
+            return True
+        # 否则返回false
+        if not node.left and not node.right:
+            return False
+        # 3.确定递归逻辑 
+        # 其实还是DFS，顺序这并不重要
+        if node.left:
+            sum -= node.left.val
+            if self.recursion(node.left, sum):
+                return True
+            sum += node.left.val  # 回溯
+        if node.right:
+            sum -= node.right.val
+            if self.recursion(node.right, sum):
+                return True
+            sum += node.right.val # 回溯
+        return False
