@@ -1,6 +1,6 @@
 # 题目：给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合（组合无序，排列有序）
 
-# 思路：
+
 
 # 解法一； 回溯法
 class Solution:
@@ -60,8 +60,8 @@ class Solution:
             return 
         for i in range(startindex, n+1):
             self.path.append(i)
-            self.backtracking(n, k, i+1)
-            self.path.pop()
+            self.backtracking(n, k, i+1) # 递归（也包回溯过程）
+            self.path.pop() # 回溯
 
 
 # 改进： 剪枝

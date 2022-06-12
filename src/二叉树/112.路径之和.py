@@ -83,9 +83,6 @@ class Solution:
         # 当到达子叶节点且路径和==target时，返回True
         if not node.left and not node.right and sum == 0:
             return True
-        # 否则返回false
-        if not node.left and not node.right:
-            return False
         # 3.确定递归逻辑 
         # 其实还是DFS，顺序这并不重要
         if node.left:
