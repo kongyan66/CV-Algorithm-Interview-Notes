@@ -22,7 +22,6 @@ class Solution:
         # 1.确定返回值
         return root
 
-
 # 写法二：比较规矩的写法
 class Solution:
     def constructMaximumBinaryTree(self, nums: List[int]) -> TreeNode:
@@ -41,3 +40,22 @@ class Solution:
         root.right = self.traversal(nums[max_value_index+1:])
         
         return root
+# re-2
+class Solution:
+    # 1.确定递归的入参与返回值
+    # 返回值：树的根节点
+    def constructMaximumBinaryTree(self, nums: List[int]) -> TreeNode:
+        # 2.确定递归的终止条件
+        if not nums:
+            return None
+        # 3.确定单调递归逻辑
+        max_value = max(nums)
+        sparator_point = nums.index(max_value)
+        node = TreeNode(max_value)
+        left_nums = nums[:sparator_point]
+        right_nums = nums[sparator_point+1:]
+
+        node.left = self.constructMaximumBinaryTree(left_nums)
+        node.right = self.constructMaximumBinaryTree(right_nums)
+
+        return node
