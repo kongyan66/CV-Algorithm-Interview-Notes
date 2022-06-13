@@ -5,7 +5,7 @@
 # 中序遍历数组用于拆分数组，分出左右子树，以切割点为界。
 # 以上思路确实就是根据深度遍历的自身性质来的，迷惑了自己画一画就好了
 
-# 解法一：迭代法
+# 解法一：递归法
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         # 1.排除为空的情况
