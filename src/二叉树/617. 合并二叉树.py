@@ -4,20 +4,20 @@
 
 # 解法一：递归法
 class Solution:
+    # 1.确定递归入参与返回值
     def mergeTrees(self, root1: TreeNode, root2: TreeNode) -> TreeNode:
-        
-        # 2.确定终止条件
+        # 2.确定递归停止条件(这一步很关键，有点抽象)
         if not root1:
             return root2
-        if not root2:
+        elif not root2:
             return root1
-
-        # 3.确定单层递归逻辑
+        # 3.单层递归逻辑
         root1.val += root2.val
         root1.left = self.mergeTrees(root1.left, root2.left)
-        root1.right =  self.mergeTrees(root1.right, root2.right)
-
+        root1.right = self.mergeTrees(root1.right, root2.right)
+        
         return root1
+
 
 # 解法二：迭代法 前序遍历  
 class Solution:
@@ -34,7 +34,7 @@ class Solution:
         while que:
             node1 = que.pop(0)
             node2 = que.pop(0)
-            # 我们选择node1作为合并的树(节省空间)
+            # 我们选择node1作为合并的树(这样不用重新开辟空间保存一颗树，节省空间)
             node1.val += node2.val
             if node1.left and node2.left:
                 que.append(node1.left)
