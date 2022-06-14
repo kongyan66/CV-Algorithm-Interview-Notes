@@ -22,18 +22,17 @@ class Solution1:
                 return root
 
 # 解法二；递归法
-class Solution2:
+class Solution:
+    # 1.确定入参与返回值
+    # 返回值:val存在返回root, 不存在返回None
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
-        return self.reverse(root, val)
-    # 1.确定入参和出参
-    def reverse(self, root, val):
-        # 2.确定停止条件
-        if not root  or root.val == val:
+        # 2.确定终止条件：
+        if not root or root.val == val:
             return root
-        # 3.确定单层递归逻辑
+        # 3.单层递归逻辑
         if root.val > val:
-            return self.reverse(root.left, val)
+            return self.searchBST(root.left, val)
         elif root.val < val:
-            return self.reverse(root.right, val)
+            return self.searchBST(root.right, val)
         else:
             return None
