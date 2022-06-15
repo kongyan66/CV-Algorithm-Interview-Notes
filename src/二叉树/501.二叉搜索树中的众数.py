@@ -65,3 +65,50 @@ class Solution2:
                 pre = cur
                 cur = cur.right
         return res
+
+# 递归法 采用中序遍历模板
+# 模板小结
+void searchBST(TreeNode* cur) {
+    if (cur == NULL) return ;
+    searchBST(cur->left);       // 左
+    （处理节点）                // 中
+    searchBST(cur->right);      // 右
+    return ;
+}
+
+# 写法
+class Solution:
+    def findMode(self, root: TreeNode) -> List[int]:
+        pre = None
+        count = 0
+        maxCount = 0
+        res = []
+        
+        def recursion(root):
+            nonlocal pre 
+            nonlocal count      # 记录当前频率
+            nonlocal maxCount   # 记录最大频率
+            nonlocal res        # 记录最终结果
+            # 对每个节点出现次数进行统计
+            if not root:
+                return 
+            recursion(root.left)
+            cur = root
+            if not pre:
+              count = 1
+            elif cur.val == pre.val:
+                count += 1
+            else:
+                count = 1
+            pre = cur
+            # 记录出现次数最多的节点
+            if count == maxCount:
+                res.append(cur.val)
+            elif count > maxCount:
+                res.clear()
+                maxCount = count
+                res.append(cur.val)
+            recursion(root.right)
+
+        recursion(root)
+        return res
