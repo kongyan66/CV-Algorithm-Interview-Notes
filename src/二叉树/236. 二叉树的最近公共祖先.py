@@ -5,23 +5,28 @@
 
 # 最佳解法； 递归法 回溯
 class Solution:
-    # 1.确定入参出参  出参：公共祖先节点
+    # 1.确定函数返回值与入参
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        # 2.确定终止条件 如果找到了 节点p或者q，或者遇到空节点，就返回。
-        if root == None or root == q or root == p :
+        # 2.确定递归停止条件
+        # 如果找到了p,q 就返回该节点，未找到就返回空
+        if root == q or root == p or root == None:
             return root
+        
         # 3.确定单层递归逻辑
-        # 获得当前节点的左右子树查询q,p的结果
+        # 在左子树找
         left = self.lowestCommonAncestor(root.left, p, q)
+        # 在右子树找
         right = self.lowestCommonAncestor(root.right, p, q)
-        # p,q都存在， 说明root即为公共祖先
-        if left != None and right != None:
+        # 分情况讨论
+        # p,q分别在左右子树上:left,right 均有值,那么公共祖先就是当前节点了
+        if left and right:
             return root
-        # 
-        elif left != None and right == None:
-            return left 
-        elif right != None and left == None:
+        # q,p 在同一子树上：这里也分两种情况，谁在前后
+        elif left and not right:
+            return left
+        elif not left and right:
             return right
+        # 最后一种情况就是未找到(当然本题给的条件时必然存在)
         else:
             return None
 
