@@ -1,5 +1,5 @@
 # 题目：给定一个二叉树, 找到该树中两个指定节点的最近公共祖先（一个节点也可以是它自己的祖先）
-
+# https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/solution/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/
 # 思路： 先理解定义，有两种情况：1. p,q 皆为子树节点 2.p,q其中一个为上级节点
 # 利用回溯从底向上搜索，遇到一个节点的左子树里有p，右子树里有q，那么当前节点就是最近公共祖先。
 

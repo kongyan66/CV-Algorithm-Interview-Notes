@@ -21,13 +21,22 @@ class Solution:
       
 # 解法二： 递归法
 class Solution:
+    # 1.确定入参与返回值
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        # 2.确定停止条件（非必须，因为题中声明p、q 为不同节点且均存在于给定的二叉搜索树中）
-        if root == None:
-            return root
-        # 3.确定单层递归逻辑
+        # 2.递归停止条件
+        if not root:
+            return None
+        # 3.单层递归逻辑
+        # 与二叉树相比，二叉树搜索树有序特性可以帮我们缩小搜索区域，但公共节点情况还是一样的
+        # 1) 都在左子树
         if root.val > p.val and root.val > q.val:
-            return self.lowestCommonAncestor(root.left, p, q)
+            left = self.lowestCommonAncestor(root.left, p, q)
+            return left
+        # 2)都在右子树
         elif root.val < p.val and root.val < q.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-        return root
+            right = self.lowestCommonAncestor(root.right, p, q)
+            return right 
+        # 3)左右子树都有  就是root的值介于p,q之间
+        else:
+            return root
+        
