@@ -30,3 +30,38 @@ class Solution:
             node.left = root.left    # 只能放左左子树（有序性）
             root = root.right        # 右子树覆删除节点位置
         return root
+
+# re-2 递归 有返回值
+class Solution:
+    # 1.确定递归的入参与返回值
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        # 2.确定递归停止条件
+        if not root:
+            return root
+        
+        # 3.单层递归逻辑 
+        # 搜索值为key的节点
+        if root.val > key:
+            root.left = self.deleteNode(root.left, key)
+        elif root.val < key:
+            root.right = self.deleteNode(root.right, key)
+        # 找到值key的节点后，分四种情况讨论
+        elif root.val == key:
+            # 左右子节点均不存在，则当前节点置空
+            if not root.left and not root.right:
+                root = None
+            # 左节点不存在， 右代替
+            elif not root.left and root.right:
+                root = root.right
+            # 右节点不存在，左代替
+            elif root.left and not root.right:
+                root = root.left
+            # 左右都存在，这里需要看下上面画的图
+            elif root.left and root.right:
+                cur = root.right
+                # 找cur节点下最右子节点
+                while cur.left:
+                    cur = cur.left
+                cur.left = root.left
+                root = root.right
+        return root

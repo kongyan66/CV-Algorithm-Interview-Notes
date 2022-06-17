@@ -3,7 +3,7 @@
 # 思路：本题难点在于给定的candinadates中有重复数，但结果要求不能有重复的，所以需要去重
 # 这里去重是指同一树层的重（横向遍历），而不是同一树枝下的重（纵向遍历）
 # 所以这里需要bool型列表去记录是否为同一层还是同一枝
-# 解法
+# 解法 使用标志位
 class Solution:
     def __init__(self):
         self.path = []
@@ -36,3 +36,5 @@ class Solution:
             self.backtracking(candidates, target, i+1)
             self.used[i] = False  # 回溯
             self.path.pop() # 回溯
+
+# re2 无使用标志位
