@@ -65,3 +65,4 @@ class Solution:
                 cur.left = root.left
                 root = root.right
         return root
+        
