@@ -29,18 +29,50 @@ class Solution:
            parent.right = TreeNode(val)
         return root
 
-# 解法二： 递归法
+# 解法二： 递归法 有返回值 
+# 不太好理解 这个root是怎么到达空节点
 class Solution:
-    # 1.确定入参与出参(yao)
+    # 1.确定入参与出参
+    # 返回值是当前路径节点
     def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
         # 2.确定终止条件 
         # 找到遍历节点为None的时候，就是要插入节点的位置，返回要插入的节点
         if not root:
             return TreeNode(val)
-        
+        # 3.单层递归逻辑
+        # 从上到下不断比较当前节点与val的值，决定放左边还是右边
+        # 直到root.left 为空时，我们就把两个节点接上
         if root.val > val:
             root.left = self.insertIntoBST(root.left, val)
+        # 同理
         if root.val < val:
             root.right = self.insertIntoBST(root.right, val)
-        
+        # 返回最终更新后树的根节点 疑问：这个root一直在变，最后怎么又变成根节点了呢？
         return root 
+
+# 解法三：递归法 无返回值  比较好理解， 和迭代法思路基本一致
+class Solution:
+    def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
+        parent = None
+        if not root:
+            return TreeNode(val)
+        # 1.确定入参与返回值 无返回值
+        def recursion(cur, val):
+            nonlocal parent
+            # 2.确定递归停止条件 当到达子叶时，决定val节点放哪边
+            if not cur:
+                if parent.val > val:
+                    parent.left = TreeNode(val)
+                elif parent.val < val:
+                    parent.right = TreeNode(val)
+                return 
+            
+            # 3.单层递归逻辑
+            parent = cur
+            if cur.val > val:
+                recursion(cur.left, val)
+            elif cur.val < val:
+                recursion(cur.right, val)
+          
+        recursion(root, val)
+        return root
