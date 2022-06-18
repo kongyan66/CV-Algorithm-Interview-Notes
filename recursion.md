@@ -248,4 +248,59 @@ class Solution:
           return False
   ```
 
+- 108.将有序数组转换为搜索二叉树（简单）
+
+  此题深刻反应了递归的"归"的含义，由里往外
+
+  ```python
+  class Solution:
+      # 1.确定递归入参与返回值
+      def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+          # 2.确定递归停止条件 只用于刹车，没有逻辑功能
+          if not len(nums):
+              return 
+          # 3.确定单层递归逻辑
+          # 找切割点
+          sparator_index = len(nums) // 2
+          node = TreeNode(nums[sparator_index])
+          # 划分左右区间
+          left_nums = nums[:sparator_index]
+          right_nums = nums[sparator_index+1:]
+          # 递归组装所有节点
+          node.left = self.sortedArrayToBST(left_nums)
+          node.right = self.sortedArrayToBST(right_nums)
+          # 返回最终构成树的根节点，这里也反应了递归的‘归’的含义，由里往外
+          print(node.val)
+          return node
+  ```
+
+- 669.修剪二叉树
+
+  此题对递归理解要求比较高，先查询再重新组装树
+
+  脑子里没有这个构建过程，所以很迷糊
+
+  ```python 
+  class Solution:
+      # 1.确定入参与返回值
+      def trimBST(self, root: Optional[TreeNode], low: int, high: int) -> Optional[TreeNode]:
+          # 2.确定递归停止条件
+          # 修建操作并不是在终止条件上进行的，所以需要空节点返回None就行
+          if not root:
+              return 
+          # 3.确定单层递归逻辑
+          # 如果root(当前节点)的元素大于high的，那么应该递归左子树，并返回左子树符合条件的头结点。
+          if root.val > high:
+              return self.trimBST(root.left, low, high)
+          # 如果root（当前节点）的元素小于low的数值，那么应该递归右子树，并返回右子树符合条件的头结点。
+          elif root.val < low:
+               return  self.trimBST(root.right, low, high)
+          # 节点值符合条件，符合要求
+          # 重新拼接符合条件的节点,这个写法不是很好理解，多看看吧
+          elif low <= root.val <= high:
+              root.left = self.trimBST(root.left, low, high)
+              root.right = self.trimBST(root.right, low, high)
+          return root
+  ```
+
   
