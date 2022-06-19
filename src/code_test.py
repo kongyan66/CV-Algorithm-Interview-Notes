@@ -1,11 +1,3 @@
-def t():
-    a = 2
-    def tt():
-        nonlocal a
-        print(a)
-        a += 2
-        print(a)
-    tt()
-    print(a)
-    print(a+2)
-t()
+a = [1,2,3]
+a.remove(2)
+print(a)
