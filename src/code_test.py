@@ -1,3 +1,3 @@
 a = [1,2,3]
-a.remove(2)
-print(a)
+for i in range(len(a), -1, -1):
+    print(i)
