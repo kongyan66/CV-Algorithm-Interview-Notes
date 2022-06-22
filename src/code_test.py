@@ -1,3 +1,11 @@
-a = [1,2,3]
-for i in range(len(a), -1, -1):
-    print(i)
+from multiprocessing import BoundedSemaphore
+
+
+n =3
+board = [['.'] * n for _ in range(n)]
+res = []
+for tem in board:
+    tem_str = "".join(tem)
+    res.append("".join(tem))
+print(res)
+
