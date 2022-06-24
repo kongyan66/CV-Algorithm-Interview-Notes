@@ -74,3 +74,5 @@ for i in range(startindex,n - (k - path.size()) + 2):  # 优化的地方
     path.append(i)  # 处理节点
     backtracking(n, k, i+1)  # 递归：控制树的纵向递归， 注意下一层搜索要从i+1开始
     path.pop() # 回溯，撤销处理的节点
+
+

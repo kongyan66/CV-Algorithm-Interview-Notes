@@ -14,5 +14,5 @@ class Solution:
         # 根据每个元素的第二个维度k，贪心算法，进行插入
         # people已经排序过了：同一高度时k值小的排前面。
         for p in people:
-            que.insert(p[1], p)
+            que.insert(p[1], p)   # 这块就很神奇
         return que
