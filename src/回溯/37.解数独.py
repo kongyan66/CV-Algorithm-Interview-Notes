@@ -31,6 +31,7 @@ class Solution:
                 # 数字1-9都不能填入空格，说明无解
                 return False
         return True
+    
 
 
 
