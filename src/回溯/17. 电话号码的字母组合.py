@@ -26,14 +26,14 @@ class Solution:
 
     # 1.确定入参与返回值 
     def backtracking(self, digits, index):
-        # 2.确定递归停止条件
+        # 2.确定递归停止条件 控制递归的深度
         if index == len(digits):
             self.results.append(self.path)
             return
         # 3.单层搜索逻辑 
         # 递归深度= 输入数字个数 宽度=3
         letters = self.map[digits[index]]
-        for letter in letters:
+        for letter in letters:  # 控制递归的宽度
             self.path += letter
             self.backtracking(digits, index+1)
-            self.path = self.path[:-1]
+            self.path = self.path[:-1]  # 回溯
