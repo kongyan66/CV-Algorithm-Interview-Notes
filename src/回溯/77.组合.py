@@ -45,6 +45,7 @@ class Solution:
             self.backtracking(n, k, i+1)
             path.pop()
 # 以下写法是可以的
+# 写法一： init初始化参数
 class Solution:
     def __init__(self):
         self.path = []
@@ -62,7 +63,22 @@ class Solution:
             self.path.append(i)
             self.backtracking(n, k, i+1) # 递归（也包回溯过程）
             self.path.pop() # 回溯
-
+# 写法二： 变量传入
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        path = []
+        result = []
+        self.backtracking(n, k, 1, path, result)
+        return result
+    # 1.确定入参与返回值
+    def backtracking(self, n, k, startindex, path, result):
+        # 2.确定递归停止条件
+        if len(path) == k:
+            result.append(path.copy())
+        for i in range(startindex, n+1):
+            path.append(i)
+            self.backtracking(n, k, i+1, path, result)
+            path.pop()
 
 # 改进： 剪枝
 # 接下来看一下优化过程如下：
