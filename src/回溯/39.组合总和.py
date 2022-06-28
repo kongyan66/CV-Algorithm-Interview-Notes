@@ -41,11 +41,12 @@ class Solution:
         if sum(self.path) == target:
             self.result.append(self.path.copy())
             return
-        elif sum(self.path) > target:
+        elif sum(self.path) > target: 
             return 
         # 3.单层搜索逻辑
         for i in range(startindex, len(candidates)):
-            self.path.append(candidates[i])
+            self.path.append(candidates[i])   # z组合问题还是拿出不放回， 这里特别之处是同一个 数字可以 无限制重复被选取
+            # 所以startindex为i
             self.backtracking(candidates, target, i) # 递归
             self.path.pop() # 回溯
 # 剪枝

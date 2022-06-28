@@ -1,2 +1,2 @@
-a = '123'
-a[0] = '6'
+tup = tuple("etttrr")
+print(tup)
