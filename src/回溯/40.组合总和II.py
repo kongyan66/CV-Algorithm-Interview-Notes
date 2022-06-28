@@ -34,7 +34,7 @@ class Solution:
             self.used[i] = True
             self.path.append(candidates[i])
             self.backtracking(candidates, target, i+1)
-            self.used[i] = False  # 回溯
             self.path.pop() # 回溯
+            self.used[i] = False  # 回溯
 
 # re2 无使用标志位
