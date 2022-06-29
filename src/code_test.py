@@ -5,7 +5,5 @@ def climbStairs(n: int) -> int:
     for i in range(3, n+1):
         p, q = q, r
         r = p + q
-        print(q)
-        print((p, q))
     return r
 print(climbStairs(4))
