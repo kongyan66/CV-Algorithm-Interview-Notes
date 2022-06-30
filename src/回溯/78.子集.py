@@ -15,8 +15,10 @@ class Solution:
         # 就这块和之前的组合问题不一样
         self.res.append(self.path.copy())
         # 2.确定递归停止条件
+        # 剩下子集为空时，停止递归
         if len(nums[startindex:]) == 0:
             return 
+        # 另一种写法
         # if startindex >= len(nums):
         #     return 
         # 3.单层搜索逻辑
