@@ -1,2 +1,2 @@
-a = [[1,2]]
-print(not a)
+a = [[]]
+print(len(a))

@@ -3,6 +3,7 @@
 
 # 这里的每一级楼梯都是有价格的，想要跨过它，就要交保护费，而我们每次可以从前一个楼梯或者前两个楼梯爬上来，难在在于写状态转移动方程
 '''
+参考：https://leetcode.cn/problems/min-cost-climbing-stairs/solution/tong-ge-lai-shua-ti-la-yi-bu-dao-wei-xie-ef9r/
 状态定义：dp[i] 表示到达第 i 级楼梯所需要的最小代价（注意：是到达，还没有跨过）。
 转移方程：dp[i] = min(dp[i-2]+cost[i-2], dp[i-1]+cost[i-1])，要想到达 i，要么交 i-2 的保护费走两步上来，要么交 i-1 的保护费走一步上来。
 初始值：dp[0] = dp[1] = 0，可以直接从 0 或 1 号楼梯开始，前面没有台阶，所以它们不需要花费代价。
