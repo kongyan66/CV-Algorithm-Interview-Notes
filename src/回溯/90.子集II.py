@@ -22,7 +22,7 @@ class Solution:
             return
         # 3.确定单层搜索逻辑
         for i in range(startindex, len(nums)):
-            # 去掉同一层之间的重复数字
+            # 去掉同一树层之间的重复数字
             # 若数组中前后元素值相同，但前者却未被使用(used == False)，说明是for loop中的同一树层的相同元素情况
             if i > 0 and nums[i] == nums[i-1] and self.used[i-1] == False:
                 continue
