@@ -20,10 +20,10 @@ class Solution:
             return
         # 3.确定单层搜索逻辑
         # 这里每一层都用有一个全新的usage_list用于记录本层元素是否重复使用
-        use_list = set()   # 用set比list更节省空间
+        use_list = set()   # 因为重复的数不一定相邻，所以用hash表更方便了
         for i in range(startindex, len(nums)):
-            # 如果存在递减序列或已经使用过的数，则停止递归
-            if (self.path and nums[i] < self.path[-1]) or nums[i] in use_list:
+            # 如果不是递增序列或已经使用过的数，则停止该次递归
+            if (self.path and nums[i] < self.path[-1]) or nums[i] in use_list:  # 这里nums[i] 比较的是path[-1] 而不是nums[i-1]
                 continue 
             use_list.add(nums[i])  # 实时记录该层元素情况
             self.path.append(nums[i])
