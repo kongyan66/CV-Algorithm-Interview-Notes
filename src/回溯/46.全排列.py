@@ -19,7 +19,8 @@ class Solution:
             self.result.append(self.path.copy())
         # 3.确定单层搜索逻辑
         for i in range(len(nums)):
-            # 若同一树枝使用过，就不能再用了
+            # 若同一树枝使用过，就不能再用了  
+            # 若看不懂为啥，就自己画画图就好了
             if self.used[i]:
                 continue
             self.used[i] = True
