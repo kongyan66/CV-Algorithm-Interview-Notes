@@ -37,4 +37,33 @@ class Solution:
             self.path.pop() # 回溯
             self.used[i] = False  # 回溯
 
-# re2 无使用标志位
+# re2 使用set()标志位
+class Solution:
+    def __init__(self):
+        self.path = []
+        self.result = []
+        # 因为有重复元素，本题需要使用used，用来标记区别同一树层的元素使用重复情况，注意区分递归纵向遍历遇到的重复元素，和for循环遇到的重复元素
+        
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        self.backtracking(candidates, target, 0)
+        return self.result
+
+    def backtracking(self, candidates, target, startindex):
+        # 2.确定递归停止条件
+        if sum(self.path) == target:
+            self.result.append(self.path.copy())
+            return 
+        if sum(self.path) > target:
+            return
+        # 3.确定单层递归逻辑
+        use = set()
+        for i in range(startindex, len(candidates)):
+            # if i > 0 and candidates[i] == candidates[i-1] and self.used[i-1] == False:
+            #     continue
+            if candidates[i] in use:
+                continue
+            self.path.append(candidates[i])
+            use.add(candidates[i])
+            self.backtracking(candidates, target, i+1)
+            self.path.pop()
