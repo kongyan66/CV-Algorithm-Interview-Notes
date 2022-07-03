@@ -9,26 +9,31 @@ class Solution:
         self.result = []
     def solveNQueens(self, n: int) -> List[List[str]]:
         board = [['.'] * n for _ in range(n)]
-        row = 0
+        row = 0  
         self.backtracking(board, n, row)
         return self.result
     # 1.确定递归入参与返回值
-    def backtracking(self,board, n, row):
+    def backtracking(self, board, n, row):
         # 2.确定递归的停止条件
-        if row == n:
+        if row == n:  # 按理不应该是n-1吗，0,1,2 深度为3
             # 转换下输出格式
+            # 为啥不直接用题目输出格式呢？因为字符串列表中字符串不可修改，此题需要放置Q
+            # 所以我们先用二维列表，找到了就转回来就好
             tem_result = []
             for tem in board:
                 tem_result.append("".join(tem))
             self.result.append(tem_result)
-            
+            return     # 这里不写return 也能通过就很奇怪
         # 3.确定单层递归逻辑
         for col in range(n):
+            # 先检查放入[row][col]后是否合规
             if not self.is_valid(board, row, col):
                 continue
             board[row][col] = 'Q'
             self.backtracking(board, n, row+1)
-            board[row][col] = '.'
+            board[row][col] = '.' # 回溯
+            # row -= 1 为啥row不需回溯呢
+
     def is_valid(self, board, row, col):
         # 判断是否同一列
         for i in range(len(board)):
