@@ -12,7 +12,7 @@ class Solution:
         # dp[j] 表示容量为j的背包能装的物品的最大价值
         # stone最大值是100，最大长度为30，那么最大和为100*30 ，则sum/2 最大值为1500
         dp = [0] * 1501   # 加一是因为数组是从下标0开始的，所以长度需加一
-        target = sum(stones) // 2  
+        target = sum(stones) // 2    
         # 初始化
         dp[0] = 0
         for i in range(len(stones)):
