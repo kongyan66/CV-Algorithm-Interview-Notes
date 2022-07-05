@@ -13,10 +13,11 @@ class Solution:
         """
         self.backtracking(board)
         return board
-    # 1.确定递归入参与返回值
+    # 1.确定递归入参与返回值 
+    # 返回值为bool
     def backtracking(self, board):
         # 2.确定递归停止条件
-        # 解数独是要遍历整个树形结构寻找可能的叶子节点就立刻返回,棋盘填满了自然就停了
+        # 解数独是要遍历整个树形结构寻找可能的叶子节点就立刻返回(就找一个解,找到就返回True,递归结束),棋盘填满了自然就停了
         # 3.确定单层搜索逻辑
         for row in range(len(board)):
             for col in range(len(board[0])):
@@ -28,13 +29,11 @@ class Solution:
                         if self.backtracking(board):
                             return True
                         board[row][col] = '.'  # 回溯
-                # 数字1-9都不能填入空格，说明无解
+                # 数字1-9都不能填入空格，说明无解，搜索失败
                 return False
+        # 遍历完棋盘所有位置，完没有返回false，说明找到了一个成功的下法，搜索成功
         return True
     
-
-
-
     def is_valid(self, board, row, col, k):
         # 判断同一行还否有冲突  行不同，列动
         for i in range(9):
