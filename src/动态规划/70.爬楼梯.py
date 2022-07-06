@@ -69,3 +69,18 @@ def climbStairs(self, n: int) -> int:
     # memo: [-1] * (n - 1)
     # -1 表示没有计算过，最大索引为 n，因此数组大小需要 n + 1
     return dfs(n, [-1] * (n + 1))
+
+
+# 终极方法：转为背包问题
+# 完全背包 排列问题 台阶选择nums=[1, 2]  target=n
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        nums = [1, 2]
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        for j in range(n+1):
+            for i in range(len(nums)):
+                if j >= nums[i]:
+                    dp[j] += dp[j-nums[i]]
+        print(dp)
+        return dp[n]
