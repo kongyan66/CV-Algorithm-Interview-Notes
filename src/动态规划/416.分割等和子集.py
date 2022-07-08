@@ -7,23 +7,18 @@
 # 解法一：回溯法
 # TODO
 
-# 解法二：01背包
+# 解法二：01背包 最大值问题
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        target = sum(nums)
-        # 如果不可分一定就没有这样的子集
-        if target % 2 == 1:
+        total = sum(nums)
+        if total % 2 == 1:
             return False
-        target //= 2
-        # 题目中说：每个数组中的元素不会超过 100，数组的大小不会超过 200
-        # 总和不会大于20000，背包最大只需要其中一半，所以10001大小就可以了
-        dp = [0] * 10001
+        target = total // 2
+        # 1.dp[i]表示容量为i的背包装入nums所获的最大总和
+        dp = [0] * (target + 1)  # target就是背包的容量，也就是dp数组的长度
+        dp[0] = 0
         for i in range(len(nums)):
+            # 倒序遍历是为了保证物品i只被放入一次
             for j in range(target, nums[i]-1, -1):
                 dp[j] = max(dp[j], dp[j-nums[i]] + nums[i])
-                # 因为背包容量最大为sum?2（也是价值最大值）,故dp[j]<=target
-                if dp[j] == target:
-                    return True
-        # 所以这块也能这么写
-        # return dp[target] == target
-        return False
+        return dp[-1] == target
