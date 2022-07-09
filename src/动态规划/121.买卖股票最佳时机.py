@@ -40,6 +40,6 @@ class Solution:
        for i in range(1, len(prices)):
            dp[i][0] = max(dp[i-1][0], -prices[i])
            dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
-
+       # 当然卖出最后卖出所以股票才有最大值，即不持有的
        return dp[len(prices)-1][1]
 
