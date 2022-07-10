@@ -23,3 +23,21 @@ class Solution:
                 # 这块还是比较灵活的，自己想肯定是想办法标记最后一次
                 minvalue = prices[i] - fee 
         return result
+
+# 动态递归
+# 思路：与122 基本一致，只需在卖出时减去手续费
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        dp = [[0] * 2 for _ in range(len(prices))]
+        dp[0][0] = 0
+        dp[0][1] = -prices[0]                 # 还是喜欢dp[i][1]表示持有的最大价值
+
+        for i in range(1, len(prices)):
+            # 不持有股票最大的价值
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i] - fee)  # 唯一区别在这
+            # 持有股票最大的价值
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])
+
+        return dp[-1][0]
+       
+
