@@ -46,7 +46,7 @@ class Solution:
         dp[0][4] = 0
 
         for i in range(1, len(prices)):
-            dp[i][0] = dp[i-1][0]
+            dp[i][0] = dp[i-1][0]  # 其实一直都是0
             dp[i][1] = max(dp[i-1][0]-prices[i], dp[i-1][1])  # 依赖0状态
             dp[i][2] = max(dp[i-1][1]+prices[i], dp[i-1][2])  # 依赖于1状态
             dp[i][3] = max(dp[i-1][2]-prices[i], dp[i-1][3])  # 依赖于2状态
