@@ -10,14 +10,13 @@
 class Solution:
     def lastStoneWeightII(self, stones: List[int]) -> int:
         # dp[j] 表示容量为j的背包能装的物品的最大价值
-        # stone最大值是100，最大长度为30，那么最大和为100*30 ，则sum/2 最大值为1500
-        dp = [0] * 1501   # 加一是因为数组是从下标0开始的，所以长度需加一
-        target = sum(stones) // 2    
+        target = sum(stones) // 2  
+        dp = [0] * (target + 1) 
         # 初始化
-        dp[0] = 0
+        dp[0] = 0      # 也可以不写
         for i in range(len(stones)):
             for j in range(target, stones[i]-1, -1):  # 减一才能到stones[i]
                 dp[j] = max(dp[j], dp[j-stones[i]] + stones[i])
         res = dp[target]
-        # 两堆加起来就是最多能粉碎的，总数一减就是剩下的
+        # 我们得到了两堆相等石头的最大重量，用总的一减就是粉碎后剩下的了
         return sum(stones) - (2 * res)
