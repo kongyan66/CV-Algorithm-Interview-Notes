@@ -29,7 +29,7 @@ class Solution:
         if (target + total) % 2 == 1 or abs(target) > total:   # 后面一个例外条件提交的时候才知道
             return 0
         bagsize = (target + total) // 2  
-        dp = [0] * (bagsize + 1)   # 为啥这里不用计算了
+        dp = [0] * (bagsize + 1)   
         dp[0] = 1
         for i in range(len(nums)):
             for j in range(bagsize, nums[i]-1, -1):
