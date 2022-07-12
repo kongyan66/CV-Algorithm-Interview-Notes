@@ -11,15 +11,15 @@
 4.遍历顺序，背包都是逆序
 '''
 
-# 解
+# 解: 01背包 最大值问题
 class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
         dp = [[0] * (n+1) for _ in range(m+1)]
-        dp[0][0] = 0
+        dp[0][0] = 0    # 可写可不写
         for item in strs:
-            zeroNums = item.count('0')
+            zeroNums = item.count('0')   # python序列通用方法count()
             oneNums = item.count('1')
-            for i in range(m, zeroNums-1, -1):
+            for i in range(m, zeroNums-1, -1):  # 01背包, 不能取重复，所以倒序
                 for j in range(n, oneNums-1, -1):
                     dp[i][j] = max(dp[i][j], dp[i-zeroNums][j -oneNums] + 1)
         return dp[m][n]
