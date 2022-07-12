@@ -9,7 +9,7 @@
 3.dp[j] += dp[j-wight[i]]
 4.遍历顺序：背包从小到大  外物品内背包
 '''
-
+# 完全背包，组合问题
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
         dp = [0] * (amount + 1)
