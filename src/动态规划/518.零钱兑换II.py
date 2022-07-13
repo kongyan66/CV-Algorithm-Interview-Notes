@@ -14,9 +14,9 @@ class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
         dp = [0] * (amount + 1)
         dp[0] = 1  # dp[0]一定要为1，dp[0] = 1是 递归公式的基础，不然都是0
-        # 这里for循环不可变
+        # 组合问题 外物品内背包
         for i in range(len(coins)):
-            for j in range(coins[i], amount+1):
+            for j in range(coins[i], amount+1):  # 完全背包 背包正序
                 dp[j] += dp[j-coins[i]]
         return dp[amount]
 
