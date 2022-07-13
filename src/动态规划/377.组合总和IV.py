@@ -7,7 +7,7 @@
 # 举一个例子：计算dp[4]的时候，结果集只有 {1,3} 这样的集合，不会有{3,1}这样的集合，因为nums遍历放在外层，3只能出现在1后面！
 
 
-# 解
+# 完全背包 组合问题
 class Solution:
     def combinationSum4(self, nums: List[int], target: int) -> int:
         dp = [0] * (target + 1)
