@@ -8,7 +8,7 @@
 3. 遍历顺序：背包正序
 4. dp[j] = min(dp[j], dp[j-nums[i]] + nums[i])
 '''
-# 解法
+# 解法  完全背包 最小值问题
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         # 我们要取最小值，所以初始化必须放最大的，观察得知最小数量小于等于amount(比如硬币面额都为1时为相等条件)
