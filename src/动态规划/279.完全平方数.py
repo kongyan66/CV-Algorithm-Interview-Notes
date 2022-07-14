@@ -9,12 +9,12 @@
 4. 外物品，内背包， 正序比遍历
 
 '''
-# 解：
+# 解：完全背包 最小值问题
 class Solution:
     def numSquares(self, n: int) -> int:
         nums = [i**2 for i in range(1, n+1) if i**2 <= n]  # 加个if避免放太多无用的
-        dp = [n + 1] * (n+1)  # 填入最大值，题中说了n <= 10**4
-        dp[0] = 0 
+        dp = [n + 1] * (n+1)  # 最小值问题，放最大值
+        dp[0] = 0  # 根据dp[i]定义，0的平方和个数为0
         for i in range(len(nums)):
             for j in range(nums[i], n+1):
                 dp[j] = min(dp[j], dp[j - nums[i]] + 1)
