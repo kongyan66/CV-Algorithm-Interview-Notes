@@ -18,15 +18,20 @@ dp[i]是由dp[i-1] 和dp[i-2] 推到来的，故必须从前向后遍历
 则dp = [2, 7, 11, 11, 12]
 ''' 
 
-# 解
+# 解 
 class Solution:
     def rob(self, nums: List[int]) -> int:
         size = len(nums)
         if size == 1:
             return nums[0]
-        dp = [0] * (size)
+        dp = [0] * (size)  # 等长，因为j与i一样长
         dp[0] = nums[0]
         dp[1] = max(nums[0], nums[1])
         for i in range(2, size):
             dp[i] = max(dp[i-2]+nums[i], dp[i-1])
         return dp[size-1]
+
+# 如果按照背包思想，但增加了时间复杂度
+        for i in range(2, size):
+            for j in range(i, size):
+                dp[j] = max(dp[j-1], dp[j-2]+nums[i])
