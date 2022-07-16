@@ -12,7 +12,7 @@ class Solution:
         # 标准IP地址长度最长为12（3*4）
         if len(s) > 12:
             return []
-        self.backtracking(s, 0, 0)
+        self.backtracking(s, 0)
         return self.result
     # 1.确定递归的入参与返回值
     def backtracking(self, s, startIndex):
@@ -24,7 +24,7 @@ class Solution:
             return 
         # 3.单层搜索逻辑
         for i in range(startIndex, len(s)):
-            if self.is_valid(s, startIndex, i):
+            if self.is_valid(s, startIndex, i):  # 为啥这里不写i+1, 因为i最大值是len(s)-1, 再加一，后面s[i+1]会超出索引范围
                 # 这里巧妙在直接对s进行操作，没有像之前用path单独保存，原因是我们每次保存的是一个完整的s
                 s = s[:i+1] + '.' + s[i+1:]
                 self.pointNum += 1
@@ -52,9 +52,10 @@ class Solution:
     #     if not 0 <= int(s[start:end]) <= 255:
     #         return False
     #     return True
-    # 左闭右闭
+    # 左闭右闭 
     def is_valid(self, s: str, start: int, end: int) -> bool:
         # 这个也很关键，就是想不到这种情况
+        # 说明是一个空的字符串
         if start > end:  
              return False
         # 若数字是0开头，不合法
@@ -66,3 +67,43 @@ class Solution:
         # if s[start, end+1] < '0' or s[start, end+1] > '255':
         #   return False
         return True
+
+# re-2 比较好理解的版本
+class Solution:
+    def __init__(self):
+        self.result = []
+        self.pointNum = 0   # 记录.数量，用于判断是否可以保存结果了
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        if len(s) > 12:   # IP地址最长为3x4=12
+            return []
+        self.backtracking(s, 0)
+        return self.result
+    # 1.确定入参与返回值 
+    def backtracking(self, s, startindex):
+        # 2.确定递归终止条件
+        if self.pointNum == 3:
+            # 验证最后一段IP块是否有效
+            if self.is_vaild(s[startindex:len(s)]):
+                self.result.append(s)
+            return 
+
+        # 3.确定单层递归逻辑
+        for i in range(startindex, len(s)):
+            if not self.is_vaild(s[startindex:i+1]):
+                continue
+            # 这里巧妙在直接对s进行操作，没有像之前用path单独保存，原因是我们每次保存的是一个完整的IP
+            s = s[:i+1]  + '.' + s[i+1:]   # 插入"."
+            self.pointNum += 1             # .计数器加一
+            self.backtracking(s, i+2)      # s插入.后，切割点需跳过该位置
+            self.pointNum -= 1             # 回溯
+            s = s[:i+1] + s[i+2:]          # 回溯
+        
+    def is_vaild(self, s):
+        if not s:
+            return False
+        if s[0] == "0" and len(s) != 1:
+            return False
+        if not 0 <= int(s) <= 255:
+            return False
+        return True
+        
