@@ -30,7 +30,7 @@ class Solution:
     def trap(self, height: List[int]) -> int:
         sum_ = 0
         left_max = [0] * len(height)   # left_max[i]表示height[:i+1]以内的最大值
-        right_max = [0] * len(height)  # right_max[i]表示height[i+1:]以内的最大值
+        right_max = [0] * len(height)  # right_max[i]表示height[i:]以内的最大值
         left_max[0] = height[0]
         right_max[-1] = height[-1]
         
