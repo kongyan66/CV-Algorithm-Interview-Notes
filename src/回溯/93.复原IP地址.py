@@ -68,7 +68,7 @@ class Solution:
         #   return False
         return True
 
-# re-2 比较好理解的版本
+# re-3 比较好理解的版本
 class Solution:
     def __init__(self):
         self.result = []
