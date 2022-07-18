@@ -1,1 +1,5 @@
-print(4 // 3)
+sst = {'a':0, 'b':2}
+if 'c' in sst:
+    print("True")
+else:
+    print('False')
