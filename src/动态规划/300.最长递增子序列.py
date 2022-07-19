@@ -3,7 +3,7 @@
 '''
 1.dp[i]表示i之前包括i的以nums[i]结尾的上升子序列的长度
 2. j < i
-位置i的最长升序子序列等于j从0到i-1各个位置的最长升序子序列 + 1 的最大值。
+位置i的最长升序子序列等于j从0到i-1各个位置的最长升序子序列 + 1 的最大值，前提是nums[i] >nums[j]才行
 dp[i] = max(dp[i], dp[j]+1)
 3.dp[0] = 1
 4.从前向后遍历
@@ -18,7 +18,7 @@ class Solution:
         
         for i in range(1,len(nums)):
             for j in range(i):
-                if nums[i] > nums[j]: 
+                if nums[i] > nums[j]:  # 只有
                     dp[i] = max(dp[i], dp[j]+1)
             result = max(dp[i], result)   # 并不是最后一个是最长的，所以要一直取最大值
         return result
