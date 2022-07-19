@@ -4,21 +4,26 @@
 
 
 # 解法一：单调栈
+# 使用单调栈好处是左边第一个小于该元素的与之相邻，如果不重复，就是左边元素
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         res = 0
         stack = [0]
+        # 与雨水区别是，我们要遍历头尾，为了保证左中右结构，我们需要补在头尾补0
         heights.insert(0, 0)
         heights.append(0)
 
         for i in range(1, len(heights)):
+            # 保证栈内的单调性
             while stack and heights[stack[-1]] > heights[i]:
-                cur = stack.pop()
-                while stack and heights[cur] == heights[stack[-1]]:
-                    stack.pop()
+                cur = stack.pop()       # 循环最后一次得到的就是凸槽左边元素
+                # 先弹出所有相等的栈顶元素，再计算面积
+                # 去掉该行，就是弹出一个，计算一次面积，反正最后取最大
+                # while stack and heights[cur] == heights[stack[-1]]:
+                #     stack.pop()
                 if stack:
                     w = i - stack[-1] - 1
-                    h = heights[cur]
+                    h = heights[cur]   # height[cur] 一定大于>= height[i]
                     res = max(res, w * h)
             stack.append(i)
         return res
