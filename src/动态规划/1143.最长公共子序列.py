@@ -24,3 +24,5 @@ class Solution:
                     dp[i][j] = max(dp[i][j-1], dp[i-1][j])  # 可以不连续，所以要保存原来的值，如果必须连续，这里就是0了
                 results = max(results, dp[i][j])  
         return results
+
+    
