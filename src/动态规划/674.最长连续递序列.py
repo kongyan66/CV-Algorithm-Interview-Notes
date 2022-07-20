@@ -9,7 +9,7 @@ if nums[i+1] > nums[i]: dp[i+1] = dp[i] + 1
 dp[i] = 1
 '''
 
-# 解法
+# 解法 
 class Solution:
     def findLengthOfLCIS(self, nums: List[int]) -> int:
         if len(nums) <= 1:
@@ -17,7 +17,7 @@ class Solution:
         dp = [1] * len(nums)
         result = 0
         for i in range(1, len(nums)):
-            if nums[i] > nums[i-1]:
+            if nums[i] > nums[i-1]:  # 有序，只需比较相邻的  无序的 子集都要找
                 dp[i] = dp[i-1] + 1
             result = max(result, dp[i])
         return result
