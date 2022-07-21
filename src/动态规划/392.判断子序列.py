@@ -24,4 +24,26 @@ class Solution:
                     dp[i][j] = dp[i][j-1]
         return dp[-1][-1] == len(s)
 
-# 解法二：双指针法
+# 情况一：这里说下为啥dp[i][j] 表示为s[:i] t[:j] 中相等子串好些 即dp长度+1
+# 情况二：我们表示为s[:i+1] s[:j+1]即dp长度与s,t对齐, 看下以下代码
+'''
+最大的问题是dp[0][0]的初始化
+根据状态方程：dp[0][0] 需要进行初始化
+对于情况一：dp[0][0]是没有实际意义的，且i,j从1开始遍历，覆盖到了s[:1] t[:1]的情况
+对于情况二：dp[0][0]是有实际意义的，它表示s[0]与t[0]共同的子序列长度，这就有很多情况，没法赋给一个固定值，而且一旦赋值错误，
+        后面状态转移动就都错了
+所以说情况一大大简化了dp[0][0]初始化的难度
+'''
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        if not len(s) or not len(t):
+            return True
+        dp = [[0] * (len(t)) for _ in range(len(s))]
+        dp[0][0] = 1  # 此处就不对了， 假若s[0] != t[0] dp[0][0] = 0
+        for i in range(0, len(s)):
+            for j in range(0, len(t)):
+                if s[i] == t[j]:
+                    dp[i][j] = dp[i-1][j-1] + 1
+                else:
+                    dp[i][j] = dp[i][j-1]
+        return dp[-1][-1] == len(s)
