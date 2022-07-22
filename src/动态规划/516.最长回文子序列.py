@@ -18,8 +18,7 @@ dp[i][j] 表示区间范围[i,j] （注意是左闭右闭）的子串是否是�
 必须从下到上，从左到右
 
 '''
-
-# 解
+# 解法
 class Solution:
     def longestPalindromeSubseq(self, s: str) -> int:
         dp = [[0] * len(s) for _ in range(len(s))]
@@ -27,7 +26,7 @@ class Solution:
         for i in range(len(s)):   # 不太好想
             dp[i][i] = 1
         for i in range(len(s)-1, -1, -1):
-            for j in range(i+1, len(s)):
+            for j in range(i+1, len(s)):    # 这里j>i,避免i=len(s)-1时 dp[i+1]溢出
                 if s[i] == s[j]:
                     dp[i][j] = dp[i+1][j-1] + 2
                 else:
