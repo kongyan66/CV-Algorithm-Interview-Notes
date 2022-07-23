@@ -37,7 +37,6 @@ class Solution:
             dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i] - fee)  # 唯一区别在这
             # 持有股票最大的价值
             dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])
-
         return dp[-1][0]
        
 
