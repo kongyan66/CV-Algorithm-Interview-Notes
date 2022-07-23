@@ -44,11 +44,16 @@ class Solution:
 
         for i in range(1, len(prices)):
             # 买入股票
+            # 1.保持状态，
+            # 2.今天买入：前一天卖出股票且过了冷冻期；前一天为冷冻期
             dp[i][0] = max(dp[i-1][0], max(dp[i-1][3]-prices[i], dp[i-1][1]-prices[i]))
             # 卖出股票，过了冷冻期
+            # 保持状态; 前一天是冷冻期
             dp[i][1] = max(dp[i-1][1], dp[i-1][3])
             # 今天卖出股票
             dp[i][2] = dp[i-1][0] + prices[i]
             # 今天为冷冻期
+            # 前一天卖出股票
             dp[i][3] = dp[i-1][2]
+        # 包含卖出股票的状态都有可能获得最大利润
         return max(dp[-1][1], dp[-1][2], dp[-1][3])
