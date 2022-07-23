@@ -51,6 +51,5 @@ class Solution:
             dp[i][2] = max(dp[i-1][1]+prices[i], dp[i-1][2])  # 依赖于1状态
             dp[i][3] = max(dp[i-1][2]-prices[i], dp[i-1][3])  # 依赖于2状态
             dp[i][4] = max(dp[i-1][3]+prices[i], dp[i-1][4])  # 依赖于3状态
-
         # 肯定所有股票都卖出收益最大
         return dp[-1][4]
