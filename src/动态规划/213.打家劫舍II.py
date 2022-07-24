@@ -39,6 +39,7 @@ class Solution:
     # 198 一点未改动
     def robRange(self, nums):
         size = len(nums)
+        # 当然这块去掉最好，和上面重复了
         if size == 1:
             return nums[0]
         dp = [0] * len(nums)
