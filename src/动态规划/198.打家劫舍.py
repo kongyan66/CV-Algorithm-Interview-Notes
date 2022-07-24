@@ -7,7 +7,7 @@ dp[i]表示下标i以内房屋，最多可以偷窃的金额为dp[i]
 决定dp[i]的就是第个房间偷还是不偷
 如果第i房间偷 dp[i] = dp[i-2] + nums[i]
 如果第i个房间不偷 dp[i] = dp[i-1] 注意这里是考虑，并不是一定要偷i-1房
-然后dp[i]取最大值 dp[i] = max(dp[i-2]+nums[i], bdp[i-1])
+然后dp[i]取最大值 dp[i] = max(dp[i-2]+nums[i], dp[i-1])
 3.dp数组初始化
 从递推公式可以看出，初始值是dp[0]和dp[1]
 dp[0] = nums[0] dp[1] = max(nums[0], nums[1])
