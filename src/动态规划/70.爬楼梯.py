@@ -78,9 +78,9 @@ class Solution:
         nums = [1, 2]
         dp = [0] * (n + 1)
         dp[0] = 1
-        for j in range(n+1):
+        for j in range(n+1):     # 可以从0开始，不符合要求的下面 j>=nums[i] 会剔除掉
             for i in range(len(nums)):
-                if j >= nums[i]:
+                if j >= nums[i]:   # 保证j-nums[i] >= 0,这样dp下标才有含义
                     dp[j] += dp[j-nums[i]]
         print(dp)
         return dp[n]

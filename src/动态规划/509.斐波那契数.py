@@ -5,7 +5,7 @@ class Solution:
     def fib(self, n: int) -> int:
         if n < 2:
             return n
-        dp = [0] * (n+1)
+        dp = [0] * (n+1)   # 为啥n+1，因为我们要求dp[n]呀，必须补一个空子
         dp[0] = 0
         dp[1] = 1
         for i in range(2, n+1):
