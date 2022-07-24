@@ -23,12 +23,12 @@ class Solution:
         return max(result[0], result[1])
     def recursion(self, node):
         if not node:
-            return [0, 0]
+            return [0, 0] 
         left = self.recursion(node.left)
         right = self.recursion(node.right)
-        # 不偷当前节点
+        # 不偷当前节点，获得最大价值 考虑左右节点，注意是考虑，选取最大的可能
         val1 = max(left[0], left[1]) + max(right[0], right[1])
-        # 偷当前节点
+        # 偷当前节点，获得最大价值 那么左右节点必然不可偷了
         val2 = node.val + left[0] + right[0]
         return [val1, val2]
       
