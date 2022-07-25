@@ -16,6 +16,6 @@ class Solution:
         # 初始化 dp[0] dp[1] 无实际意义，故从2开始
         dp[2] = 1
         for i in range(3, n+1):
-            for j in range(1, i-1):
-                dp[i] =max(dp[i], max((i-j)*j, dp[i-j]*j))
+            for j in range(1, i):
+                dp[i] =max(dp[i], max((i-j)*j, dp[i-j]*j)) # 每次计算dp[i](算了j次)，取最大的而已,所以还要和dp[i]比较
         return dp[-1]
