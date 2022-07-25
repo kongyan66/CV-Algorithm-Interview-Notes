@@ -6,7 +6,7 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         # 1.dp[i][j] 表示到达（i，j）位置的路径数量
-        dp = [[0] * n for _ in range(m)]
+        dp = [[0] * n for _ in range(m)]         # 注意dp长度也为m,n
         # 2.初始化 
         # 从(0, 0)的位置到(i, 0)的路径只有一条，那么dp[0][j]也同理。
         for i in range(m):
@@ -16,7 +16,7 @@ class Solution:
         
         for i in range(1, m):
             for j in range(1, n):
-                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]     # 后面不需加2
         return dp[m-1][n-1]
 
 # DFS 超时
