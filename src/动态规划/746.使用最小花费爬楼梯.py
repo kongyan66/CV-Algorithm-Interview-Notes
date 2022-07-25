@@ -13,7 +13,7 @@
 # time:O(n) space:O(n)
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        # 1.dp[i]指针到达第i个阶梯时需要花费的最小代价
+        # 1.dp[i]指针到达第i个阶梯时需要花费的最小代价，并没有跨过，还不收费
         dp = [0] * (len(cost)+1)
         # 2.dp[i]初始化
         dp[0] = dp[1] = 0
