@@ -9,21 +9,23 @@
 3. dp[j] = dp[i] and dp[i+1:n+1] in wordDict
 4. 
 '''
-# 代码随想录版  没看懂
+# 代码随想录版  
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        dp = [False] * (len(s) + 1)
-        dp[0] = True
+        dp = [False] * (len(s) + 1)   # +1为了好初始化，dp[0]无意义，长度为了够必须加一
+        dp[0] = True  # 无意义，只为了递推公式
         # 遍历背包
-        for j in range(1, len(s)+1):
+        for j in range(1, len(s)+1): 
             # 遍历物品
             for word in wordDict:
                 # 只有字符串长度大于单侧长度，才有可能
                 if j >= len(word):
                     # 如果dp[j-len(word)]为True, 且s[j-len(word):j]在字典里，那么该段字符串就可以被表示
-                    # 为啥用dp[j] 没看懂
-                    dp[j] = dp[j] or dp[j - len(word)]  and s[j- len(word):j] == word
+                    # 为啥用dp[j] 可认为更新dp吧，选用不同的单词去测试
+                    dp[j] = dp[j] or (dp[j - len(word)]  and s[j- len(word):j] == word)
         return dp[len(s)]
+
+
 
 # letcode版 好理解
 # https://leetcode.cn/problems/word-break/solution/dong-tai-gui-hua-ji-yi-hua-hui-su-zhu-xing-jie-shi/
