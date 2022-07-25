@@ -1,5 +1,5 @@
 # 题目：相比于62.不同路径，多了障碍物，障碍物不能通过
-# 思路：和62大题一致，区别在于初始化和遍历过程，需要判断有误障碍物，有就跳过
+# 思路：和62大题一致，区别在于初始化和遍历过程，需要判断有误障碍物，有就跳过. 还有就是初始化化，有障碍物后面就为0
 
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
