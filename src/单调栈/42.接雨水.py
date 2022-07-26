@@ -71,3 +71,19 @@ class Solution:
                     res += w * h                 
             stack.append(i)
         return res
+# re-2
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        stack = [0]
+        res = 0
+        for i in range(1, len(height)):
+            while stack and height[stack[-1]] < height[i]:
+                cur = stack.pop()
+                # 只有当栈中还有左部分，才计算面积
+                # m每弹出一次，算一次面积
+                if stack:
+                    w = i - stack[-1] - 1
+                    h = min(height[stack[-1]], height[i]) - height[cur]
+                    res += w * h
+            stack.append(i)
+        return res
