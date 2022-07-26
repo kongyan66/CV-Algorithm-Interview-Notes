@@ -35,9 +35,10 @@ class Solution:
         for i in range(1, len(temperatures)):
             # 如果当前值大于栈顶值，弹出，计算距离
             while stack and temperatures[stack[-1]] < temperatures[i]:
-                # 弹出
+                # 出栈
                 cur = stack.pop()
                 # 计算距离
                 res[cur] = i - cur
+            # 入栈
             stack.append(i)
         return res
