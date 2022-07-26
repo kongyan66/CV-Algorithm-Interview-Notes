@@ -21,7 +21,9 @@ class Solution:
     def rob(self, root: TreeNode) -> int:
         result = self.recursion(root)
         return max(result[0], result[1])
-    def recursion(self, node):
+    # 确定入参与返回值
+    # 返回值dp数组
+    def recursion(self, node):  
         if not node:
             return [0, 0] 
         left = self.recursion(node.left)
