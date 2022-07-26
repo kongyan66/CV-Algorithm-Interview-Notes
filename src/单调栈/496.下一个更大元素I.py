@@ -26,10 +26,10 @@ class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
         res = [-1] * len(nums1)
         stack = [0]
-
+        # 先不管nums1,只找nums2中左边大于右边的情况
         for i in range(1, len(nums2)):
             while stack and nums2[stack[-1]] < nums2[i]:
-                # 如果nNum是匹配成
+                # 如果找到左边大于右边的情况，再到numa1查有这个数不
                 if nums2[stack[-1]] in nums1:
                     index = nums1.index(nums2[stack[-1]]) # 转换到nums1中的索引
                     res[index] = nums2[i]
