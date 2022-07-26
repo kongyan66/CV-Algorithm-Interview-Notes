@@ -9,7 +9,8 @@ class Solution:
         res = [-1] * len(nums) * 2
         stack = [0]
         for i in range(1, 2 * len(nums)):
-            i = i % len(nums)   # 熟悉的操作呀，可以重复训练数据集n次
+            i = i % len(nums)   # 熟悉的操作呀，可以重复训练数据集k次
+            # 下面和496完全一致
             while stack and nums[stack[-1]] < nums[i]:
                 res[stack[-1]] = nums[i]
                 stack.pop()
