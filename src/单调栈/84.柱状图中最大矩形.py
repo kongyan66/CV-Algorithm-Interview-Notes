@@ -14,16 +14,16 @@ class Solution:
         heights.append(0)
 
         for i in range(1, len(heights)):
-            # 保证栈内的单调性
+            # 保证栈内的单调性 由底到头单调增
             while stack and heights[stack[-1]] > heights[i]:
                 cur = stack.pop()       # 循环最后一次得到的就是凸槽左边元素
                 # 先弹出所有相等的栈顶元素，再计算面积
                 # 去掉该行，就是弹出一个，计算一次面积，反正最后取最大
                 # while stack and heights[cur] == heights[stack[-1]]:
                 #     stack.pop()
-                if stack:
+                if stack: # 栈内还有元素才能算面积
                     w = i - stack[-1] - 1
-                    h = heights[cur]   # height[cur] 一定大于>= height[i]
+                    h = heights[cur]   # height[cur] 一定大于>= height[i] 与接雨水的区别
                     res = max(res, w * h)
             stack.append(i)
         return res
