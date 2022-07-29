@@ -38,3 +38,4 @@ class Solution:
                 que.extend([[i+1, j], [i-1, j], [i, j+1], [i, j-1]])
                 count += 1
         return count
+    
