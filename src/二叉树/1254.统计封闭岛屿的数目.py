@@ -10,7 +10,7 @@ class Solution:
         col = len(grid[0])
         count = 0
         # 改动就在这里，其他与200一致
-        for i in range(row):
+        for i in range(row):       # 这里靠边岛屿指与边界接壤的岛屿，并不是都都靠边
             # 把靠上边的岛屿淹掉
             self.BFS(grid, i, 0)
             # 把靠下边的岛屿淹掉
