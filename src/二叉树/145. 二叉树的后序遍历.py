@@ -17,7 +17,7 @@ class Solution:
                 stack.append(cur.right)
         return res[::-1]  # 逆序输出
 
-# 解法二：
+# 解法二：递归法
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         res = []
@@ -29,5 +29,5 @@ class Solution:
             return 
         self.recursion(node.left, res)
         self.recursion(node.right, res)
-        res.append(node.val)
+        res.append(node.val)  # 相当于回溯
         
