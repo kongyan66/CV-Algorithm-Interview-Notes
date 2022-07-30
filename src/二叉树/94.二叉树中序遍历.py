@@ -1,9 +1,3 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = rightS
 # 图解见 基础知识.md
 # 因为要访问的元素和要处理的元素顺序是不一致的，所以写法和前序遍历有区别
 # 解法一：迭代法 标准写法
@@ -26,8 +20,7 @@ class Solution:
                 # cur指向右节点，这点很重要
                 cur = node.right
         return res
-
-      
+   
 # 统一写法：标记法
 # 要处理的节点放入栈之后，紧接着放入一个空指针作为标记
 # 简单记： 中序遍历：左中右 -> 入栈顺序：右中左
