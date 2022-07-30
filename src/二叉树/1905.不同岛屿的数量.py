@@ -5,8 +5,8 @@
 # 解法：DFS
 class Solution:
     def __init__(self):
-        self.island = set()
-        self.path = ''
+        self.island = set() # 保存所有岛屿路径
+        self.path = ''   # 保存岛屿路径
 
     def findDifIsland(self, grid):
         m = len(grid)
@@ -16,7 +16,6 @@ class Solution:
                 if grid[i][j] == 1:
                     self.path = ''
                     self.DFS(grid, i, j, 66)
-                    print(self.path)
                     self.island.add(self.path)
         return len(self.island)
 
@@ -40,4 +39,5 @@ if __name__ == '__main__':
     solution = Solution()
     res = solution.findDifIsland(grid)
     print(res)
+   
  

@@ -34,7 +34,7 @@ class Solution:
 # 小结
 # 前序遍历：中左右  后序遍历：左右中 中序遍历：左中右
 
-# 迭代遍历
+# 迭代遍历 注意顺序 空节点不如栈
 class Solution:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
       if root is None:
@@ -47,7 +47,7 @@ class Solution:
         # 先处理中间节点
         result.append(node.val)
         # 再处理右边节点
-        if node.right:
+        if node.right: # 空节点不入栈
           stack.append(node.right)
         # 最后处理左边节点
         if node.left:
