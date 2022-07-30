@@ -12,7 +12,7 @@ class Solution:
         while que:
             res =[]
             # 遍历当前层的宽度
-            for _ in range(len(que)):
+            for _ in range(len(que)): # 循环内只算一次
                 # 每次遍历，当前层所有节点均处理完（弹完了）
                 cur = que.pop(0)
                 res.append(cur.val)
