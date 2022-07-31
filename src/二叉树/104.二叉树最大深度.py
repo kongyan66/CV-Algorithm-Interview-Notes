@@ -17,6 +17,7 @@ class Solution:
             count +=1 
         return count
 
+
 # 解法二：递归法
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
