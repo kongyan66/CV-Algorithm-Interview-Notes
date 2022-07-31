@@ -19,21 +19,26 @@
                     que.append(cur.right)
             results.append(res)
         return results[::-1]
-# 解法二：递归法
+
+# 解法二：递归法 
+# 层序遍历用迭代法就好
 class Solution:
-    def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
-        res = []
-        self.recursion(root, 0, res)
-        return res[::-1]
-     
-    def recursion(self, node, depth, res):
+    def __init__(self):
+        self.path = []
+
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        self.recursion(root, 0)
+        return self.path
+
+    def recursion(self, node, depth):
         if not node:
             return 
+        # 深度与列表编号一致
+        if len(self.path) == depth:
+            self.path.append([])
         
-        if len(res) == depth:
-            res.append([])
-        res[depth].append(node.val)
+        self.path[depth].append(node.val)
         if node.left:
-            self.recursion(node.left, depth+1, res)
+            self.recursion(node.left, depth+1)
         if node.right:
-            self.recursion(node.right, depth+1, res)
+            self.recursion(node.right, depth+1)
