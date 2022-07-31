@@ -34,4 +34,4 @@ class Solution:
         left_depth = self.recursion(node.left)
         right_depth = self.recursion(node.right)
         # 这里需要注意下，是从当前节点往下看，所以最终深度需要+1
-        return max(left_depth, right_depth)+1
+        return max(left_depth, right_depth) + 1

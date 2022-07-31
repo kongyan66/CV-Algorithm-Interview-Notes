@@ -22,7 +22,7 @@ class Solution:
                     return count
 
 # 解法二：递归法
-# 可见递归法关注的是局部事件，比如此题，我们算好一个节点的深度，递归后就能算出一个树的深度
+# 可见递归法关注的是局部事件，比如此题，我们算好一个节点的深度，递归后就能算出一个树的深度 
 class Solution:
     def minDepth(self, root: TreeNode) -> int:
         if not root:
@@ -39,10 +39,10 @@ class Solution:
         right_depth = self.getdepth(node.right)
         # z这里容易出错：最小深度是从根节点到最近叶子节点的最短路径上的节点数量，如果左子叶无节点，深度并不一定是1
         # 如果左子叶为空，就看右子叶最小深度
-        if node.right == None and node.left != None:
+        if node.left and not node.right:
             return left_depth + 1
         # 如果右子叶为空，就看左子叶为空
-        elif node.right != None and node.left == None:
+        elif not node.left and node.right:
             return right_depth + 1
         # 如果左右子节点均存在，看左右子叶的最小深度
         else:
