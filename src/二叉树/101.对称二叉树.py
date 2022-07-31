@@ -43,12 +43,16 @@ class Solution:
     def recursion(self, left_node, right_node):
         # 2.确定终止条件
         # 有必然四种情况需要考虑
+        # 左右都为空
         if not left_node and not right_node:
             return True
+        # 左右有一个为空
         elif not left_node and right_node:
             return False
         elif left_node and  not right_node:
             return False
+        # 左右不为空，但值不相等
+        # 这里容易疑惑，为啥值相等的不考虑了，值相等就继续向下递归呀，一旦return就终止递归了呀，就没有后续了
         elif left_node.val != right_node.val:
             return False
         # 3.确定单层递归逻辑
