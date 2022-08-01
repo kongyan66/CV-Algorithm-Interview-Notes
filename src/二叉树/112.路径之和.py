@@ -100,6 +100,7 @@ class Solution:
 class Solution:
     def __init__(self):
         self.path = []
+        
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
