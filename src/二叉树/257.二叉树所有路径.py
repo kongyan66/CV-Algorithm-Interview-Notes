@@ -48,6 +48,7 @@ class Solution:
         # 3.单程递归逻辑
         
         if node.left:
+            # 递归与回溯一一对应
             self.recursion(node.left, path, result) # 递归
             path.pop() # 回溯
         if node.right:
