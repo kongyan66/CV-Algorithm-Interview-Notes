@@ -77,7 +77,7 @@ class Solution:
         else:
             return self.recursion(root, targetSum - root.val)
     # 1.确定入参与返回值
-    # 入参：node, targetsum 返回值：bool
+    # 入参：node, targetsum 返回值：根节点到子叶节点是否存在和为target的路径
     def recursion(self, node, sum):
         # 2.确定终止条件
         # 当到达子叶节点且路径和==target时，返回True
@@ -95,4 +95,32 @@ class Solution:
             if self.recursion(node.right, sum):
                 return True
             sum += node.right.val # 回溯
+        return False
+# re-2 改112.路径之和
+class Solution:
+    def __init__(self):
+        self.path = []
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        if self.recursion(root, targetSum):
+            return True
+        else:
+            return False
+
+    def recursion(self, node, targetSum):
+        self.path.append(node.val)
+        if not node.left and not node.right:
+            if sum(self.path) == targetSum:
+                return True 
+            else:
+                return False
+        if node.left:
+            if self.recursion(node.left, targetSum):
+                return True
+            self.path.pop()
+        if node.right:
+            if self.recursion(node.right, targetSum):
+                return True
+            self.path.pop()
         return False
