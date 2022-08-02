@@ -4,6 +4,7 @@
 # 解法一：迭代法
 class Solution:
     # 1.确定入参与返回值
+    # 返回值：符合条件的节点
     def trimBST(self, root: Optional[TreeNode], low: int, high: int) -> Optional[TreeNode]:
         # 2.确定递归停止条件
         # 修建操作并不是在终止条件上进行的，所以需要空节点返回None就行
