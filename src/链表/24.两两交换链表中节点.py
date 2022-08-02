@@ -36,8 +36,10 @@ class Solution:
         # 3.单层递归逻辑
         # 设需要交换的两个点为 head 和 next，head 连接后面交换完成的子链表，next 连接 head，完成交换
         post = head.next
-        head.next = self.recursion(post.next)
-        post.next = head
-        return post
+        tem = post.next  # 记录下一个小段头结点
+        post.next = head  # 交换当前小段节点
+        head.next = self.recursion(tem) # 连接下一段节点
+        
+        return post # 归的过程
         
         
