@@ -15,6 +15,7 @@ class Solution:
             pre = cur
             cur = tem
         return pre # 不是cur, 此时cur已为None
+
 # 解法二:递归
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
@@ -30,5 +31,5 @@ class Solution:
         # 3.确定单层递归逻辑
         tem = cur.next
         cur.next = pre
-        # 有返回值 接收停止条件的返回值
+        # 有返回值 接收停止条件的返回值 体现归的过程
         return self.recursion(cur, tem)
