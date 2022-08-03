@@ -13,7 +13,6 @@ class Solution:
         self.recursion(n, A, B, C)
 
     def recursion(self, n, A, B, C):
-       
         if n == 1:
             C.append(A[-1])
             A.pop()
@@ -22,4 +21,3 @@ class Solution:
         C.append(A[-1])                # 将A最后一个移到C
         A.pop()                        # 这时，A空了
         self.recursion(n-1, B, A, C)   # 将B上面n-1个通过空的A移到C
-        

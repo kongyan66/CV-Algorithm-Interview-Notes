@@ -1,6 +1,3 @@
-
-
-
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -39,8 +36,13 @@ if __name__ == "__main__":
     import sys
     # for line in sys.stdin:
     #     a = line.split()
-    arr_ = input()
-    arr = [int(n) for n in arr_.split()]
-    res = findmin(arr)
-    print(res)
-  
+    # arr_ = input()
+    # arr = [int(n) for n in arr_.split()]
+    # # res = findmin(arr)
+    # print(arr)
+
+    for _ in range(4):
+        m = list(map(int, input().split()))
+        print(m)
+         
+
