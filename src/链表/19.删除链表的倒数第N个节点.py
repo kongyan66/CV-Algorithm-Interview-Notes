@@ -1,4 +1,5 @@
-# 思路：定位倒数第N个位置，因为链表都是正序的，所以首先需要知道节点总数，才能算出N节点的正序位置
+# 思路： 快慢指针 快指针先去定位
+# 定位倒数第N个位置，因为链表都是正序的，所以首先需要知道节点总数，才能算出N节点的正序位置
 
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
