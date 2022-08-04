@@ -14,3 +14,4 @@ class Solution:
             cur_a = cur_a.next if cur_a else headB # a走完了切换到b
             cur_b = cur_b.next if cur_b else headA # 同理
         return cur_a
+        
