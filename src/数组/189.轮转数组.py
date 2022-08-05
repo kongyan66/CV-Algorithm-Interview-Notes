@@ -30,6 +30,8 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         n = len(nums) 
+        # 需要注意的是，本题还有一个小陷阱，题目输入中，如果k大于nums.size了应该怎么办?
+        # 如果k=len(nums) 则相当于没动过
         k = k % n
         self.reverse(nums, 0, n - 1)
         self.reverse(nums, 0, k - 1)
