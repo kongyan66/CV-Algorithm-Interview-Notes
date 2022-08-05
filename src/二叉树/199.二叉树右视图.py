@@ -10,12 +10,10 @@ class Solution1:
             return results
         que = deque([root])
         while que:
-            size = len(que)
             # 最后一个就是最右的节点
-            cur = que[-1]
-            results.append(cur.val)
+            results.append(que[-1].val)
             # 执行这个遍历的目的是获取下一层所有的node
-            for _ in range(size):
+            for _ in range(len(que)):
                 cur = que.popleft()
                 if cur.left:
                     que.append(cur.left)
