@@ -30,14 +30,13 @@ class Solution:
             return results
         que = [root]
         while que:
-            width = len(que)
             res = []
-            for _ in range(width):
+            for _ in range(len(que)):
                 cur = que.pop(0)
                 res.append(cur.val)
                 if cur.left:
                     que.append(cur.left)
                 if cur.right:
                     que.append(cur.right)
-            results.append(sum(res)/width)
+            results.append(sum(res) / len(res))
         return results
