@@ -1,5 +1,5 @@
 # 题目：简单 给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
-# 思路：交换下每个节点的左右孩子，所以要找到所有节点（即需要遍历节点），
+# 思路：交换下每个节点的左右孩子，所以要找到所有节点（即需要遍历节点）
 # 这就可以用到之前的深度优先遍历（三种），广度优先遍历（1种）以及迭代法
 
 # 解法一：层序遍历
@@ -38,11 +38,11 @@ class Solution:
 # 解法四：中序遍历：左中右
 # 因为使用递归的中序遍历，某些节点的左右孩子会翻转两次。需要注意
 
-# 解法五：迭代法 （是自己最不熟的写法）
+# 解法五：递归法 用的是DFS
 # 思路：递归是三步法则
 # 1.确定入参与出参: root -> root
 # 2.确定终止条件: deque为空时
-# 3.确定单层逻辑: 交换当前节点的左右孩子，反转左子树和右子树（这步不太明白啊）
+# 3.确定单层逻辑: 交换当前节点的左右孩子，反转左子树和右子树
 class Solution5:
     def invertTree(self, root: TreeNode) -> TreeNode:
         if root is None:
@@ -51,3 +51,11 @@ class Solution5:
         self.invertTree(root.left)
         self.invertTree(root.right)
         return root     
+# 或者这么 但感觉还是上面的优雅些
+    def recursion(self, node):
+        if not node:
+            return None
+        tem = node.left  # 交换法则
+        node.left = self.recursion(node.right)
+        node.right = self.recursion(tem)
+        return node
