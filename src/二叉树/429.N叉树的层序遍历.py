@@ -18,8 +18,7 @@ class Solution:
         que = deque([root])
         while que:
            result = []
-           size = len(que)
-           for _ in range(size):
+           for _ in range(len(que)):
                cur = que.popleft()
                result.append(cur.val)
                # 唯一变的地方

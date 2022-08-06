@@ -33,12 +33,16 @@ def findmin(arr):
     res = length - max_value
     return res
 if __name__ == "__main__":
-    a = "1 2"
-    print(map(int, a.split())[0])
+    for i in range(1, 4):
+        print('i:', i)
+        for j in range(1, 4):
+            print('j:', j)
+            if j == 2:
+                break
+
+
+
+
  
-    # arr_ = input()
-    # arr = [int(n) for n in arr_.split()]
-    # # res = findmin(arr)
-    # print(arr)
 
 
