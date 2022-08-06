@@ -25,7 +25,6 @@ class Solution:
             return None 
         que = [root]
         while que:
-            res = []
             size = len(que) 
             for i in range(size):
                 cur = que.pop(0)
