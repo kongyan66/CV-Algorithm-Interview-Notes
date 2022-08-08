@@ -4,6 +4,13 @@
 # 思路：后续遍历，去找每一个节点的贡献值，回溯的时候将得到最大值。
 # https://leetcode.cn/problems/binary-tree-maximum-path-sum/solution/by-lin-shen-shi-jian-lu-k-2td7/
 
+'''
+时间复杂度：O(N)O(N)，其中 NN 是二叉树中的节点个数。对每个节点访问不超过 22 次。
+
+空间复杂度：O(N)O(N)，其中 NN 是二叉树中的节点个数。空间复杂度主要取决于递归调用层数，最大层数等于二叉树的高度，最坏情况下，二叉树的高度等于二叉树中的节点个数。
+
+'''
+
 # 解法
 class Solution:
     def __init__(self):
