@@ -35,11 +35,12 @@ class Solution:
         return result
     # 1.确定递归的返回值与参数
     def recursion(self, node, path, result):
-        # 处理中节点（前序遍历）,为了方便回溯（使用pop）,我们用list来保存路径，但->需要单独处理
+        # 因为终止条件时叶子节点，如果放在下面，递归就结束了，叶子节点的值还未来及保存
         path.append(node.val)
    
         # 2.确定终止条件
         if not node.left and not node.right:
+            # 处理中节点（前序遍历）,为了方便回溯（使用pop）,我们用list来保存路径，但->需要单独处理
             tem = ''
             for i in range(len(path)):
                 tem += str(path[i]) + '->'
