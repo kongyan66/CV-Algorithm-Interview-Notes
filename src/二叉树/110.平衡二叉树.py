@@ -53,8 +53,10 @@ class Solution:
         if root is None:
             return 0
         # 3.确定单层递归逻辑
+        # 前序遍历找所有节点
         left_height = self.getheight(root.left)
         right_height = self.getheight(root.right)
+        # 后续遍历比较高度差
         if left_height == -1 or right_height == -1: 
             return -1
         # 如果高度差大于一，则记当前节点高度为-1
