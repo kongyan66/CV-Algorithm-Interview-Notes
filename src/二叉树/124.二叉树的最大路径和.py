@@ -31,3 +31,4 @@ class Solution:
         self.res = max(self.res, max_left + max_right + root.val)
         # 选择往左或者往右（这点很重要）
         return max(max_left, max_right) + root.val
+
