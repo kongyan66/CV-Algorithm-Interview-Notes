@@ -27,6 +27,9 @@ class Solution:
             sum_ += nums[i]
             # 求前序和为sum_ - k的数量
             count += pre_sum[sum_ - k]
+            pre_sum[sum_] += 1
         return count
+
+
 
 
