@@ -56,6 +56,7 @@ class Solution:
             self.sum_ += node.left.val
         self.recursion(node.left)
         self.recursion(node.right)
+        
 # 添加一个flag作为判断当前是左节点还是右节点 flag==1 为左节点 0为右节点，加入递归
     def recursion(self, node, flag):
         if not node:
