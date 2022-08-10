@@ -74,8 +74,8 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
-        else:
-            return self.recursion(root, targetSum - root.val)
+        return self.recursion(root, targetSum - root.val)
+
     # 1.确定入参与返回值
     # 入参：node, targetsum 返回值：根节点到子叶节点是否存在和为target的路径
     def recursion(self, node, sum):
@@ -104,11 +104,8 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
-        if self.recursion(root, targetSum):
-            return True
-        else:
-            return False
-
+        return self.recursion(root, targetSum)
+         
     def recursion(self, node, targetSum):
         self.path.append(node.val)
         if not node.left and not node.right:
@@ -125,3 +122,12 @@ class Solution:
                 return True
             self.path.pop()
         return False
+# re-3 隐藏回溯
+    def recursion(self, node, targetSum):
+        if not node:
+            return False
+        # 到达叶子节点就判断
+        if not node.left and not node.right and targetSum - node.val == 0:
+            return True
+        # 这里回溯咋体现的点啊
+        return self.recursion(node.left, targetSum - node.val) or self.recursion(node.right, targetSum - node.val)
