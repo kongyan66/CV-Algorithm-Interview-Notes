@@ -5,35 +5,18 @@
 # 解法一：迭代法：层序遍历（比较推荐）
 class Solution:
     def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
-        if root != None:
-            que = [root]
+        que = [root]
         result = 0
-        
         while que:
-            for i in range(len(que)):
-                if i == 0:                 # 取每一层最左侧节点的值
-                    result = que[i].val
+            result = que[0].val
+            for _ in range(len(que)):
                 cur = que.pop(0)
                 if cur.left:
                     que.append(cur.left)
                 if cur.right:
                     que.append(cur.right)
         return result
-# re-2
-class Solution:
-    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
-        que = [root]
-        while que:
-            res = []
-            for i in range(len(que)):
-                cur = que.pop(0)
-                res.append(cur.val)
-                if cur.left:
-                    que.append(cur.left)
-                if cur.right:
-                    que.append(cur.right)
-        return res[0]
-    
+
 # 解法二：递归法（比较难理解）
 # 找最大深度最左节点的 最大深度最左节点的
 class Solution:
@@ -67,3 +50,29 @@ class Solution:
             curdepth += 1
             self.recursion(node.right, curdepth)
             curdepth -= 1  # 回溯
+# re_2 
+# 到最大深度时第一次遇到的节点就是左下角的节点 这句话很重要
+class Solution:
+    def __init__(self):
+        self.res = 0
+        self.max_depth = 0
+        self.depth = 0
+   
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        self.DFS(root)
+        return self.res
+
+    def DFS(self, root):
+        if not root:
+            return 
+        # 前序遍历位置
+        self.depth += 1
+        # 到最大深度时第一次遇到的节点就是左下角的节点
+        if self.depth > self.max_depth:
+            self.max_depth = self.depth
+            self.res = root.val
+        
+        self.DFS(root.left)
+        self.DFS(root.right)
+        # 后续遍历位置
+        self.depth -= 1  # 回溯 注意两次递归也只写一个
