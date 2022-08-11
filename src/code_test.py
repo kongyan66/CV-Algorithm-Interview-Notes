@@ -33,6 +33,7 @@ def findmin(arr):
     res = length - max_value
     return res
 if __name__ == "__main__":
+    print(10 // 10)
     
 
 
