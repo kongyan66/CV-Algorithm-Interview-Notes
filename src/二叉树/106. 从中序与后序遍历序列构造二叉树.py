@@ -1,7 +1,7 @@
 # 题目：给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder 是同一棵树的后序遍历，
 # 请你构造并返回这颗 二叉树 。
 
-# 思想：此题需要一定技巧，所以看下面步骤（自己想肯定想不来啊），而且此题最适合递归写
+# 思想：构建一棵树，第一件事一定是找根节点，然后想办法构造左右子树。
 
 # 解法一：递归
 class Solution:
@@ -30,5 +30,4 @@ class Solution:
         root.right = self.buildTree(in_rightnode, post_rightnode)
         return root
 
-# 解法二：迭代法
 

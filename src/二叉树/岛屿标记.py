@@ -1,3 +1,6 @@
+# https://zhajiman.github.io/post/connected_component_labelling/#seed-filling-%E7%AE%97%E6%B3%95
+# 
+
 class Solution:
     def __init__(self):
         self.list_mark = []
