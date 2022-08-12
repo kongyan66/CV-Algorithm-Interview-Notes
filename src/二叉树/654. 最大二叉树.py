@@ -3,7 +3,7 @@
 # 递归地在最大值 左边 的 子数组前缀上 构建左子树。
 # 递归地在最大值 右边 的 子数组后缀上 构建右子树。
 
-# 思路：此题也适合递归
+# 思路：根节点就是数组中最大值，左右侧就是左右子树
 # 写法一：这个写法比之前标准写法更简洁，递归大法秒啊
 class Solution:
     def constructMaximumBinaryTree(self, nums: List[int]) -> TreeNode:
