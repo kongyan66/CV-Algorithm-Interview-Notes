@@ -7,11 +7,13 @@ class Solution:
     # 1.确定递归入参与返回值
     def mergeTrees(self, root1: TreeNode, root2: TreeNode) -> TreeNode:
         # 2.确定递归停止条件(这一步很关键，有点抽象)
+        # 如果一棵树有，另一棵树没有，接上去，结束递归
         if not root1:
             return root2
         elif not root2:
             return root1
         # 3.单层递归逻辑
+        # 两棵树都有的节点，叠加节点值
         root1.val += root2.val
         root1.left = self.mergeTrees(root1.left, root2.left)
         root1.right = self.mergeTrees(root1.right, root2.right)

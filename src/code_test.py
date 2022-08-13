@@ -1,39 +1,35 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
 
-def longestarr(arr):
-    if arr == None or len(arr) == 0:
-        return 0
-    if len(arr) == 1:
-        return 1
-    length = len(arr)
-    max_value = 1
-    dp = [1] * length
+map = {'W':[-1, 0], 'A':[0, -1], 'S':[1, 0], 'D':[0, 1]}
 
-    for i in range(1, length):
-        if arr[i] > arr[i-1]:
-            dp[i] = dp[i-1] + 1
-        max_value = max(max_value, dp[i])
-    return max_value
+def move(steps, grid):
+    i, j = 0, 0
+    for step in steps:
+        dir = map[step]
+        grid[i + dir[0]][j + dir[i]] = 0    
+
+def check(grid):
+    row = len(grid)
+    col = len(grid[0])
+    count = 0
+    for i in range(row):
+        for j in range(col):
+            if grid[i][j] == 1:
+                count += 1
+    if count == 0:
+        return True
+    else:
+        
+
+if __name__ == '__main__':
+    n, m, k = int(input().split(' '))
+    steps = input()
+    grid = [[1] * m for _ in range(n)]
+    grid[0][0] = 0
+    move(steps)
+    check(grid)
 
 
-def findmin(arr):
-    length = len(arr)
-    ids = [0] * length
-    for i in range(length):
-        val = arr[i]
-        arr[i] = (val, i)
-    arr.sort()
-    for i in range(length):
-        ids[i] = arr[i][1]
-    
-    max_value = longestarr(ids)
-    res = length - max_value
-    return res
-if __name__ == "__main__":
-    print([0] * 5)
+
     
 
 
