@@ -1,6 +1,6 @@
 # 题目：给你一个链表数组（头结点用列表存），每个链表都已经按升序排列。请你将所有链表合并到一个升序链表中，返回合并后的链表。
 
-# 解法一：两两合并，也可看做归并排序
+# 思路1：分而治之，也可看做归并排序，链表两两合并
 # 以下采用了两个递归，思路和数组排序一致，即归并排序，吧多个链表分解为两个链表，排好序后再合并，
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
@@ -34,3 +34,5 @@ class Solution:
             else:
                 list2.next = self.mergeTwoLists(list1, list2.next)
                 return list2
+
+# 思路2：优先级队列

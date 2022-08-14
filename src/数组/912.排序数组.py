@@ -31,3 +31,8 @@ class Solution:
             p -= 1
 
         return tem
+
+# 解法二：堆排序
+# https://leetcode.cn/problems/sort-an-array/solution/by-peaceful-thompsonfsu-b3bu/
+# 先在原先数组的基础上构造大根堆（时间复杂度nlogn）；
+# 再依次弹出最大元素（每次弹出的时间复杂度为logk，k为当前大根堆中元素数目）。

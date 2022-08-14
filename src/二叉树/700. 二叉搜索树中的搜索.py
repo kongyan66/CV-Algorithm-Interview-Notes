@@ -27,12 +27,12 @@ class Solution:
     # 返回值:val存在返回root, 不存在返回None
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
         # 2.确定终止条件：
-        if not root or root.val == val:
-            return root
+        if not root:
+            return 
         # 3.单层递归逻辑
         if root.val > val:
             return self.searchBST(root.left, val)
         elif root.val < val:
             return self.searchBST(root.right, val)
         else:
-            return None
+            return root
