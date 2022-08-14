@@ -37,6 +37,5 @@ class Solution:
                 minvalue = min(minvalue, cur.val - pre.val)
             pre = cur
             recursion(root.right)
-        
         recursion(root)
         return minvalue
