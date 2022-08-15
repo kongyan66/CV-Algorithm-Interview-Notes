@@ -93,13 +93,15 @@ class Solution:
             if not root:
                 return 
             recursion(root.left)
+
             cur = root
-            if not pre:
+            # 计数器处理
+            if not pre: # 首位默认为1
               count = 1
-            elif cur.val == pre.val:
+            elif cur.val == pre.val: # 连续加一
                 count += 1
             else:
-                count = 1
+                count = 1  # 连续中断计数器归一
             pre = cur
             # 记录出现次数最多的节点
             if count == maxCount:
@@ -108,6 +110,7 @@ class Solution:
                 res.clear()
                 maxCount = count
                 res.append(cur.val)
+
             recursion(root.right)
 
         recursion(root)
