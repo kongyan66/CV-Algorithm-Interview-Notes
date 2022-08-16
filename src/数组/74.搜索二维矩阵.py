@@ -33,3 +33,48 @@ class Solution:
         return False
 
 # 解法三：二次二分法
+# 找行数比较麻烦，有改动，避免死循环， 故不推荐
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+
+        # 第一次二分查找，找第一列最后一个不大于目标值的元素的行号，和一维二分有些区别
+        left, right = 0, m - 1
+        while left < right:     # 避免左指针比右指针差一时left = mid陷入循环
+            mid = (left + right + 1) // 2 # 此处的+1是为避免left = mid时陷入循环
+            if matrix[mid][0] < target:
+                left = mid       # 找的就是左边界，所以不能加一
+            elif matrix[mid][0] > target:
+                right = mid - 1
+            else:
+                return True
+        
+        # 找该行
+        row = left 
+        left, right = 0, n - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if matrix[row][mid] < target:
+                left = mid + 1
+            elif matrix[row][mid] > target:
+                right = mid - 1
+            else:
+                return True
+        return False
+
+# 解法四：抽象BST 与240.搜索二维矩阵.py一致
+
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m, n = len(matrix), len(matrix[0])
+        # 从右上角出发，也可以左下角
+        i, j = 0, n - 1
+        while i < m and j >= 0:
+            if matrix[i][j] == target:
+                return True
+            elif matrix[i][j] > target:
+                j -= 1
+            elif matrix[i][j] < target:
+                i += 1
+        return False
