@@ -59,7 +59,7 @@ class Solution:
             # 左右都存在，这里需要看下上面画的图
             elif root.left and root.right:
                 cur = root.right
-                # 找cur节点下最右子节点
+                # 找cur节点下最右子节点,然后把左节点接上去
                 while cur.left:
                     cur = cur.left
                 cur.left = root.left
