@@ -76,3 +76,24 @@ class Solution:
           
         recursion(root, val)
         return root
+
+# 解法四：最简单的
+# 题中说了，给的值与树中的值都不同，所以肯定是在树的最下边嘛，我们找到符合二叉搜索树大小关系的空节点位置，插入即可，没有破坏原结构
+# 前面的方法动树的结构就太麻烦了
+class Solution:
+    def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
+        if not root:
+            return TreeNode(val)
+        # 有返回值 子树的根节点
+        def recursion(root, val):
+            if not root:
+                return TreeNode(val)
+            if root.val > val:
+                root.left = recursion(root.left, val) # 后续遍历
+            if root.val < val:
+                root.right = recursion(root.right, val)
+            return root
+
+        recursion(root, val)
+        return root
+        
