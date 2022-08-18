@@ -12,7 +12,7 @@ class Solution:
         # 移动右区间
         while  right - 1 >= 0 and arr[right-1] > arr[right]:
             right -= 1
-
+        # 如果left与right相遇，且不在原位置，说明是山峰
         if left == right and left != 0 and right != len(arr) - 1:
             return True
         else:
