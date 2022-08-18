@@ -2,7 +2,7 @@
 
 # 思路：先用dict保证每个数出现的次数，再对次数进行排序，判断相邻之间是否有相等的，没有就返回True
 
-# 解法一：hash表
+# 解法一：hash表 + 排序
 class Solution:
     def uniqueOccurrences(self, arr: List[int]) -> bool:
         map = defaultdict(int)
@@ -16,4 +16,4 @@ class Solution:
         return True
 
 
-        
+# 解法二：双hash表
