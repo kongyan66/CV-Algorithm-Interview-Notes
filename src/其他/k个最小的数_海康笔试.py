@@ -2,9 +2,7 @@
 
 # 思路：排序 + 去重
 
-import re
-
-
+# 解法
 def solution(arr, k):
     arr.sort()
     res = [arr[0]]
