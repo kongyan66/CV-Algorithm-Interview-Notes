@@ -27,3 +27,5 @@ class Solution:
         for i, num in enumerate(nums):
             res[i] = hash[num]
         return res
+
+        
