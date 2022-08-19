@@ -21,7 +21,7 @@ class Solution:
 # 解法二：
 class Solution:
     def reverse(self, nums, l, r):
-        while l < r:
+        while l <= r:    # 这里等号可取可不取
             nums[l], nums[r] = nums[r], nums[l]
             l += 1
             r -= 1
