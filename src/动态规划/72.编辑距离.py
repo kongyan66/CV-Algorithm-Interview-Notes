@@ -26,19 +26,21 @@ dp[i][0] 和 dp[0][j]
 # 解法 只做了操作数统计 并不是列出详细步骤
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
-        dp = [[0] * (len(word2)+1) for _ in range(len(word1)+1)]
-        for i in range(len(word1)+1):
+        m, n = len(word1), len(word2)
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+        for i in range(m + 1):
             dp[i][0] = i
-        for j in range(len(word2)+1):
+        for j in range(n + 1):
             dp[0][j] = j
 
-        for i in range(1, len(word1)+1):
-            for j in range(1, len(word2)+1):
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
                 # 相等 无任何操作
-                if word1[i-1] == word2[j-1]:
+                if word1[i - 1] == word2[j - 1]:
                     dp[i][j] = dp[i-1][j-1]
-                # 不相等 增、删、减
+                # 不等，增删改，注意增和删除是等价的，分析一种即可
                 else:
-                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])+1
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
         return dp[-1][-1]
 
