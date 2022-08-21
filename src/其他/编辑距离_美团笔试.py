@@ -36,3 +36,4 @@ if __name__ == '__main__':
     # arr2 = list(map(int, input().split(' ')))
     res = solution(n, m, arr1, arr2)
     print(res)
+
