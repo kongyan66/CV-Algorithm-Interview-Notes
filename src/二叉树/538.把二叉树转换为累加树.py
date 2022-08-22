@@ -3,15 +3,18 @@
 
 # 解法一： 递归 反序中序遍历 对中序遍历稍作改变
 class Solution:
+    def __init__(self):
+        self.sum = 0
+
     def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        pre = TreeNode()
-        def recursion(root):
-            nonlocal pre
-            if not root:
-                return root
-            recursion(root.right)
-            root.val += pre.val
-            pre = root
-            recursion(root.left)
-        recursion(root)
+        self.DFS(root)
         return root
+    
+    def DFS(self, root):
+        if not root:
+            return 
+        # 本题其实就是中序遍历的路径
+        self.DFS(root.right)
+        self.sum += root.val
+        root.val = self.sum
+        self.DFS(root.left)
