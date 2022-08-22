@@ -4,7 +4,7 @@
 
 ## HOG简介
 
-HOG（Histogram of Oriented Gradient，即方向梯度直方图）是应用在计算机视觉和图像处理领域，用于目标检测的特征描述子，由Navneet Dalal和Bill Triggs等人在2005年CVPR发表的论文上提出。HOG通过计算和统计图像局部区域的梯度方向直方图来构建特征，结合SVM等分类器常用于图像识别等领域，尤其在行人检测中具有非常不错的表现。
+HOG（Histogram of Oriented Gradient，即方向梯度直方图）是应用在计算机视觉和图像处理领域，用于目标检测的特征描述子，由Navneet Dalal和Bill Triggs等人在2005年CVPR发表的论文上提出。HOG通过**计算和统计图像局部区域的梯度方向直方图来构建特征**，结合SVM等分类器常用于图像识别等领域，尤其在行人检测中具有非常不错的表现。
 
 ## HOG特征描述原理
 

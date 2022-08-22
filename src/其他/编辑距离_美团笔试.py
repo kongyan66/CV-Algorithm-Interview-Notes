@@ -25,7 +25,7 @@ def solution(n, m, arr1, arr2):
             if arr1[i-1] == arr2[j-1]:
                 dp[i][j] = dp[i-1][j-1]
             else:
-                # 删除当前数字
+                # 删除或替换当前数字
                 #dp[i][j] = dp[i-1][j-1] + min(abs(arr1[i-1]) + abs(arr2[j-1]), abs(arr1[i-1] - arr2[j-1]))
                 dp[i][j] = min(dp[i-1][j] + abs(arr1[i-1]), dp[i][j-1] + abs(arr2[j-1]), dp[i-1][j-1] + abs(arr1[i-1] - arr2[j-1]))
     return dp[-1][-1]
