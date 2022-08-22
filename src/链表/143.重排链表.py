@@ -4,7 +4,6 @@
       先获取链表中点，然后将链表拆成两个链表（左链表包含中点），之后将右半节点反转，最后将两链表合并。
       合并顺序：先右后左
 '''
-
 class Solution:
     def reorderList(self, head: Optional[ListNode]) -> None:
         """
