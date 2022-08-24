@@ -42,3 +42,10 @@ class Solution:
                 grid[i][j] = '0'
                 queue.extend([[i +1, j], [i-1, j], [i, j-1], [i, j+1]])
 
+    # 或者按照原版写
+        while que:
+            for _ in range(len(que)):
+                i, j = que.pop(0)
+                if 0 <= i < len(grid) and 0 <= j < len(grid[0]) and grid[i][j] == '1':
+                    grid[i][j] = '0'
+                    que.extend([(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)])
