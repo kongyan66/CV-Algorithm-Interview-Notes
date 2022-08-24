@@ -23,4 +23,3 @@ class Solution:
             if map_s[s[i]] != t[i] or map_t[t[i]] != s[i]:
                 return False
         return True
-
