@@ -11,14 +11,14 @@ class Solution:
         count = 0
         # 改动就在这里，其他与200一致
         for i in range(row):       # 这里靠边岛屿指与边界接壤的岛屿，并不是都都靠边
-            # 把靠上边的岛屿淹掉
+            # 把靠左边的岛屿淹掉
             self.BFS(grid, i, 0)
-            # 把靠下边的岛屿淹掉
+            # 把靠右边的岛屿淹掉
             self.BFS(grid,i, col-1)
         for j in range(col):
-            # 把靠左边的岛屿淹掉
+            # 把靠上边的岛屿淹掉
             self.BFS(grid, 0, j)
-            # 把靠右边的岛屿淹掉
+            # 把靠下边的岛屿淹掉
             self.BFS(grid, row-1, j)
 
         for i in range(row):

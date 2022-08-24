@@ -4,6 +4,11 @@
 # 解法一：DFS
 # 遍历网格，遇到陆地(1),数量就加一， 然后就对该位置进进DFS，淹没相邻的陆地（遇1置零），好处是避免用visited保存访问路径。
 # 设目前指针指向一个岛屿中的某一点 (i, j)，寻找包括此点的岛屿边界，然后向此点的上下左走做深度搜索
+
+# 时间复杂度：O(MN)O(MN)，其中 MM 和 NN 分别为行数和列数。
+# 空间复杂度：O(MN)O(MN)，在最坏情况下，整个网格均为陆地，深度优先搜索的深度达到 M NMN。
+
+
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         row = len(grid)
