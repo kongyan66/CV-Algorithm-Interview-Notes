@@ -11,7 +11,7 @@ class Solution:
         # 1.先淹没不可能成为子岛屿的岛
         for i in range(row):
             for j in range(col):
-                if grid2[i][j] == 1 and grid1[i][j] == 0:
+                if grid2[i][j] == 1 and grid1[i][j] == 0:  # grid2为陆地而grid为岛屿，则该陆地不可能为子岛屿
                     self.DFS(grid2, i, j)
         # 2.再对grid2中岛屿计数 和200.完全一致
         count = 0
