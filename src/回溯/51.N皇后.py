@@ -7,11 +7,13 @@
 class Solution:
     def __init__(self):
         self.result = []
+
     def solveNQueens(self, n: int) -> List[List[str]]:
         board = [['.'] * n for _ in range(n)]
         row = 0  
         self.backtracking(board, n, row)
         return self.result
+
     # 1.确定递归入参与返回值
     def backtracking(self, board, n, row):
         # 2.确定递归的停止条件
@@ -33,10 +35,11 @@ class Solution:
             self.backtracking(board, n, row+1)
             board[row][col] = '.' # 回溯
             # row -= 1 为啥row不需回溯呢
-
+            
+    # 判断当位置以内是否有“Q”
     def is_valid(self, board, row, col):
         # 判断是否同一列
-        for i in range(len(board)):
+        for i in range(row):
             if board[i][col] == 'Q':
                 return False
         # 判断是否同一行
