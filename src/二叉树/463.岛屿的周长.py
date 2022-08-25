@@ -26,7 +26,7 @@ class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
         return int(abs(convolve2d(grid,[[-2,1],[1,0]])).sum())
 
-# 解法三：DFS
+# 解法三：DFS 
 # 从陆地到海水或者从陆地到边界，则周长+1
 class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
@@ -41,8 +41,10 @@ class Solution:
     def DFS(self, grid, i, j):
         if not 0 <= i < len(grid) or not 0 <= j < len(grid[0]) or grid[i][j] == 0:
             return 1
-        # 如果访问过的节点就置2， 表明已经访问过
+        # 接壤陆地不算周长
         if grid[i][j] == 2:
             return 0
+        # 如果访问过的节点（陆地）就置2， 表明已经访问过
         grid[i][j] = 2
+        # 返回当前岛屿的周长
         return self.DFS(grid, i+1, j) + self.DFS(grid, i-1, j) + self.DFS(grid, i, j+1) + self.DFS(grid, i, j-1)
