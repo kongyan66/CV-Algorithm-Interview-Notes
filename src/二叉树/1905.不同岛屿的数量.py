@@ -33,7 +33,6 @@ class Solution:
         # 后序遍历位置：离开 (i, j) 这个就体现了递归的内部回溯过程
         self.path += str(-dir) + ','
 
-
 if __name__ == '__main__':
     grid = [[1,0,1,0,1],[1,1,1,1,1],[0,0,0,0,0],[0,0,0,0,0],[1,1,0,1,1]]
     solution = Solution()
