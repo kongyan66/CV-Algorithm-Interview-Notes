@@ -27,6 +27,7 @@ class Solution:
         r = self.DFS(grid, i, j-1)
         return t + d + l + r + 1   # 岛屿面积 = 当前位置面积（1） + 上下左右位置面积（DFS）\
 
+
 # BFS 队列实现
     def BFS(self, grid, i, j):
         que = [[i, j]]
