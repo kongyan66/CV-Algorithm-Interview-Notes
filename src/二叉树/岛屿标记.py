@@ -18,6 +18,9 @@ class Solution:
     def DFS(self, grid, i, j, mark_id):
         if not 0 <= i < len(grid) or not 0 <= j < len(grid[0]) or grid[i][j] == 0 or grid[i][j] in self.list_mark:
             return 
+        # 走过了就不能再走了（这个不太还理解）
+        if grid[i][j] == mark_id:
+            return 
         grid[i][j] = mark_id
 
         self.DFS(grid, i+1, j, mark_id)
