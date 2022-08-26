@@ -55,7 +55,7 @@ class Solution:
     def recursion(self, root):
         if not root:
             return 0
-      
+        # 返回每个节点的贡献值
         left = self.recursion(root.left)
         right = self.recursion(root.right)
         # 每个结点都要当做根节点一样去判断  左子树最大深度+右子树最大深度+1
