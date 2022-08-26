@@ -24,11 +24,11 @@ class Solution:
     def recursion(self, root):
         if not root:
             return 0
-        # 
+        # 返回该节点的最大贡献值
         max_left = max(0, self.recursion(root.left))
         max_right = max(0, self.recursion(root.right))
         # 更新最大值  根节点值+左子树最大路径和+右子树最大路径和
         self.res = max(self.res, max_left + max_right + root.val)
-        # 选择往左或者往右（这点很重要）
+        # 就是从根节点 root 为起点的最大单边路径和，只走直线嘛（这点很重要）
         return max(max_left, max_right) + root.val
 
