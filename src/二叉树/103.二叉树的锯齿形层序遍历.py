@@ -19,6 +19,7 @@ class Solution:
             while left_stack:
                 cur = left_stack.pop()
                 tem.append(cur.val)
+                # 偶数层 正序装进去，末尾弹出，就是逆序了，反之正序
                 if cur.left:
                     right_stack.append(cur.left)
                 if cur.right:
