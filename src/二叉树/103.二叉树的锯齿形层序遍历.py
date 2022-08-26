@@ -16,6 +16,7 @@ class Solution:
         while left_stack or right_stack:
             tem = []
             # 奇数层正序
+            #  for _ in range(len(left_stack)):
             while left_stack:
                 cur = left_stack.pop()
                 tem.append(cur.val)
