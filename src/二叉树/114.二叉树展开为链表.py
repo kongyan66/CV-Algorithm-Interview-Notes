@@ -44,8 +44,7 @@ class Solution:
 
 # 换一个写法就好理解多了
 class Solution:
-    def __init__(self):
-        self.pre = None
+    
     def flatten(self, root: Optional[TreeNode]) -> None:
         """
         Do not return anything, modify root in-place instead.
