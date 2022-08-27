@@ -62,7 +62,7 @@ loss设计的前提是标签先确定好，这里面**c的真值该怎么设置�
 
 在YOLO v1的模型中检测头就是最后的2个全连接层(Linear in PyTorch)，它们是参数量最大的2个层，也是最值得改进的2个层。后面的YOLO模型都对这里进行改进：
 
-## Yolov2
+## YOLO v2
 
 我们认为，**检测模型 = 特征提取器 + 检测头**
 
@@ -81,27 +81,126 @@ YOLO v1虽然快，但是预测的框不准确，很多目标找不到：
 
 #### 问题一：如何提高准确度
 
-**同时代别人怎么做的呢？**
-
-同时代的检测器有R-CNN，人家预测的是偏移量。什么是偏移量？
-
-<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-4883b178ed0e2bb95f1d504dc6bed6a7_r.jpg" alt="preview" style="zoom:67%;" />
-
-之前YOLO v1直接预测x,y,w,h，范围比较大，现在我们想预测一个稍微小一点的值，来增加准确度。不得不先介绍2个新概念：**基于grid的偏移量和基于anchor的偏移量**。什么意思呢？
-
-- **基于anchor的偏移量**的意思是，anchor的位置是固定的，**偏移量=目标位置-anchor的位置**。
-
-- **基于grid的偏移量**的意思是，grid的位置是固定的，**偏移量=目标位置-grid的位置**。
-
-
-
-
-
-
-
-
+YOLO v2改预测偏移量而不是直接去预测 (x,y,w,h)， 人家预测的是偏移量。另一个重要的原因是：直接预测位置会导致神经网络在一开始训练时不稳定，使用偏移量会使得训练过程更加稳定，性能指标提升了5%左右。
 
 #### 问题二：如何提高recall
+
+**YOLO v1一次能检测多少个目标吗**？答案是**49个目标**，98个框，并且2个框对应一个类别。可以是大目标也可以是小目标。因为输出的尺寸是：[N, 7, 7, 30]。式中N为图片数量，7,7为49个区域(grid)。
+
+$$30=2×5(c,x,y,w,h)+1×20classes$$
+
+**YOLO v2**首先把 7×7 个区域改为 **13×13** 个区域，每个区域有**5**个anchor，且每个anchor对应着1个类别，那么，输出的尺寸就应该为：[N,13,13,125]。
+
+$$125=5×5(c,x,y,w,h)+5×20classes$$
+
+这里面有个bug，就是YOLO v2先对每个区域得到了5个anchor作为参考，那你就会问2个问题：
+
+**1. 为什么要用Anchor呢？**
+
+**一开始YOLO v1的初始训练过程很不稳定**，在YOLO v2中，作者观察了很多图片的所有Ground Truth，发现：比如车，GT都是矮胖的长方形，再比如行人，GT都是瘦高的长方形，且宽高比具有相似性。那**能不能根据这一点，从数据集中预先准备几个几率比较大的bounding box，再以它们为基准进行预测呢？**这就是Anchor的初衷。
+
+**2. 每个区域的5个anchor是如何得到的？**
+
+对于任意一个数据集，就比如说COCO吧(紫色的anchor)，先对训练集的GT bounding box进行聚类，聚成几类呢？作者进行了实验之后发现**5**类的**recall vs. complexity**比较好，现在聚成了**5**类，当然9类的mAP最好，预测的最全面，但是在复杂度上升很多的同时对模型的准确度提升不大，所以采用了一个比较折中的办法选取了5个聚类簇，即使用5个先验框。
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-7e157d61f41ca02634f06b0b78c71684_r.jpg" alt="preview" style="zoom: 67%;" />
+
+所以到现在为止，有了anchor再结合预测值 tx,ty,tw,th ，就可以求出目标位置。
+
+结论是，**anchor是从数据集中统计得到的(Faster-RCNN中的Anchor的宽高和大小是手动挑选的)。**
+
+### Loss
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-faed5df5818795d5fc047815f0338768_r.jpg" alt="preview" style="zoom:80%;" />
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/image-20220827213624292.png" alt="image-20220827213624292" style="zoom:80%;" />
+
+### 小结
+
+YOLO v2做了这么多改进，整体性能大幅度提高，但是小目标检测仍然是YOLO v2的痛。直到kaiming大神的ResNet出现，backbone可以更深了，所以darknet53诞生。
+
+最后我们做个比较：
+
+![preview](https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-e4dce0794b6d4aa5a67133633baed6b4_r.jpg)
+
+
+
+## YOLO v3
+
+### backbone改进
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-085b6d95dc53894e5de4fe95d2249b06_r.jpg" alt="preview" style="zoom: 67%;" />
+
+###  head改进
+
+之前在说小目标检测仍然是YOLO v2的痛，YOLO v3是如何改进的呢？如下图所示。
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-4cf1b6f6afec393122305ca2bb2725a4_r.jpg" alt="preview" style="zoom: 50%;" />
+
+我们知道，YOLO v2的检测头已经由YOLO v1的 7×7 变为 13×13了，我们看YOLO v3检测头分叉了，分成了3部分：
+
+- 13*13*3*(4+1+80)
+- 26*26*3*(4+1+80)
+- 52*52*3*(4+1+80)
+
+这样预测的框更多更全面了，并且分级了。**anchor和YOLO v2一样，依然是从数据集中统计得到的。**
+
+我们发现3个分支分别为**32倍下采样，16倍下采样，8倍下采样**，分别取预测**大，中，小目标**。为什么这样子安排呢？
+
+因为**32倍下采样**每个点感受野更大，所以去预测**大目标，8倍下采样**每个点感受野最小，所以去预测**小目标。专人专事。**
+
+又有人会问，你现在是3个分支，我改成5个，6个分支会不会更好？理论上会，但还是那句话，作者遵循recall vs. complexity的trade off。
+
+### loss改进
+
+yolov3 loss分3部分组成：定位损失+置信度损失+分类损失，本质就是算各个grid(一个grid看做一个小检测器)的损失和。
+第1行代表geo_loss，S代表13,26,52，就是grid是几乘几的。B=5。
+第2行代表confidence_loss，和YOLO v2一模一样。
+第3行代表class_loss，和YOLO v2的区别是改成了交叉熵。
+
+![preview](https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-1714579e2a7f9ca88335bdaeae9e1c4f_r.jpg)
+
+**分类损失**
+
+YOLO v3使用多标签分类，用多个独立的logistic分类器代替softmax函数，以计算输入属于特定标签的可能性。在计算分类损失进行训练时，YOLO v3对每个标签使用二元交叉熵损失。
+
+**正负样本确定**
+
+如果某个anchor与 GT 目标IOU 值最大，则则相应的目标性得分应为 1
+
+对于重叠大于等于0.5的其他先验框(anchor)，忽略，不算损失。
+
+对于重叠小于0.5的其他先验框(anchor)，负样本。
+
+> 每个 GT 目标**仅与一个先验边界框相关联**。 如果没有分配先验边界框，则不会导致**分类和定位损失，只会有目标性的置信度损失。**
+
+
+
+## YOLO v4
+
+### backbone 改进
+
+
+
+### head改进
+
+**1. Using multi-anchors for single ground truth**
+
+之前的YOLO v3是1个anchor负责一个GT，YOLO v4中用多个anchor去负责一个GT。方法是：对于 GTj 来说，只要 IoU(anchori,GTj)>threshold ，就让 anchori 去负责 GTj 。
+
+这就相当于你anchor框的数量没变，但是选择的**正样本**的比例增加了，就**缓解了正负样本不均衡的问题**。
+
+**2.Eliminate_grid sensitivity**
+
+还记得之前的YOLO v2的这幅图吗？YOLO v2，YOLO v3都是预测4个这样的偏移量
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-63ca4ed417c5db83b18c95a42a7f60f2_r.jpg" alt="preview" style="zoom: 50%;" />
+
+这里其实还隐藏着一个问题：
+
+模型预测的结果是： tx,ty,tw,th ，那么最终的结果是： bx,by,bw,bh 。这个 b 按理说应该能取到一个grid里面的任意位置。但是实际上边界的位置是取不到的，因为sigmoid函数的值域是： (0,1) ，它不是 [0,1] 。所以作者提出的Eliminate_grid sensitivity的意思是：将 bx,by 的计算公式改为：
+
+**MSE Loss → IoU Loss→ GIoU Loss→ DIoU Loss→ CIoU Loss**
 
 
 
@@ -110,3 +209,4 @@ YOLO v1虽然快，但是预测的框不准确，很多目标找不到：
 [你一定从未看过如此通俗易懂的YOLO系列(从v1到v5)模型解读(上)](https://zhuanlan.zhihu.com/p/183261974)
 
 [你一定从未看过如此通俗易懂的YOLO系列(从v1到v5)模型解读 (中)](https://zhuanlan.zhihu.com/p/183781646)
+
