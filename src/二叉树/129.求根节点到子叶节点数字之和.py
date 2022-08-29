@@ -24,3 +24,5 @@ class Solution:
         if root.right:
             self.DFS(root.right)
             self.path.pop()
+
+    
