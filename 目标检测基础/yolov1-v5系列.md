@@ -200,7 +200,59 @@ YOLO v3使用多标签分类，用多个独立的logistic分类器代替softmax�
 
 模型预测的结果是： tx,ty,tw,th ，那么最终的结果是： bx,by,bw,bh 。这个 b 按理说应该能取到一个grid里面的任意位置。但是实际上边界的位置是取不到的，因为sigmoid函数的值域是： (0,1) ，它不是 [0,1] 。所以作者提出的Eliminate_grid sensitivity的意思是：将 bx,by 的计算公式改为：
 
-**MSE Loss → IoU Loss→ GIoU Loss→ DIoU Loss→ CIoU Loss**
+![image-20220829155335088](https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/image-20220829155335088.png)
+
+这里的1.1就是一个示例，你也可以是1.05,1.2等等，反正要乘上一个略大于1的数，作者发现经过这样的改动以后效果会再次提升。
+
+### loss改进
+
+改进路线：**MSE Loss → IoU Loss→ GIoU Loss→ DIoU Loss→ CIoU Loss**
+
+之前的YOLO v2，YOLO v3在计算geo_loss时都是用的MSE Loss，之后人们开始使用IoU Loss。
+
+**IOU loss**
+
+$ L_{iou} = 1 - \frac{B\cap B_{gt}}{B \cup B_{gt}}$ ，它可以反映预测检测框与真实检测框的检测效果。
+
+但是问题也很多：不能反映两者的距离大小（重合度）。同时因为loss=0，**当GT和bounding box不挨着时，没有梯度回传，无法进行学习训练。**如下图4所示，三种情况IoU都相等，但看得出来他们的重合度是不一样的，左边的图回归的效果最好，右边的最差：
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-a52e8fc7166b29c08b80de1ead22ec79_r.jpg" alt="preview" style="zoom: 50%;" />
+
+**GIOU loss**
+
+**所以接下来的改进是：**
+
+$ L_{GIOU} = 1 - IOU + \frac{C- B\cup B_{gt}}{|C|}$ , $C$ 为同时包含了预测框和真实框的最小框的面积.
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-4ccbf64fa4eefb0e321809a803f90c74_r.jpg" alt="preview" style="zoom:50%;" />
+
+GIoU Loss可以解决上面IoU Loss对距离不敏感的问题。但是GIoU Loss存在训练过程中**发散**等问题。
+
+**DIOU**
+
+$ L_{DIOU} = 1 - IOU + \frac{\rho^2(b, b^{gt})}{|c^2|}$, 其中，$b$, $b^{gt}$ 分别表示预测框和真实框的中心点，且$\rho $代表计算两个中心的**欧式距离**。$c$代表是能够同时包含预测框和真实框的**最小闭包区域**的对角线距离。
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-2345aacc478cc5523d439ffcd84958ac_r.jpg" alt="preview" style="zoom:50%;" />
+
+**DIoU loss**可以直接最小化两个目标框的距离，因此比GIoU loss收敛快得多。
+
+**DIoU loss除了这一点之外，还有一个好处是：**
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-3db202166e0c206001ca03e191489532_r.jpg" alt="preview" style="zoom: 50%;" />
+
+​																				IoU Loss和GIoU loss都一样时
+
+如上图所示，此3种情况IoU Loss和GIoU loss都一样，但是DIoU Loss右图最小，中间图次之，左图最大。
+
+**小结**：DIOU 收敛快，缓解Bbox包含GT的问题 ，**依然没有彻底解决包含的问题**，即
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-96838980b7fd4443661cf0019802ea7b_r.jpg" alt="preview" style="zoom:50%;" />
+
+这2种情况$b$和 $b^{gt}$是重合的，DIoU loss的第3项没有区别，所以在这个意义上DIoU loss依然存在问题。
+
+**CIOU**
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/image-20220829172635777.png" alt="image-20220829172635777" style="zoom:67%;" />
 
 
 
