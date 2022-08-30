@@ -1,6 +1,7 @@
 # 题目：给定两个整数数组，preorder 和 postorder ，其中 preorder 是一个具有 无重复 值的二叉树的前序遍历，postorder 是同一棵树的后序遍历，重构并返回二叉树。
 
 # 思路：与前中和后中不同的是，前后构建的树并不唯一，思路基本一致
+# 通过前序和后序遍历构造二叉树的关键在于通过左子树的根节点，确定 preorder 和 postorder 中左右子树的元素区间
 
 # 解法
 class Solution:
