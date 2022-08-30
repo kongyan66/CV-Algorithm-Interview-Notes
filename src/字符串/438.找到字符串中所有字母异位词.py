@@ -2,6 +2,8 @@
 # 异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。
 
 # 思路：滑动窗口 维护一个固定长len(p)的窗口，每次都去与p比较，若包含p的排列就保存窗口左端
+# https://leetcode.cn/problems/minimum-window-substring/solution/by-flix-1kac/
+
 
 # 解
 class Solution:
