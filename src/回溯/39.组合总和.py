@@ -45,8 +45,7 @@ class Solution:
             return 
         # 3.单层搜索逻辑
         for i in range(startindex, len(candidates)):
-            self.path.append(candidates[i])   # z组合问题还是拿出不放回， 这里特别之处是同一个 数字可以 无限制重复被选取
-            # 所以startindex为i
+            self.path.append(candidates[i])   # 组合问题还是拿出不放回，这里特别之处是同一个数字可以无限制重复被选取,所以startindex为i
             self.backtracking(candidates, target, i) # 递归
             self.path.pop() # 回溯
 # 剪枝
@@ -56,7 +55,7 @@ class Solution:
         for i in range(startindex, len(candidates)):
             if sum(self.path) == target:
                 return 
-            self.path.append(candidates[i])
+            self.path.append(candidates[i])   
             self.backtracking(candidates, target, i) # 递归
             self.path.pop() # 回溯
 
