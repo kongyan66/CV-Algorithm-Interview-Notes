@@ -37,11 +37,11 @@ class Solution:
     def backtracking(self, k, n, startindex):
         # 2.确定递归停止条件
         # 无论是否有满足条件的，到底了就要停止
-        if k == len(self.path):
+        if len(self.path) == k:
             # 满足条件的存入result中
             if sum(self.path) == n:
                 self.result.append(self.path.copy())
-            return 
+            return                                   # 不写return 也是可以的（为啥呀?) 
         # 3.单层搜索过程
         # for循环用来横向遍历
         for i in range(startindex, 10):

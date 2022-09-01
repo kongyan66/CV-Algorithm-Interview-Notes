@@ -1,9 +1,20 @@
-from collections import Counter
-list_01 = [1,9,9,5,0,8,0,9]  #GNZ48-陈珂生日
-cnt = Counter(list_01)#Counter({9: 3, 0: 2, 1: 1, 5: 1, 8: 1})
-print(cnt[9])
+n = int(input())
+arr1 = list(map(int, input().split()))
+arr2 = list(map(int, input().split()))
+count = 0
+# for i in range(1, len(arr2)):
+#     if arr2[i] > arr2[i-1]:
+#         count += 1
+# print(count)
+map = dict()
+for i in range(len(arr1)):
+    map[arr1[i]] = i
 
-    
+for j in range(len(arr2)-1):
+    if map[arr2[i]] > map[arr2[i+1]]:
+        count += 1
+
+print(count)
 
 
 
