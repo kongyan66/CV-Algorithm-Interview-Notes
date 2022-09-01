@@ -26,9 +26,8 @@ class Solution:
             return 
         # 3.单层搜索逻辑
         for i in range(startindex, len(candidates)):
-            # 最难理解的一块
             # 检查同一树层是否出现曾经使用过的相同元素
-            # 若数组中前后元素值相同，但前者却未被使用(used == False)，说明是for loop中的同一树层的相同元素情况
+            # 若数组中前后元素值相同，但前者却未被使用(used == False)（回溯后恢复到原来状态），说明当前元素是同一树层的相同元素情况
             if i > 0 and candidates[i] == candidates[i-1] and self.used[i-1] == False:
                 continue
             self.used[i] = True
