@@ -18,6 +18,7 @@ class Solution:
             self.result.append(self.path.copy())
             return 
         # 3.确定搜索逻辑
+        # 先砍第一刀
         for i in range(startindex, len(s)):
             tem = s[startindex:i+1]             # 这是切割的核心思想
             if not self.isPalindrome(tem):

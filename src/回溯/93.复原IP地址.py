@@ -78,6 +78,7 @@ class Solution:
             return []
         self.backtracking(s, 0)
         return self.result
+
     # 1.确定入参与返回值 
     def backtracking(self, s, startindex):
         # 2.确定递归终止条件
@@ -92,6 +93,7 @@ class Solution:
             if not self.is_vaild(s[startindex:i+1]):
                 continue
             # 这里巧妙在直接对s进行操作，没有像之前用path单独保存，原因是我们每次保存的是一个完整的IP
+            # 为啥不用self.path记录呢 因为最后一段无法回退，导致重复
             s = s[:i+1]  + '.' + s[i+1:]   # 插入"."
             self.pointNum += 1             # .计数器加一
             self.backtracking(s, i+2)      # s插入.后，切割点需跳过该位置
