@@ -19,11 +19,12 @@ class Solution:
             return 
         # 3.确定搜索逻辑
         for i in range(startindex, len(s)):
-            tem = s[startindex:i+1]
-            if self.isPalindrome(tem):
-                self.path.append(tem)
-                self.backtracking(s, i+1)
-                self.path.pop()
+            tem = s[startindex:i+1]             # 这是切割的核心思想
+            if not self.isPalindrome(tem):
+                continue
+            self.path.append(tem)
+            self.backtracking(s, i+1)
+            self.path.pop()
         
     # 判断回文数组
     def isPalindrome(self, s):
