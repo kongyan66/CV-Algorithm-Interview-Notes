@@ -22,7 +22,6 @@ class Solution:
                 if cnt[ch] > 0:  # 新加入的字符位于p中
                     nedd -= 1    # 此时新加入窗口中的字符对need有影响
                 cnt[ch] -= 1
-
             # 窗口左边界
             left = right - m
             if left >= 0:
@@ -31,7 +30,7 @@ class Solution:
                     if cnt[ch] >= 0:   # 刚滑出的字符位于p中
                         need += 1      # 此时滑出窗口的字符对need有影响
                     cnt[ch] += 1
- 
+
             if need == 0:              # 找到了一个满足题意的窗口，其左端点为right-m+1
                 res.append(right - m + 1)
         return res
