@@ -22,7 +22,8 @@ class Solution:
         # 这里每一层都用有一个全新的usage_list用于记录本层元素是否重复使用
         use_list = set()   # 因为重复的数不一定相邻，所以用hash表更方便了
         for i in range(startindex, len(nums)):
-            # 如果不是递增序列或已经使用过的数，则停止该次递归
+            # 需要保证两点：1.递增序列  2.需要同层去重
+            # 如果不是递增序列或已经使用过的数，则跳过
             if (self.path and nums[i] < self.path[-1]) or nums[i] in use_list:  # 这里nums[i] 比较的是path[-1] 而不是nums[i-1]
                 continue 
             use_list.add(nums[i])  # 实时记录该层元素情况
