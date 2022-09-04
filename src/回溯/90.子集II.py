@@ -36,3 +36,13 @@ class Solution:
             self.path.pop()  # 回溯
             
 
+# 去重也能这么写
+        used = set()
+        for i in range(startindex, len(nums)):
+            if nums[i] in used:
+                continue
+            self.path.append(nums[i])
+            used.add(nums[i])
+            self.backtracking(nums, i+1)
+          
+            self.path.pop()
