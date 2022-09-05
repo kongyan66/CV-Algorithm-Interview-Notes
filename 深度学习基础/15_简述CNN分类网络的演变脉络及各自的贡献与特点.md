@@ -50,27 +50,29 @@ VGG 主要在网络深度上进行探索，提出了两个深度的网络 **VGG1
 
 ## GoogLeNet
 
-GoogLeNet 是 ImageNet 2014的冠军网络。GoogLeNet 不仅在深度上进行探索，还增加了网络的宽度，试图回答在设计网络时究竟应该选多大尺寸的卷积、或者应该选汇合层。其提出了Inception模块，同时用1×1、3×3、5×5卷积和3×3汇合，并保留所有结果。
+GoogLeNet 是 ImageNet 2014的冠军网络。GoogLeNet 不仅在深度上进行探索，还增加了网络的宽度，试图回答在设计网络时究竟应该选多大尺寸的卷积、或者应该选汇合层。其提出了Inception模块，同时用1×1、3×3、5×5卷积和3×3汇合相同尺寸不同深度的feature map，并concat所有结果。详情点这：[inception v1网络](https://blog.csdn.net/csdn_xmj/article/details/116604126)   [inception v1-v4](https://zhuanlan.zhihu.com/p/30756181)
 
 ![preview](https://i.loli.net/2020/06/26/Xe5pz8TAjJdVW9k.jpg)
 
 ### GoogLeNet 关键点与贡献：
 
 1.  **多分支**分别处理，并级联结果。
-2. 为了降低计算量，用了**1×1卷积**降维。
-3. 使用了**全局平均汇合（Global average pooling）替代全连接层**，使网络参数大幅减少。
+2. 为了降低计算量，用了**1×1卷积**降维(先降后升)。
+3. 使用了**全局平均池化（Global average pooling）替代全连接层**，使网络参数大幅减少，但目标检测小目标还是全连接好些。
 
 inception结构在之后的几年中从v1到v4不断改进。
 
-> **Inception v2**  在 v1 的基础上加入 batch normalization 技术，在tensorflow中，使用 BN 在激活函数之前效果更好；将 5x5 卷积替换成两个连续的 3x3 卷积，使网络更深，参数更少。
+> **Inception v2**  在 v1 的基础上加入 batch normalization 技术，在tensorflow中，使用 BN 在激活函数之前效果更好；将 5x5 卷积替换成两个连续的 3x3 卷积，使网络更深，参数更少。使用$1*n$和  $n*1$这种非对称的卷积来代替n*n的对称卷积，既降低网络的参数，又增加了网络的深度
 >
 > **Inception v3** 核心思想是将卷积核分解成更小的卷积，如将 7x7 分解成 1x7 和 7x1 两个卷积核。
 >
-> **Inception  v4** 在Inception模块基础上结合了 residual 模块。
+> **inception V4** 将原来卷积、池化的顺次连接（网络的前几层）替换为stem模块，来获得更深的网络结，又设计了三种inception模块。
+>
+> **Inception-ResNet  v2** 在Inception模块基础上结合了 residual 模块。
 
 ## ResNet
 
-ResNet 是 ImageNet 2015年的冠军网络，是一个里程碑的事件。ResNet旨在解决网络加深后训练难度增大的现象。其提出了residual模块，包含两个3×3卷积和一个短路连接(左图)。短路连接可以有效缓解反向传播时由于深度过深导致的梯度消失现象，这使得网络加深之后性能不会变差。因此 ResNet 网络的层数有 152 之多。
+ResNet 是 ImageNet 2015年的冠军网络，是一个里程碑的事件。ResNet旨在解决网络加深后训练难度增大的现象。其提出了residual模块，包含两个3×3卷积和一个短路连接(左图)。短路连接可以有效缓解反向传播时由于深度过深导致的**梯度消失**现象，这使得网络加深之后性能不会变差。因此 ResNet 网络的层数有 152 之多。
 
 ![preview](https://i.loli.net/2020/06/26/IRrt4mA1uUHpb7E.jpg)
 
@@ -78,7 +80,7 @@ ResNet 是 ImageNet 2015年的冠军网络，是一个里程碑的事件。ResNe
 
 1. 使用**短路连接**，使训练深层网络更容易，并且**重复堆叠**相同的模块组合。
 2. ResNet大量使用了**批量归一层**。
-3. 对于很深的网络(超过50层)，ResNet使用了更高效的**瓶颈(bottleneck)**结构(右图)。
+3. 对于很深的网络(超过50层)，ResNet使用了更高效的**[瓶颈(bottleneck)](https://zhuanlan.zhihu.com/p/98692254)**结构(右图)。
 
 ## ResNeXt
 
