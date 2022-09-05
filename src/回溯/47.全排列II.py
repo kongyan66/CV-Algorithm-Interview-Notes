@@ -20,8 +20,9 @@ class Solution:
             self.result.append(self.path.copy())
         # 3.确定单层搜索逻辑
         for i in range(len(nums)):
-            # 如果同一层取的数有重复，则停止改层递归
-            # 如果同一树枝下，取了本身，则停止递归 ，两种去重是独立的，所以是or连接呀
+            # 如果同一层取的数有重复，则停止该层递归
+            # 如果同一树枝下，再次取了本身，则停止递归 
+            # 两种去重是独立的，所以是or连接呀
             if (i > 0 and nums[i] == nums[i-1] and not self.used[i-1]) or self.used[i]:
                 continue
             self.used[i] = True
