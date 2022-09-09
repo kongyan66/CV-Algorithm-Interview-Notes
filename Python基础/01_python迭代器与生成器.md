@@ -58,22 +58,87 @@ False
 
 可见，**迭代器一定是可迭代对象，但可迭代对象不一定是迭代器。**
 
+### for循环的本质
 
+说到__iter__()和__next__()方法，就很有必要介绍一下iter()和next()方法了。
+
+1）`iter()与__iter__()`
+
+`__iter__()`的作用是返回一个迭代器，虽然上面说过，只要实现了`__iter__()`方法就是可迭代对象，但是，没有实现功能（返回迭代器）总归是不够的。`iter()`是Python提供的一个内置方法, 作用是来调用`__iter__()`方法。
+
+2）`next()与__next__()`
+
+`__next__()`的作用是返回遍历过程中的下一个元素，如果没有下一个元素则主动抛出`StopIteration`异常。而`next()`就是Python提供的一个用于调用`__next__()`方法的内置方法。
+
+下面，我们通过next()方法来遍历一个list：
+
+```python
+>>> list_1 = [1, 2, 3]
+>>> next(list_1)
+Traceback (most recent call last):
+File "<pyshell#19>", line 1, in <module>
+next(list_1)
+TypeError: 'list' object is not an iterator
+>>> list_2 = iter(list_1)  # 先调用iter()才能返回一个迭代器
+>>> next(list_2)
+1
+>>> next(list_2)
+2
+>>> next(list_2)
+3
+>>> next(list_2)
+Traceback (most recent call last):
+File "<pyshell#24>", line 1, in <module>
+next(list_2)
+StopIteration
+```
+
+**通过for循环对一个可迭代对象进行迭代时，for循环内部机制会自动通过调用iter()方法执行可迭代对象内部定义的__iter__()方法来获取一个迭代器，然后一次又一次得迭代过程中通过调用next()方法执行迭代器内部定义的__next__()方法获取下一个元素，当没有下一个元素时，for循环自动捕获并处理StopIteration异常。**
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/image-20220908233501198.png" alt="image-20220908233501198" style="zoom:67%;" />
 
 ### 实例
 
 以[斐波那契数列](https://www.zhihu.com/search?q=斐波那契数列&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A213544776})为例来实现一个迭代器：
 
 ```python
+class FIB:
+    def __init__(self, n):
+        self.pre = 0
+        self.cur = 1
+        self.n = n
 
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.n > 0:
+            value = self.cur
+            self.cur += self.pre
+            self.pre = value
+            self.n -= 1
+            return value
+        else:
+            raise StopIteration
+
+f = FIB(10)
+print([i for i in f])
 ```
 
 
 
+## 生成器
 
 
 
+## 二者关系
+
+![preview](https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-95b4076d30e55da078045cdade28cea3_r.jpg)
 
 ## 参考
 
 [为什么for循环能遍历list](https://www.cnblogs.com/chenhuabin/p/11288797.html#_label1)
+
+[如何更好地理解Python迭代器和生成器？](https://www.zhihu.com/question/20829330)
+
+[Iterables vs. Iterators vs. Generators](https://nvie.com/posts/iterators-vs-generators/)
