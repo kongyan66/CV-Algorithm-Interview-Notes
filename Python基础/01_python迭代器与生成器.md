@@ -1,6 +1,6 @@
 ## 问题
 
-迭代器与生成器是Python最有用语言特性之一，可以说我们每次写python都用上了，也是面试高频问题，所以今天就来了解下吧！
+迭代器与生成器是Python最有用语言特性之一，可以说我们每次写python都用上了，也是面试高频问题，所以今天就来整透彻了！
 
 ## 迭代器(iterator)
 
@@ -14,11 +14,11 @@
 
 #### 可迭代对象
 
-我们每次使用 `for i in Iterable时就已经在用迭代器了，例如基本数据类型int、bool、str，还有容器类型list、tuple、dict、set。这些类型当中，有些是可迭代的，有些不可迭代，怎么判断呢？
+我们每次使用 `for i in Iterable`时就已经在用迭代器了，但基本数据类型int、bool、str，还有容器类型list、tuple、dict、set。这些类型当中，有些是可迭代的，有些不可迭代，怎么判断呢？
 
 ```python 
 from collections import Iterable
->>> isinstance(123, Iterable)
+>>> isinstance(123, Iterable)  # 判断类型
 False
 >>> isinstance([], Iterable)
 True
@@ -128,6 +128,93 @@ print([i for i in f])
 
 
 ## 生成器
+
+### 定义
+
+在 Python 中还有一种函数，用关键字 yield 来返回值，这种函数叫生成器函数，函数被调用时会返回一个生成器对象，**生成器本质上还是一个特殊的迭代器**，也是用在迭代操作中，因此它有和迭代器一样的特性，唯一的区别在于实现方式上不一样，**后者更加简洁**。
+
+### 迭代器与生成器
+
+那为何用生成器做迭代器就这么方便呢？在调用该生成器函数时，Python会自动在其内部添加__iter__()方法和__next__()方法。把生成器传给 next() 函数时， 生成器函数会向前继续执行， 执行到函数定义体中的下一个 yield 语句时， 返回产出的值， 并在函数定义体的当前位置暂停， 下一次通过next()方法执行生成器时，又从上一次暂停位置继续向下……，最终， 函数内的所有yield都执行完，如果继续通过yield调用生成器， 则会抛出StopIteration 异常——这一点与迭代器协议一致。
+
+可以看到，生成器的执行机制与迭代器是极其相似的，生成器本就是迭代器，只不过，有些特殊。那么，生成器特殊在哪呢？或者说，有了迭代器，为什么还要用生成器？**生成器采用的是一种惰性计算机制**，一次调用也只会产生一个值，它不会将所有的值一次性返回给你，你需要一个那就调用一次next()方法取一个值，这样做的好处是如果元素有很多（数以亿计甚至更多），如果用列表一次性返回所有元素，那么会消耗很大内存，如果我们只是想要对所有元素依次一个一个取出来处理，那么，使用生成器就正好，一次返回一个，**并不会占用太大内存。**
+
+### 实现方式
+
+**生成器函数**
+
+说白了就是采用`yield`的函数就是一个生成器
+
+```python
+>>> from collections.abc import Iterable
+>>> from collections.abc import Iterator
+>>> def func(n):
+...     yield n*2
+>>> g = gen(2)
+>>> isinstance(g, Iterable)
+True
+>>> isinstance(g, Iterator)
+True
+>>> next(g)
+>>> 4
+```
+
+**生成器表达式**
+
+生成器表达式与列表推导式长的非常像，但是它俩返回的对象不一样，前者返回生成器对象，后者返回列表对象。
+
+```
+#生成器表达式
+>>> g = [x*2 for x in range(10)]
+>>> type(g)
+<type 'generator'>
+# 列表表达式
+>>> l = [x*2 for x in range(10)]
+>>> type(l)
+<type 'list'>
+```
+
+### 实例
+
+举个例子，假设我们现在要取1亿以内的所有偶数，如果用列表来实现，代码如下：
+
+```python 
+def fun_list():
+    index = 1
+    temp_list = []
+    while index < 100000000:
+        if index % 2 == 0:
+            temp_list.append(index)
+            print(index)
+        index += 1
+    return temp_list
+```
+
+上面程序会先获取所有符合要求的偶数，然后一次性返回。如果你运行了代码，你就会发现两个问题——运行时间很长、消耗很多内存。
+
+有时候，我们并不一定需要一次性获得所有的对象，需要一个使用一个就可以，这样的话，可以用生成器来实现：
+
+```pyhon
+>>> def fun_gen():
+    　　index = 1
+    　　while index < 100000000:
+      　　  if index % 2 == 0:
+      　　      yield index
+      　　  index += 1
+
+        
+>>> fun_gen()
+<generator object fun_gen at 0x00000222DC2F4360>
+>>> g = fun_gen()
+>>> next(g)
+2
+>>> next(g)
+4
+>>> next(g)
+6
+```
+
+
 
 
 
