@@ -1,31 +1,30 @@
-# n = int(input())
-# arr = list(map(int, input().split()))
-# # n = 3
-# # arr = [2, -1, -1]
-# count = 0
-# sum = 0
+from collections import defaultdict
+# 当前位置出发得到的最大收益
+# 1.确定入参与返回值 入参：到达位置 返回值：当前位置的收益
+def dfs(x):
+    if x == 0:
+        return 0
+    if x not in vis:
+        dic[x] += dfs(x // 2)
+        vis.add(x)
+    return dic[x]
 
-# for i in range(n):
-#     sum += arr[i]
-#     if sum == 0:
-#         sum += 1
-#         count += 1
-#     if arr[i] == 0:
-#         arr[i] += 1
-#         sum += 1
-#         count += 1
-# print(count)
+# 输入处理
+n = 4
+p = [2, 3, 4, 5]
+v = [2, 5, 2, 4]
+# hash表记录宝藏位置与价值
+dic = defaultdict(int)
+for idx, val in zip(p, v):
+    dic[idx] += val        # 有可能一个多个宝藏在同一个位置
 
-t = int(input())
+vis = set() # 记录走过的位置
 
-for _ in range(t):
-    n, x, y, k = list(map(int, input().split()))
-    x_time = k / x 
-    y_time = (n - k + 1) / y
+# 到达不同，各自的最大收益
+# 为啥可以共用dic，因为只能走向比自己大的，所以前面的值不受影响
+for x in sorted(dic.keys()):
+    print(x)
+    dfs(x)
+    print(dic)
 
-    if x_time == y_time:
-        print("Tie")
-    elif x_time < y_time:
-        print("Win")
-    else:
-        print("Lose")
+print(max(dic.values()))
