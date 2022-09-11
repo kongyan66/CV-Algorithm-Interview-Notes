@@ -7,6 +7,7 @@
 
 # 思路二：动态规划
 # 对于乘法，我们需要注意，负数乘以负数，会变成正数
+# https://leetcode.cn/problems/maximum-product-subarray/solution/dpfang-fa-xiang-jie-by-yang-cong-12/
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         maxDP = [0] * len(nums)
