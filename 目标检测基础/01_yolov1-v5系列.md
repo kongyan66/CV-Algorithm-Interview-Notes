@@ -356,6 +356,28 @@ $ L_{DIOU} = 1 - IOU + \frac{\rho^2(b, b^{gt})}{|c^2|}$, 其中，$b$, $b^{gt}$ 
 
 <img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/image-20220829172635777.png" alt="image-20220829172635777" style="zoom:67%;" />
 
+## YOLOV5
+
+### head改进
+
+**head部分没有任何改动**，和yolov3和yolov4完全相同，也是三个输出头，stride分别是8,16,32，大输出特征图检测小物体，小输出特征图检测大物体。
+
+但采用了**自适应anchor，而且这个功能还可以手动打开/关掉，具体是什么意思呢？**加上了自适应anchor的功能，个人感觉YOLO v5其实变成了2阶段方法。
+
+**先回顾下之前的检测器得到anchor的方法：**
+
+**Yolo v2 v3 v4：聚类得到anchor**，不是完全基于anchor的，w,h是基于anchor的，而x,y是基于grid的坐标，所以人家叫**location prediction**。
+
+**R-CNN系列：手动指定**anchor的位置。
+
+**基于anchor的方法是怎么用的：**
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-5dc0cdfb531add5071abf2abc7399467_r.jpg" alt="preview" style="zoom:50%;" />
+
+有了anchor的 (xA,yA,wA,hA) ,和我们预测的偏移量 tx,ty,tw,th ，就可以计算出最终的output： bx,by,bw,bh 。
+
+之前anchor是固定的，自适应anchor利用网络的学习功能，让 (xA,yA,wA,hA) 也是可以学习的。我个人觉得自适应anchor策略，影响应该不是很大，除非是**刚开始设置的anchor是随意设置的**，一般我们都会基于实际项目数据重新运用**kmean算法聚类得到anchor**，这一步本身就不能少。
+
 ## 小结
 
 我们发现YOLO v1只是把最后的特征分成了 7×7 个grid，到了YOLO v2就变成了 13×13 个grid，再到YOLO v3 v4 v5就变成了多尺度的**(strides=8,16,32)**，更加复杂了。那**为什么一代比一代检测头更加复杂呢？答案是：因为它们的提特征网络更加强大了，能够支撑起检测头做更加复杂的操作。**
