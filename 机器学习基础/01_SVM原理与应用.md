@@ -64,3 +64,11 @@ $$y^i(w_d^Tx^i + b_d)ge 1$$为了表示的方便,记为$$y^i(w^Tx^i + b) ge 1$$
 $$ left{egin{aligned}  {min frac 1 2 ||w||^2 \  S.T. y^{(i)}(w^T x^{(i)} + d) ge 1}  end{aligned} ight.$$
 
 限定条件下的最优化问题要比全局最优化问题背后的数学推导复杂太多了,不在本篇说明了。以上,我们基本理解了svm的原理.
+
+
+
+## 参考
+
+[包你一文看懂支撑向量机SVM](http://t.zoukankan.com/sdu20112013-p-10266382.html)
+
+[一文读懂支持向量机SVM（附实现代码、公式）](https://mp.weixin.qq.com/s/a3cmhFKz-YNKp5gCgbmOZg)
