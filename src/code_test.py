@@ -1,30 +1,34 @@
-from collections import defaultdict
-# 当前位置出发得到的最大收益
-# 1.确定入参与返回值 入参：到达位置 返回值：当前位置的收益
-def dfs(x):
-    if x == 0:
-        return 0
-    if x not in vis:
-        dic[x] += dfs(x // 2)
-        vis.add(x)
-    return dic[x]
+def shipWithDays(weight, d):
+    # 最小载重量的范围就是在[sum_weight, max_weight]
+    sum_weight = sum(weight)
+    max_weight = max(weight)
+    # 利用最小二分法找最小的k
+    left, right = max_weight, sum_weight
+    while left < right:
+        mid = (left + right) >> 1
+        if canShip(weight, d, mid):
+            right = mid
+        else:
+            left = mid + 1
 
-# 输入处理
-n = 4
-p = [2, 3, 4, 5]
-v = [2, 5, 2, 4]
-# hash表记录宝藏位置与价值
-dic = defaultdict(int)
-for idx, val in zip(p, v):
-    dic[idx] += val        # 有可能一个多个宝藏在同一个位置
+    return left
 
-vis = set() # 记录走过的位置
+def canShip(weight, d, k):
+    cur = k
+    for i in range(len(weight)):
+        if weight[i] > k:
+            return False
+        if cur < weight[i]:
+            cur = k
+            d -= 1
+        cur -= weight[i]
+    return d > 0
 
-# 到达不同，各自的最大收益
-# 为啥可以共用dic，因为只能走向比自己大的，所以前面的值不受影响
-for x in sorted(dic.keys()):
-    print(x)
-    dfs(x)
-    print(dic)
+if __name__ == '__main__':
+    weights = [1,2,3,4,5,6,7,8,9,10]
+    print(shipWithDays(weights, 5))
 
-print(max(dic.values()))
+            
+
+
+    

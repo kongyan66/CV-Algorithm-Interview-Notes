@@ -18,7 +18,7 @@ class Solution:
             ans = max(ans, count)
         return ans + 1
 
-# 解法二：哈希表
+# 解法二：哈希表 时间复杂度o(n)
 # 枚举数组中的每个数 x，考虑以其为起点，不断尝试匹配 x+1, x+2, \cdotsx+1,x+2,⋯ 是否存在
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
