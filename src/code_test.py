@@ -12,15 +12,17 @@ def shipWithDays(weight, d):
             left = mid + 1
 
     return left
-
+# 判断当前载重量k是否能在期限d天内运送完
+# 利用贪心算法，每次都尽可能装满，看是否能按期运完
 def canShip(weight, d, k):
     cur = k
     for i in range(len(weight)):
-        if weight[i] > k:
+        if weight[i] > k:  # 说明一个也装不下
             return False
-        if cur < weight[i]:
+        if cur < weight[i]: # 装满了就换下一趟
             cur = k
             d -= 1
+        # 贪心：一趟尽可能装满
         cur -= weight[i]
     return d > 0
 
