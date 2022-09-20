@@ -21,7 +21,7 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
        # 1.确定dp数组 dp[i]表示到达第i级台阶爬法数量
-       dp = [0] * (n+1)
+       dp = [0] * (n+1)  # 为啥是n+1，因为要与题中的n对齐
        # 考虑n=1的情况
        if n <= 2:
            return n
@@ -54,6 +54,7 @@ class Solution:
         elif n == 2:
             return 2
         return self.climbStairs(n-1) + self.climbStairs(n-2)
+        
 ## 优化递归  通过 (这个想法很好，但不太理解，对递归理解还不够深刻)
 '''
 记忆化递归，自顶向下
