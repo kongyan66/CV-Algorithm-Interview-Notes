@@ -1,6 +1,6 @@
 # 题目：（通常用 F(n) 表示）形成的序列称为 斐波那契数列。该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和
 
-# 解法一：动态规划 dp数组
+# 解法一：动态规划 dp数组 空间复杂度O(n)
 class Solution:
     def fib(self, n: int) -> int:
         if n < 2:
@@ -11,7 +11,8 @@ class Solution:
         for i in range(2, n+1):
             dp[i] = dp[i-1] + dp[i-2]
         return dp[-1]
-# 解法二:动态规划 滚动数组
+
+# 解法二:动态规划 滚动数组 空间复杂度O(1)
 class Solution:
     def fib(self, n: int) -> int:
         if n < 2:
@@ -32,3 +33,5 @@ class Solution:
         if n < 2:
             return n
         return fib(n-1) + fib(n-2)
+
+
