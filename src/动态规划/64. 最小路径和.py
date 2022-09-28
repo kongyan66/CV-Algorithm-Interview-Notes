@@ -19,7 +19,8 @@ class Solution:
             for j in range(1, n):
                 dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
         return dp[-1][-1]
-# 解法二：暴力法 DFS
+
+# 解法二：暴力法 DFS 超时
 class Solution:
     def __init__(self):
         self.res = []
