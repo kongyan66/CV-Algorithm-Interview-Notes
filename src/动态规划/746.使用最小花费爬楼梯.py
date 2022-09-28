@@ -22,7 +22,7 @@ class Solution:
             dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])  # 比较好理解的一种状态转移方程
         return dp[len(cost)]
 
-# time:O(n) space:O(1)
+# 滚动数组 time:O(n) space:O(1)
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
         p, q = 0, 0
