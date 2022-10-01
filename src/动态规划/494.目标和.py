@@ -37,7 +37,7 @@ class Solution:
                 dp[j] += dp[j - nums[i]]
         return dp[bagsize]
 
-# 解法二：回溯（超时，无法AC）
+# 解法二：回溯（超时，无法AC, 但为啥同样逻辑，java就可通过呢？）
 # 枚举出所有情况，即加+和-的所有情况，然后看符合和为target的路径的数量
 class Solution:
     def __init__(self):
