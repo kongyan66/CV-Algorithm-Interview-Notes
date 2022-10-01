@@ -20,3 +20,5 @@ class Solution:
         res = dp[target]
         # 我们得到了两堆相等石头的最大重量，用总的一减就是粉碎后剩下的了
         return sum(stones) - (2 * res)
+
+        
