@@ -21,4 +21,4 @@ class Solution:
             # 倒序遍历是为了保证物品i只被放入一次
             for j in range(target, nums[i]-1, -1):
                 dp[j] = max(dp[j], dp[j-nums[i]] + nums[i])
-        return dp[-1] == target
+        return dp[-1] == target  # 说明找到一个和为sum // 2的子数组，所以成立
