@@ -12,10 +12,13 @@
 # 解：完全背包 最小值问题
 class Solution:
     def numSquares(self, n: int) -> int:
+        # 生成完全平方数
         nums = [i**2 for i in range(1, n+1) if i**2 <= n]  # 加个if避免放太多无用的
         dp = [n + 1] * (n+1)  # 最小值问题，放最大值
         dp[0] = 0  # 根据dp[i]定义，0的平方和个数为0
+        # 外层物品，内层背包， 该问题本质也是一个组合问题
         for i in range(len(nums)):
             for j in range(nums[i], n+1):
                 dp[j] = min(dp[j], dp[j - nums[i]] + 1)
         return dp[n]
+
