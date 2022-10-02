@@ -16,7 +16,8 @@ class Solution:
         dp[0] = 1  # dp[0]一定要为1，dp[0] = 1是 递归公式的基础，不然都是0
         # 组合问题 外物品内背包
         for i in range(len(coins)):
-            for j in range(coins[i], amount+1):  # 完全背包 背包正序
+            for j in range(coins[i], amount+1):  # 完全背包 背包正序; 要注意范围，背包的容量不能小于向前物品的大小
                 dp[j] += dp[j-coins[i]]
         return dp[amount]
+
 
