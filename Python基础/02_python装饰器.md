@@ -54,7 +54,7 @@ use_logging(foo)
 
 这样做逻辑上是没问题的，功能是实现了，但是我们调用的时候不再是调用真正的业务逻辑 foo 函数，而是换成了 use_logging 函数，这就破坏了原有的代码结构， 现在我们不得不每次都要把原来的那个 foo 函数作为参数传递给 use_logging 函数，那么有没有更好的方式的呢？**当然有，答案就是装饰器。**
 
-### 简单装饰器
+## 简单装饰器
 
 以下是装饰的的雏形：
 
@@ -98,9 +98,173 @@ foo()
 
 装饰器在 Python 使用如此方便都要归因于 Python 的函数能像普通的对象一样能作为参数传递给其他函数，可以被赋值给其他变量，可以作为返回值，可以被定义在另外一个函数内。
 
+## 逻辑函数带参数
+
+### **单个参数**
+
+以上逻辑函数都没有参数，如果你的业务逻辑函数 foo 需要参数怎么办？比如：
+
+```python
+def foo(name):
+    print("i am %s" % name)
+```
+
+我们可以在定义 wrapper 函数的时候指定参数：
+
+```python
+def wrapper(name):
+        logging.warn("%s is running" % func.__name__)
+        return func(name)
+    return wrapper
+```
+
+这样 foo 函数定义的参数就可以定义在 wrapper 函数中.
+
+### **多个位置参数**
+
+如果 foo 函数接收两个参数呢？三个参数呢？更有甚者，我可能传很多个。当装饰器不知道 foo 到底有多少个参数时，我们可以用 *args 来代替：
+
+```pyhton
+def wrapper(*args):
+        logging.warn("%s is running" % func.__name__)
+        return func(*args)
+    return wrapper
+```
+
+### **多个关键词参数**
+
+如果 foo 函数还定义了一些关键字参数呢？比如：
+
+```python
+def foo(name, age=None, height=None):
+    print("I am %s, age %s, height %s" % (name, age, height))
+```
+
+这时，你就可以把 wrapper 函数指定关键字函数：
+
+```python
+def wrapper(*args, **kwargs):
+        # args是一个数组，kwargs一个字典
+        logging.warn("%s is running" % func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
+```
+
+## 带参数的装饰器
+
+假如你需要控制日志的输出级别，那么就需要给装饰器添加一个参数了，这就是带参数的装饰器。
+
+在上面的装饰器调用中，该装饰器接收唯一的参数就是执行业务的函数 foo 。装饰器的语法允许我们在调用时，提供其它参数，比如`@decorator(a)`。这样，就为装饰器的编写和使用提供了更大的灵活性。比如，我们可以在装饰器中指定日志的等级，因为不同业务函数可能需要的日志级别是不一样的。
+
+```python
+def use_logging(level):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            if level == "warn":
+                logging.warn("%s is running" % func.__name__)
+            elif level == "info":
+                logging.info("%s is running" % func.__name__)
+            return func(*args)
+        return wrapper
+
+    return decorator
+
+@use_logging(level="warn")
+def foo(name='foo'):
+    print("i am %s" % name)
+
+foo()
+```
+
+上面的 use_logging 是允许带参数的装饰器。它实际上是对原有装饰器的一个函数封装，并返回一个装饰器。我们可以将它理解为一个含有参数的闭包。当我 们使用`@use_logging(level="warn")`调用的时候，Python 能够发现这一层的封装，并把参数传递到装饰器的环境中。@use_logging(level="warn")等价于@decorator.
+
+## 类装饰器
+
+装饰器不仅可以是函数，还可以是类，相比函数装饰器，类装饰器具有灵活度大、高内聚、封装性等优点。使用类装饰器主要依靠类的`__call__`方法，当使用 @ 形式将装饰器附加到函数上时，就会调用此方法，比如以下的写法：
+
+```python
+class Foo(object):
+    def __init__(self, func):
+        self._func = func
+
+    def __call__(self):
+        print ('class decorator runing')
+        self._func()
+        print ('class decorator ending')
+
+@Foo
+def bar():
+    print ('bar')
+
+bar()
+```
+
+## functools.wraps保留元信息
+
+使用装饰器极大地复用了代码，但是他有一个缺点就是原函数的元信息不见了，比如函数的`docstring`、`__name__`、参数列表，先看例子：
+
+```python
+# 装饰器
+def logged(func):
+    def with_logging(*args, **kwargs):
+        return func(*args, **kwargs)
+    return with_logging
+
+# 函数
+@logged
+def f(x):
+   """does some math"""
+   return x + x * x
+
+f(2)
+print(f.__name__)      # 输出 'with_logging'
+print (f.__doc__)       # 输出 None
+```
+
+不难发现，函数 f 被`with_logging`取代了，当然它的`docstring`，`__name__`就是变成了`with_logging`函数的信息了。好在我们有`functools.wraps`，`wraps`本身也是一个装饰器，它能把原函数的元信息拷贝到装饰器里面的 func 函数中，这使得装饰器里面的 func 函数也有和原函数 foo 一样的元信息了。
+
+```python
+from functools import wraps
+# 装饰器
+def logged(func):
+    @wraps(func)
+    def with_logging(*args, **kwargs):
+        return func(*args, **kwargs)
+    return with_logging
+
+# 函数
+@logged
+def f(x):
+   """does some math"""
+   return x + x * x
+
+f(2)
+print(f.__name__)      # 输出 'f'
+print (f.__doc__)       # 输出 'does some math'
+```
+
+## 装饰器的调用顺序
+
+一个函数还可以同时定义多个装饰器，比如：
+
+```python 
+@a
+@b
+@c
+def f ():
+    pass
+```
+
+它的执行顺序是从里到外，最先调用最里层的装饰器，最后调用最外层的装饰器，它等效于:
+
+```python
+f = a(b(c(f)))
+```
+
 
 
 ## 参考
 
 [理解 Python 装饰器看这一篇就够了](https://foofish.net/python-decorator.html)
 
+[python cookbook 元编程](https://python3-cookbook.readthedocs.io/zh_CN/latest/c09/p02_preserve_function_metadata_when_write_decorators.html)
