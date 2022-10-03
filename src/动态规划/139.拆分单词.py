@@ -10,6 +10,9 @@
 4. 
 '''
 # 代码随想录版  
+from xml.etree.ElementTree import TreeBuilder
+
+
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         dp = [False] * (len(s) + 1)   # +1为了好初始化，dp[0]无意义，长度为了够必须加一
@@ -41,3 +44,36 @@ class Solution:
         return dp[-1]
 
 # 直接回溯法
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordDict = set(wordDict) # 用O(n)的时间转为哈希表，这样查询只需要O(1)
+        def dfs(s):
+            # s串用完了，说明找到了
+            if not s: 
+                return True
+            for i in range(len(s)):
+                # s[:i+1]子串存在，s[i+1:]另一部分子串存在
+                if s[:i+1] in wordDict and dfs(s[i+1:]):
+                    return True
+            return False
+        return dfs(s)
+
+        
+# 回溯+记忆化递归
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordDict = set(wordDict) # 用O(n)的时间转为哈希表，这样查询只需要O(1)
+        method = dict()
+        def dfs(s):
+            # 如果记忆中存在，就直接返回
+            if s in method: 
+                return method[s]
+            if not s: 
+                return True
+            for i in range(len(s)):
+                if s[:i+1] in wordDict and dfs(s[i+1:]):
+                    method[s] = True  # 实时记录
+                    return True
+            method[s] = False # 回溯
+            return False
+        return dfs(s)
