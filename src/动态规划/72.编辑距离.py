@@ -55,7 +55,7 @@ class Solution:
         return self.dp(word1, m - 1, word2, n - 1)
     # 定义：s1[0..i] 和 s2[0..j] 的最小编辑距离是 dp(s1, i, s2, j)
     def dp(self, word1, i, word2, j):
-        # 处理base case
+        # 处理base case 如果字符串为空了，就自由一种删除操作
         if i == -1:
             return j + 1
         if j == -1:
@@ -70,3 +70,33 @@ class Solution:
                 self.dp(word1, i - 1, word2, j) + 1,
                 self.dp(word1, i - 1, word2, j - 1) + 1
             )
+
+# 解法三：记忆化递归
+class Solution:
+    def __init__(self):
+        self.memo = {}
+
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        # 按照 dp 函数的定义，计算 s1 和 s2 的最小编辑距离
+        return self.dp(word1, m - 1, word2, n - 1)
+    # 定义：s1[0..i] 和 s2[0..j] 的最小编辑距离是 dp(s1, i, s2, j)
+    def dp(self, word1, i, word2, j):
+        # 处理base case 
+        if i == -1:
+            return j + 1
+        if j == -1:
+            return i + 1
+        if (i, j) in self.memo:
+            return self.memo[(i, j)]
+        # 进行状态转移
+        if word1[i] == word2[j]:
+            self.memo[(i, j)] = self.dp(word1, i - 1, word2, j - 1)
+            return self.memo[(i, j)]
+        else:
+            self.memo[(i, j)] = min(
+                self.dp(word1, i, word2, j - 1) + 1,
+                self.dp(word1, i - 1, word2, j) + 1,
+                self.dp(word1, i - 1, word2, j - 1) + 1
+            )
+            return self.memo[(i, j)]
