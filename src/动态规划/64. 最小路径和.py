@@ -78,5 +78,6 @@ class Solution:
             return self.memo[(i, j)]
         self.memo[(i, j)] = min(self.DFS(grid, i - 1, j), self.DFS(grid, i, j - 1)) + grid[i][j]
         return self.memo[(i, j)]
+        
 
         
