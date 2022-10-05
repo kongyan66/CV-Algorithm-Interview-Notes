@@ -20,7 +20,7 @@ class Solution:
                 dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
         return dp[-1][-1]
 
-# 解法二：暴力法 DFS 超时
+# 解法二：暴力法 DFS(超时)
 class Solution:
     def __init__(self):
         self.res = []
@@ -42,3 +42,41 @@ class Solution:
         self.DFS(grid, i+1, j)
         self.DFS(grid, i, j+1)
         self.sum_ -= grid[i][j]  # 回溯
+
+# dp函数的写法
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        return self.DFS(grid, m - 1, n - 1)
+
+    def DFS(self, grid, i, j):
+        # base case
+        if i == 0 and j == 0:
+            return grid[0][0]
+        # 如果索引出界，返回一个很大的值，证在取 min 的时候不会被取到
+        if i < 0 or j < 0:
+            return float('inf')
+
+        return min(self.DFS(grid, i - 1, j), self.DFS(grid, i, j - 1)) + grid[i][j]
+
+# 解法三：记忆化递归（递归+备忘录）
+class Solution:
+    def __init__(self) -> None:
+        self.memo = {}
+
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        return self.DFS(grid, m - 1, n - 1)
+
+    def DFS(self, grid, i, j):
+        # base case
+        if i == 0 and j == 0:
+            return grid[0][0]
+        if i < 0 or j < 0:
+            return float('inf')
+        if (i, j) in self.memo:
+            return self.memo[(i, j)]
+        self.memo[(i, j)] = min(self.DFS(grid, i - 1, j), self.DFS(grid, i, j - 1)) + grid[i][j]
+        return self.memo[(i, j)]
+
+        

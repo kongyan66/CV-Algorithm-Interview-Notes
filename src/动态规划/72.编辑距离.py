@@ -18,12 +18,14 @@ dp[i][j] = dp[i-1][j] + 1
 dp[i][j] = dp[i][j - 1] + 1;
 3) 替换元素，word1替换word1[i - 1]
 dp[i][j] = dp[i - 1][j - 1] + 1;
+
 综上 dp[i][j] = min({dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]}) + 1;
 
 3. dp数组初始化
 dp[i][0] 和 dp[0][j]
 '''
-# 解法 只做了操作数统计 并不是列出详细步骤
+# 解法一：动态规划
+# 只做了操作数统计 并不是列出详细步骤
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
         m, n = len(word1), len(word2)
@@ -44,3 +46,27 @@ class Solution:
                     dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
         return dp[-1][-1]
 
+
+# 解法二：递归DFS(超时)
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        # 按照 dp 函数的定义，计算 s1 和 s2 的最小编辑距离
+        return self.dp(word1, m - 1, word2, n - 1)
+    # 定义：s1[0..i] 和 s2[0..j] 的最小编辑距离是 dp(s1, i, s2, j)
+    def dp(self, word1, i, word2, j):
+        # 处理base case
+        if i == -1:
+            return j + 1
+        if j == -1:
+            return i + 1
+        
+        # 进行状态转移
+        if word1[i] == word2[j]:
+            return self.dp(word1, i - 1, word2, j - 1)
+        else:
+            return min(
+                self.dp(word1, i, word2, j - 1) + 1,
+                self.dp(word1, i - 1, word2, j) + 1,
+                self.dp(word1, i - 1, word2, j - 1) + 1
+            )
