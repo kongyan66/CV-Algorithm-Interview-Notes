@@ -25,10 +25,11 @@ class Solution:
 1.确定dp数组及下标含义
 dp[i] 表示nums[:i+1] 最大连续子序列和为dp[i]
 2.确定推导公式
-dp[i]有两个方向，要么继续加，要么重头开始，取值最大的
+dp[i]有两个选择，要么继续加，要么从当前重新开始，取最大的
 dp[i] = max(dp[i-1]]+nums[i-1], nums[i])
 3.初始化
 dp[0] = 0
+res = dp[0]
 '''
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
