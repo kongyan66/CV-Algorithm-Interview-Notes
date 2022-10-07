@@ -3,9 +3,10 @@
 
 class Solution:
     def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
-        start = 0 
-        cursum = 0
-        totalsum = 0
+        start = 0   # 记录起点
+        cursum = 0  # 记录当前油箱剩余油量
+        totalsum = 0 # 记录全程剩余的油量
+        
         for i in range(len(gas)):
             # 不仅下一个地方有够用，也要保证后面油也都够用
             cursum += gas[i] - cost[i]
