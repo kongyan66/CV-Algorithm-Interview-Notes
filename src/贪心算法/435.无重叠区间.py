@@ -20,10 +20,12 @@ class Solution:
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
         intervals.sort(key=lambda x:x[0])
-        nums = 1
+        nums = 1  # 不重叠区间数量
         for i in range(1, len(intervals)):
+            # 有重叠，更新下end
             if intervals[i][0] < intervals[i-1][1]:
                 intervals[i][1] = min(intervals[i-1][1], intervals[i][1])
+            # 无重叠，区间树加一
             else:
                 nums += 1
         return len(intervals) - nums
