@@ -1,3 +1,8 @@
+# 题目：有一个长度为n的数组，初始化都为0， 给你k组操作，每组用一个三元组表示（startindex, endindex, inc), 表示对该闭区间增加inc
+
+# 思路：显然是一道差分区间的题
+
+# 解
 class Difference:
     def __init__(self, nums) -> None:
         self.diff = [0] * len(nums)
@@ -31,3 +36,4 @@ if __name__ == "__main__":
         diff.increment(i, j, val)
     ans = diff.result()
     print(ans)
+# 返回[-2, 0, 3, 5, 3]
