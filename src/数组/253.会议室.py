@@ -1,3 +1,8 @@
+# 题目：给你输入若干形如 [begin, end] 的区间，代表若干会议的开始时间和结束时间，请你计算至少需要申请多少间会议室。
+
+# 思路：如果把每个会议的起始时间看做一个线段区间，那么题目就是让你求最多有几个重叠区间
+
+# 解：
 class Solution:
     """
     @param intervals: an array of meeting time intervals
@@ -39,8 +44,3 @@ if __name__ == '__main__':
     soulution = Solution()
     ans = soulution.min_meeting_rooms(intervals)
     print(ans)
-
-
-
-        
-
