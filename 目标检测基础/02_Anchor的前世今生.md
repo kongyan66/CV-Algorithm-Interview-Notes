@@ -49,8 +49,11 @@ YOLO v1的初始训练过程很不稳定，在YOLO v2中，作者观察了很多
 
 ## Anchor的竞争
 
-
+即使网络最终给出了检测框，并不意味以这些anchor学些到bbox就安全了，一个目标只能留下一个检测框,还有一次最终的一次考验（NMS）
 
 ## 参考
 
 [目标检测中Anchor的本质分析](https://zhuanlan.zhihu.com/p/84398108)
+
+[新手也能彻底搞懂的目标检测Anchor是什么？怎么科学设置？](https://zhuanlan.zhihu.com/p/112574936)
+

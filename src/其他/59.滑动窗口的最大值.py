@@ -13,6 +13,8 @@ class Solution:
         for i in range(0, len(nums)-k+1):
             res.append(max(nums[i:i+k]))
         return res
+
+    
 # 解法二：单调队列 O(n)
 # 题解：https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/solution/dong-hua-yan-shi-dan-diao-dui-lie-jian-z-unpy/
 class Solution:
