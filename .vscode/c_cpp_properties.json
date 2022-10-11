@@ -10,10 +10,10 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "C:\\Strawberry\\c\\bin\\gcc.exe",
+            "compilerPath": "D:/Program Files (x86)/mingw64/bin/g++.exe",
             "cStandard": "c89",
             "cppStandard": "c++14",
-            "intelliSenseMode": "windows-gcc-x86"
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4

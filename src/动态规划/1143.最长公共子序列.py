@@ -11,7 +11,7 @@ dp[i][j]：长度为[0, i - 1]的字符串text1与长度为[0, j - 1]的字符�
 即：dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
 '''
 
-# 解法
+# 解法一：动态规划
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         dp = [[0] * (len(text2)+1) for _ in range(len(text1)+1)]
@@ -25,4 +25,43 @@ class Solution:
                 results = max(results, dp[i][j])  
         return results
 
+
+# 解法二：暴力递归
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        return self.dp(text1, len(text1) - 1, text2, len(text2) - 1)
     
+    def dp(self, s1, i, s2, j):
+        # base case
+        # 如果都到头了还没找到，那说明两者就没有重叠
+        if i < 0 or j < 0 :
+            return 0
+    
+        if s1[i] == s2[j]:  #
+            return self.dp(s1, i - 1, s2, j - 1) + 1
+        else:
+            return max(self.dp(s1, i - 1, s2, j), self.dp(s1, i, s2, j - 1))
+# 解法三：记忆化递归
+class Solution:
+    def __init__(self):
+        self.memo = {}
+
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        return self.dp(text1, len(text1) - 1, text2, len(text2) - 1)
+    
+    def dp(self, s1, i, s2, j):
+        # 如果都到头了还没找到，那说明两者就没有重叠
+        if i < 0 or j < 0 :
+            return 0
+
+        if (i, j) in self.memo:
+            return self.memo[(i, j)]
+
+        if s1[i] == s2[j]:
+            self.memo[(i, j)] = self.dp(s1, i - 1, s2, j - 1) + 1
+            return self.memo[(i, j)]
+        else:
+            self.memo[(i, j)] = max(self.dp(s1, i - 1, s2, j), self.dp(s1, i, s2, j - 1))
+            return self.memo[(i, j)]
+
+
