@@ -1,30 +1,41 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         from collections import Counter
-        window = dict()
+        from collections import defaultdict
+        window = defaultdict(int)
         need = Counter(t)
-        valid = 0
-        length = float('inf')
-
+        min_len = float('inf')
         left, right = 0, 0
+        match = 0
 
-        for right in range(len(s)):
+        while right < len(s):
             c = s[right]
-            if need.count(c):
+            if c in need:
                 window[c] += 1
+                # 匹配到字符
                 if window[c] == need[c]:
-                    valid += 1
-            
-            while valid == len(need):
-                if right - left < length:
+                    match += 1
+            right += 1
+
+            while match == len(need):
+                # 如果出现了更短的子串
+                if right - left < min_len:
                     start = left
-                    length = right - left
+                    min_len = right - left
 
                 d = s[left]
-                left += 1
-                if need.count(d):
-                    if window[d] == need[d]:
-                        valid -= 1
+                if d in need:
                     window[d] -= 1
-        return length
+                    # 说明此时已经不匹配了
+                    if window[d] < need[d]:
+                        match -= 1
+                left += 1
+                    
+        return '' if min_len == float('inf') else s[start:start + min_len]
+
+if __name__ == "__main__":
+    from collections import Counter
+
+
+
 
