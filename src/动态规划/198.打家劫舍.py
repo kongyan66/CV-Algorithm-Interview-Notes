@@ -28,7 +28,7 @@ class Solution:
         dp[0] = nums[0]
         dp[1] = max(nums[0], nums[1])
         for i in range(2, size):
-            dp[i] = max(dp[i-2]+nums[i], dp[i-1])
+            dp[i] = max(dp[i-2]+nums[i], dp[i-1])  # 当前房屋偷还是不偷
         return dp[size-1]
 
 # 如果按照背包思想，但增加了时间复杂度
