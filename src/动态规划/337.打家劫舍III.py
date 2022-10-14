@@ -13,8 +13,8 @@ dp 采用一个长度为2的数组，下标0记录不偷该节点所得最大金
 如果是偷当前节点，那么左右孩子就不能偷 val = cur.val + left[0] + right[0]
 4。初始化
 递归终止条件 return(0, 0)
-
 '''
+
 # 动规解法
 # 后序遍历+DP
 class Solution:
@@ -87,4 +87,4 @@ class Solution:
         # 不偷该节点
         val2 = self.recursion(node.left) + self.recursion(node.right)
         self.map[node] = max(val1, val2)   # map里记录一下
-        return max(val1, val2)
+        return self.map[node]

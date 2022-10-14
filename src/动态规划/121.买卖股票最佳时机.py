@@ -1,7 +1,7 @@
 # 题目：给定一个prices[i]表示每天股票的价格，你只能莫某一天迈入这只股票，然后在未来某一天卖出，问能获得最大利润
 # 思路：只能买卖一次，就是求数组的最大差值
 
-# 贪心算法 最小值最小 最大值最大
+# 贪心算法 最小值买入 最大值卖出
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         low = float('inf')
