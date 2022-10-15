@@ -1,41 +1,67 @@
-class Solution:
-    def minWindow(self, s: str, t: str) -> str:
-        from collections import Counter
-        from collections import defaultdict
-        window = defaultdict(int)
-        need = Counter(t)
-        min_len = float('inf')
-        left, right = 0, 0
-        match = 0
+# n, k = list(map(int, input().split()))
+# nums = list(map(int, input().split()))
+# nums.sort()
 
-        while right < len(s):
-            c = s[right]
-            if c in need:
-                window[c] += 1
-                # 匹配到字符
-                if window[c] == need[c]:
-                    match += 1
-            right += 1
+# i = n - 1
+# while nums[i] - nums[0] > k:
+#     i -= 1
+# j = 0
 
-            while match == len(need):
-                # 如果出现了更短的子串
-                if right - left < min_len:
-                    start = left
-                    min_len = right - left
+# while nums[len(nums) - 1] - nums[j] > k:
+#     j += 1
+# ans = max(i + 1, n - j)
+# print(ans)
 
-                d = s[left]
-                if d in need:
-                    window[d] -= 1
-                    # 说明此时已经不匹配了
-                    if window[d] < need[d]:
-                        match -= 1
-                left += 1
-                    
-        return '' if min_len == float('inf') else s[start:start + min_len]
+# n, k = list(map(int, input().split()))
+# nums = list(map(int, input().split()))
 
-if __name__ == "__main__":
-    from collections import Counter
+# nums.sort()
+# dp = [0] * n
+# dp[0] = 1
 
+# for i in range(1, n):
+#     if nums[i] - nums[i-1] <= k:
+#         dp[i] = max(dp[i], dp[i - 1]+ 1)
+ 
+# print(dp)
 
+# n = int(input())
+# start = list(map(int, input().split()))
+# end = list(map(int, input().split()))
 
+# arr = [[0] * 2 for _ in range(n)]
+# for i in range(n):
+#     arr[i][0] = start[i]
+#     arr[i][1] = end[i]
+arr = [[4,4], [1,1], [3, 3], [2, 3], [1, 2], [2, 2]]
+path = []
+res = []
+count = 0
+
+def dfs(arr, startindex):
+    global count
+    if len(path) == 3:
+        if not is_overlap(path):
+            count += 1
+            res.append(path.copy())
+        return
+    
+    for i in range(startindex, len(arr)):
+        path.append(arr[i])
+        dfs(arr, i + 1)
+        path.pop()
+
+def is_overlap(path):
+    tem = path.copy()
+    tem.sort(key = lambda x:x[1])
+  
+    for i in range(1, len(tem)):
+        if tem[i][0] <= tem[i - 1][1]:
+            return True
+    return False
+        
+dfs(arr, 0)
+
+print(count)
+print(res)
 
