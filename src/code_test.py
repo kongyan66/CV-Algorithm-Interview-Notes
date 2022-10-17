@@ -1,67 +1,39 @@
-# n, k = list(map(int, input().split()))
-# nums = list(map(int, input().split()))
-# nums.sort()
+def max_interval(arr):
+    arr.sort(key = lambda x:x[1])
+    end = arr[0][1]
+    ans, count = 0, 0             # 记录相交区间数量
+    for i in range(1, len(arr)):
+        if end >= arr[i][0]: # 说明有交集，计数加一
+            count += 1      
+        else:               # 没有交集，更新end，清零count,有交集再重新计算。
+            end = arr[i][1]
+            count = 0
+        ans = max(ans, count)
+    return ans
 
-# i = n - 1
-# while nums[i] - nums[0] > k:
-#     i -= 1
-# j = 0
+def max_not_interval(arr):
+    arr.sort(key = lambda x:x[1])
+    end = arr[0][1]
+    count = 1                     # 记录不相交区间数量，至少有一个区间不相交
+    for i in range(1, len(arr)):
+        if end <= arr[i][0]:
+            count += 1    # 找到下一个选择区间了
+            end = arr[i][1]
+    return count
 
-# while nums[len(nums) - 1] - nums[j] > k:
-#     j += 1
-# ans = max(i + 1, n - j)
-# print(ans)
+def is_interval(arr):
+    arr.sort(key = lambda x:x[1])
+    end = arr[0][1]
 
-# n, k = list(map(int, input().split()))
-# nums = list(map(int, input().split()))
-
-# nums.sort()
-# dp = [0] * n
-# dp[0] = 1
-
-# for i in range(1, n):
-#     if nums[i] - nums[i-1] <= k:
-#         dp[i] = max(dp[i], dp[i - 1]+ 1)
- 
-# print(dp)
-
-# n = int(input())
-# start = list(map(int, input().split()))
-# end = list(map(int, input().split()))
-
-# arr = [[0] * 2 for _ in range(n)]
-# for i in range(n):
-#     arr[i][0] = start[i]
-#     arr[i][1] = end[i]
-arr = [[4,4], [1,1], [3, 3], [2, 3], [1, 2], [2, 2]]
-path = []
-res = []
-count = 0
-
-def dfs(arr, startindex):
-    global count
-    if len(path) == 3:
-        if not is_overlap(path):
-            count += 1
-            res.append(path.copy())
-        return
-    
-    for i in range(startindex, len(arr)):
-        path.append(arr[i])
-        dfs(arr, i + 1)
-        path.pop()
-
-def is_overlap(path):
-    tem = path.copy()
-    tem.sort(key = lambda x:x[1])
-  
-    for i in range(1, len(tem)):
-        if tem[i][0] <= tem[i - 1][1]:
+    for i in range(1, len(arr)):
+        if end > arr[i][0]:
             return True
+        else:
+            end = arr[i][1]
     return False
-        
-dfs(arr, 0)
-
-print(count)
-print(res)
-
+    
+if __name__ == '__main__':
+    # arr = [[1, 3], [0, 4], [2, 5], [6, 7], [4, 8]]
+    arr = [[1, 2], [3, 4], [3, 6]]
+    res = is_interval(arr)
+    print(res)
