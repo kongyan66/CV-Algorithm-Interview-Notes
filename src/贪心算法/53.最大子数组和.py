@@ -40,4 +40,21 @@ class Solution:
             dp[i] = max(dp[i-1] + nums[i], nums[i])
             res = max(res, dp[i])
         return res
-        
+
+
+# 滑动窗口
+# 窗口元素之和大于0时扩大窗口，小于0缩小窗口，每次移动窗口时更新答案
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        left, right = 0, 0
+        total = 0
+        res = -float('inf')
+        while right < len(nums):
+            total += nums[right]
+            right += 1
+            res = max(res, total)
+            while total < 0:
+                total -= nums[left]
+                left += 1
+        return res
