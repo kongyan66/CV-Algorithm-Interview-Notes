@@ -55,3 +55,30 @@ class Solution:
         if node.right:
             self.recursion(node.right, path, result) # 递归
             path.pop() # 回溯
+
+
+# re-3
+class Solution:
+    def __init__(self):
+        self.path = []
+        self.res = []
+
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        self.recursion(root)
+        return self.res
+    # 1.确定入参与返回值
+    # 无返回值 有人工回溯
+    def recursion(self, root):
+        self.path.append(root.val)
+        if not root.left and not root.right:
+            tem = ''
+            for item in self.path:
+                tem += str(item) + '->'
+            self.res.append(tem[:-2])
+            return 
+        if root.left:
+            self.recursion(root.left)
+            self.path.pop()
+        if root.right:
+            self.recursion(root.right)
+            self.path.pop()
