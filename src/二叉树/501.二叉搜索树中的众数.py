@@ -66,7 +66,7 @@ class Solution2:
                 cur = cur.right
         return res
 
-# 递归法 采用中序遍历模板
+# 解法三：递归法 采用中序遍历模板
 # 模板小结
 void searchBST(TreeNode* cur) {
     if (cur == NULL) return ;
@@ -115,3 +115,44 @@ class Solution:
 
         recursion(root)
         return res
+
+# re-4 还是分开写看着舒服  
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def __init__(self):
+        self.pre = None
+        self.count = 0
+        self.max_count = 0
+        self.res = []
+
+    def findMode(self, root: TreeNode) -> List[int]:
+        self.DFS(root)
+        return self.res
+
+    def DFS(self, root):
+        if not root:
+            return 
+        
+        self.DFS(root.left)
+        cur = root              # 使用了pre指针和cur指针的技巧
+        # 中间处理逻辑
+        if not self.pre:
+            self.count = 1
+        elif self.pre.val == cur.val:
+            self.count += 1
+        else:
+            self.count = 1
+        if self.count > self.max_count:
+            self.max_count = self.count
+            self.res.clear()
+            self.res.append(cur.val)
+        elif self.count == self.max_count:
+            self.res.append(cur.val)
+
+        self.pre = root
+        self.DFS(root.right)
