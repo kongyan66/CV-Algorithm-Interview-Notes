@@ -33,6 +33,7 @@
 
 
 res = []
-map = {'a':1, 'b':3, 'c':1}
-map = sorted(zip(map.values(), map.keys()))
-print(min(map))
+a = [1, 2, 3]
+b = [4, 5, 6, 7]
+map = sorted(zip(a, b))
+print(map)

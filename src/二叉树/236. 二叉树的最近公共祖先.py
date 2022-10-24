@@ -6,14 +6,17 @@
 # 最佳解法； 递归法 回溯
 class Solution:
     # 1.确定函数返回值与入参
+    # 需要递归函数返回值，来告诉我们是否找到节点q或者p,如果找到就返回根节点，没找到就返回None
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         # 2.确定递归停止条件
-        # 如果找到了p,q 就返回该节点，未找到就返回空
-        if root == q or root == p or root == None:
+        if not root:
+            return root
+        # 如果找到了p,q 其中一个是根节点，就返回该节点
+        if root == q or root == p:
             return root
         
         # 3.确定单层递归逻辑
-        # 在左子树找
+        # 在左子树找,由于p,q值不同，所以不会找重复的
         left = self.lowestCommonAncestor(root.left, p, q)
         # 在右子树找
         right = self.lowestCommonAncestor(root.right, p, q)
