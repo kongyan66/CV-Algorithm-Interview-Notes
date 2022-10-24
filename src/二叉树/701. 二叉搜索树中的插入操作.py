@@ -47,7 +47,7 @@ class Solution:
         # 同理
         if root.val < val:
             root.right = self.insertIntoBST(root.right, val)
-        # 返回最终更新后树的根节点 疑问：这个root一直在变，最后怎么又变成根节点了呢？
+        # 返回最终更新后树的根节点 疑问：这个root一直在变，最后怎么又变成根节点了呢？因为回溯
         return root 
 
 # 解法三：递归法 无返回值  比较好理解， 和迭代法思路基本一致
@@ -88,6 +88,7 @@ class Solution:
         def recursion(root, val):
             if not root:
                 return TreeNode(val)
+            # 加了if判断, 说明只搜索一边
             if root.val > val:
                 root.left = recursion(root.left, val) # 后续遍历
             if root.val < val:
