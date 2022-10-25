@@ -24,7 +24,7 @@ class Solution:
     def DFS(self, grid, m, n):
         # 2.确定递归停止条件
         # 越界或者遇到水(0)
-        if not 0 <= m < len(grid) or not 0 <= n < len(grid[0]) or grid[m][n] == '0':
+        if not 0 <= m < len(grid) or not 0 <= n < len(grid[0]) or grid[m][n] == '0': # 因为 dfs 函数遍历到值为 0 的位置会直接返回，所以只要把经过的位置都设置为 0，就可以起到不走回头路的作用。
             return
         # 3.确定单层递归逻辑
         # 将陆地淹没（1置0）

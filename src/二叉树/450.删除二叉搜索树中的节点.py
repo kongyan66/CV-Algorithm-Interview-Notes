@@ -31,7 +31,7 @@ class Solution:
             root = root.right        # 右子树覆删除节点位置
         return root
 
-# re-2 递归 有返回值
+# re-2 递归 有返回值 好理解
 class Solution:
     # 1.确定递归的入参与返回值
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
