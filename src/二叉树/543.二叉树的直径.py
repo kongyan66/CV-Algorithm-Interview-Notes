@@ -1,6 +1,6 @@
 # 题目：给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。
 
-# 思路：直径即为就是左右子树的最大深度之和
+# 思路：直径即为就是左右子树的最大深度之和, 注意长度指的是两节点之间的长度，比如2-1-3 长度为2
 
 # 思路一：求左右子树的最高度之和，用层序遍历,时间复杂度O(N)  AC了100/104 
 # 以下下发均未考虑这条路径可能穿过也可能不穿过根结点，故不全AC
@@ -42,23 +42,24 @@ class Solution:
         right = self.recursion(root.right)
         return max(left, right) + 1
 
-# 思路二： 实时找合适的根节点 与124.二叉树最大路径和 思路完全一致
+# 思路二： 分解法 当前节点的最大直径=左右子树最大深度之和
+# 实时找合适的根节点 与124.二叉树最大路径和 思路完全一致
 # https://leetcode.cn/problems/diameter-of-binary-tree/solution/hot-100-9er-cha-shu-de-zhi-jing-python3-di-gui-ye-/
 class Solution:
     def __init__(self):
         self.res = 0
 
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        self.recursion(root)
-        return self.res - 1
+        self.maxDepth(root)
+        return self.res
     
-    def recursion(self, root):
+    def maxDepth(self, root):
         if not root:
             return 0
         # 返回每个节点的贡献值
-        left = self.recursion(root.left)
-        right = self.recursion(root.right)
-        # 每个结点都要当做根节点一样去判断  左子树最大深度+右子树最大深度+1
-        self.res = max(self.res, left + right + 1)
+        left = self.maxDepth(root.left)
+        right = self.maxDepth(root.right)
+        # 每个结点都要当做根节点一样去判断  左子树最大深度+右子树最大深度
+        self.res = max(self.res, left + right)
         # 求子树最大深度
         return max(left, right) + 1
