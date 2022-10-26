@@ -1,5 +1,6 @@
 # 题目：给定一个二叉树，找出其最大深度。二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
 # 思路：还是层序遍历思想，用一个计数器记录while 循环的次数即为深度
+
 # 解法一：迭代法
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
@@ -35,3 +36,24 @@ class Solution:
         right_depth = self.recursion(node.right)
         # 这里需要注意下，是从当前节点往下看，所以最终深度需要+1
         return max(left_depth, right_depth) + 1
+
+# 解法三：遍历的思维
+class Solution:
+    def __init__(self):
+        self.depth = 0
+        self.res = 0
+
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        self.recursion(root)
+        return self.res
+
+    def recursion(self, root):
+        if not root:
+            return
+        self.depth += 1
+        self.res = max(self.res, self.depth)
+        self.recursion(root.left)
+        self.recursion(root.right)
+        self.depth -= 1
+
+    
