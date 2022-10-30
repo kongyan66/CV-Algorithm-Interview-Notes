@@ -20,27 +20,27 @@ class Solution:
         self.recursion(node.left)
         self.recursion(node.right)
 
-# 解法二：边遍历，边组装  
+# 解法二：边遍历，边组装(有问题)
 # 此题不能用前序遍历，因为组装会破坏原有结构，导致遍历顺序出错。用后续遍历就不会有这个问题了
 # 以下这个写法实在理解不了
-class Solution:
-    def __init__(self):
-        self.pre = None
-    def flatten(self, root: Optional[TreeNode]) -> None:
-        """
-        Do not return anything, modify root in-place instead.
-        """
-        self.recursion(root)
+# class Solution:
+#     def __init__(self):
+#         self.pre = None
+#     def flatten(self, root: Optional[TreeNode]) -> None:
+#         """
+#         Do not return anything, modify root in-place instead.
+#         """
+#         self.recursion(root)
 
-    def recursion(self, node):
-        if not node:
-            return 
-        self.recursion(node.right)
-        self.recursion(node.left)
-        # 后续操作
-        node.left = None
-        node.right = self.pre
-        self.pre = node
+#     def recursion(self, node):
+#         if not node:
+#             return 
+#         self.recursion(node.right)
+#         self.recursion(node.left)
+#         # 后续操作
+#         node.left = None
+#         node.right = self.pre
+#         self.pre = node
 
 # 换一个写法就好理解多了
 class Solution:
