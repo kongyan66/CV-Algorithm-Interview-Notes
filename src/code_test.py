@@ -1,30 +1,7 @@
-class Solution:
-    def __init__(self):
-        self.pre = None
-    def flatten(self, root: Optional[TreeNode]) -> None:
-        """
-        Do not return anything, modify root in-place instead.
-        """
-        self.recursion(root)
-
-    def recursion(self, root):
-        if not root:
-            return 
-        
-        self.recursion(root.left)
-        self.recursion(root.right)
-
-        root.left = None
-        root.right = self.pre
-        self.pre = root
-
- 
-        
-            
-            
-
-    
-
-
-    
-
+import random
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+imge = np.random.randint(0,256,size=(20,10))
+plt.imshow(imge,cmap='gray')
+plt.show()  # 显示图片
