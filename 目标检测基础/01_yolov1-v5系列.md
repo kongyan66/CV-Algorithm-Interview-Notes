@@ -109,7 +109,7 @@ loss设计的前提是标签先确定好，这里面**c的真值该怎么设置�
 - 图4中的双横线的上半部分(第0-22层)为backbone，train的方法如上文。
 - 后面的结构如下图5所示：
 
-<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-1498b3c3c5ebebbb31b871329bc97b2e_r.jpg" alt="preview" style="zoom:67%;" />
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-1498b3c3c5ebebbb31b871329bc97b2e_r.jpg" alt="preview" style="zoom: 50%;" />
 
 - 从第23层开始为检测头，其实是3个 3 * 3 * 1024 的卷积层。
 - 同时增加了一个 passthrough 层(27层)，最后使用 1 * 1 卷积层输出预测结果，输出结果的size为 13×13×125 。
@@ -214,7 +214,7 @@ YOLO v3没有Pooling layer了，用的是conv(stride = 2)进行下采样，**为
 yolov3 loss分3部分组成：定位损失+置信度损失+分类损失，本质就是算各个grid(一个grid看做一个小检测器)的损失和。
 第1行代表geo_loss，S代表13,26,52，就是grid是几乘几的。B=5。
 第2行代表confidence_loss，和YOLO v2一模一样。
-第3行代表class_loss，和YOLO v2的区别是改成了交叉熵。
+第3行代表class_loss，和YOLO v2的区别是改成了交叉熵BCE。
 
 ![preview](https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-1714579e2a7f9ca88335bdaeae9e1c4f_r.jpg)
 
@@ -224,7 +224,7 @@ YOLO v3使用多标签分类，用多个独立的logistic分类器代替softmax�
 
 **正负样本确定**
 
-如果某个anchor与 GT 目标IOU 值最大，则则相应的目标性得分应为 1
+如果某个anchor与 GT 目标IOU 值最大，则则相应的目标性得分应为 1，即一个anchor负责一个GT。
 
 对于重叠大于等于0.5的其他先验框(anchor)，忽略，不算损失。
 
@@ -275,7 +275,7 @@ Yolov4的结构图和Yolov3相比，因为多了**CSP结构，PAN结构**，如�
 2. **CBL：**由Conv+Bn+Leaky_relu激活函数三者组成。
 3. **Res unit：**借鉴Resnet网络中的残差结构，让网络可以构建的更深。
 4. **CSPX：**借鉴CSPNet网络结构，由三个卷积层和X个Res unint模块Concate组成。
-5. **SPP：**采用1×1，5×5，9×9，13×13的最大池化的方式，进行多尺度融合。
+5. **SPP：**采用1×1，5×5，9×9，13×13的最大池化的方式，使用pading填充保持宽高不变，实现了不同尺度的特征融合。
 
 **其他基础操作：**
 
@@ -312,31 +312,47 @@ Yolov4的结构图和Yolov3相比，因为多了**CSP结构，PAN结构**，如�
 
 ### loss改进
 
-改进路线：**MSE Loss → IoU Loss→ GIoU Loss→ DIoU Loss→ CIoU Loss**
+**定位损失**
 
-之前的YOLO v2，YOLO v3在计算geo_loss时都是用的MSE Loss，之后人们开始使用IoU Loss。
+改进路线：**MSE Loss → IoU Loss→ GIoU Loss→ DIoU Loss→ CIoU Loss** 之前的YOLO v2，YOLO v3在计算geo_loss时都是用的MSE Loss，之后人们开始使用IoU Loss。
 
 **IOU loss**
 
-$ L_{iou} = 1 - \frac{B\cap B_{gt}}{B \cup B_{gt}}$ ，它可以反映预测检测框与真实检测框的检测效果。
+$IOU  =  \frac{B\cap B_{gt}}{B \cup B_{gt}}$   , $0<= IOU <= 1$
 
-但是问题也很多：不能反映两者的距离大小（重合度）。同时因为loss=0，**当GT和bounding box不挨着时，没有梯度回传，无法进行学习训练。**如下图4所示，三种情况IoU都相等，但看得出来他们的重合度是不一样的，左边的图回归的效果最好，右边的最差：
+$ L_{iou} =  -lnIOU $  or $L_{iou} = 1 -$IOU，它可以反映预测检测框与真实检测框的检测效果。
+
+但是问题也很多：不能反映两者的距离大小（重合度）。如下图4所示，三种情况IoU都相等，但看得出来他们的重合度是不一样的，左边的图回归的效果最好，右边的最差， 同时如果不相交，无论距离多远其loss均相同，这也是不合理的。
 
 <img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-a52e8fc7166b29c08b80de1ead22ec79_r.jpg" alt="preview" style="zoom: 50%;" />
+
+优点：1.能很好反应重合程度 2.具有尺度不变性
+
+缺点：1.对距离不敏感
 
 **GIOU loss**
 
 **所以接下来的改进是：**
 
-$ L_{GIOU} = 1 - IOU + \frac{C- B\cup B_{gt}}{|C|}$ , $C$ 为同时包含了预测框和真实框的最小框的面积.
+$GIOU = IOU - \frac{C- B\cup B_{gt}}{|C|}$,  $-1 <= CIOU <= 1$, $C$ 为同时包含了预测框和真实框的最小框的面积.
+
+$ L_{GIOU} = 1 - GIOU$ ,  $L_{CIOU} \in [0, 2]$
 
 <img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-4ccbf64fa4eefb0e321809a803f90c74_r.jpg" alt="preview" style="zoom:50%;" />
 
 GIoU Loss可以解决上面IoU Loss对距离不敏感的问题。但是GIoU Loss存在训练过程中**发散**等问题。
 
+优点：兼顾IOU loss的优点且解决了距离不敏感问题。
+
+缺点：以下情况，GIOU会退化成IOU损失。
+
+<img src="C:\Users\10428\AppData\Roaming\Typora\typora-user-images\image-20221105102551676.png" alt="image-20221105102551676" style="zoom:50%;" />
+
 **DIOU**
 
-$ L_{DIOU} = 1 - IOU + \frac{\rho^2(b, b^{gt})}{|c^2|}$, 其中，$b$, $b^{gt}$ 分别表示预测框和真实框的中心点，且$\rho $代表计算两个中心的**欧式距离**。$c$代表是能够同时包含预测框和真实框的**最小闭包区域**的对角线距离。
+$DIOU = IOU - \frac{\rho^2(b, b^{gt})}{|c^2|}= IOU - \frac{d^2}{c^2}$, $DIOU \in [-1, 1]$
+
+$ L_{DIOU} = 1 - DIOU$,   其中，$b$, $b^{gt}$ 分别表示预测框和真实框的中心点，且$\rho $代表计算两个中心的**欧式距离**。$c$代表是能够同时包含预测框和真实框的**最小闭包区域**的对角线距离。
 
 <img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-2345aacc478cc5523d439ffcd84958ac_r.jpg" alt="preview" style="zoom:50%;" />
 
@@ -350,7 +366,9 @@ $ L_{DIOU} = 1 - IOU + \frac{\rho^2(b, b^{gt})}{|c^2|}$, 其中，$b$, $b^{gt}$ 
 
 如上图所示，此3种情况IoU Loss和GIoU loss都一样，但是DIoU Loss右图最小，中间图次之，左图最大。
 
-**小结**：DIOU 收敛快，缓解Bbox包含GT的问题 ，**依然没有彻底解决包含的问题**，即
+优点：收敛更快， 定位准确度高
+
+缺点：DIOU 收敛快，缓解Bbox包含GT的问题 ，**依然没有彻底解决包含的问题**，即
 
 <img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/v2-96838980b7fd4443661cf0019802ea7b_r.jpg" alt="preview" style="zoom:50%;" />
 
@@ -358,7 +376,11 @@ $ L_{DIOU} = 1 - IOU + \frac{\rho^2(b, b^{gt})}{|c^2|}$, 其中，$b$, $b^{gt}$ 
 
 **CIOU**
 
-<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/image-20220829172635777.png" alt="image-20220829172635777" style="zoom:67%;" />
+一个优秀的回归定位损失应该考虑到三种几何参数：重叠面积（即IOU） 中心点距离 长宽比
+
+<img src="https://raw.githubusercontent.com/kongyan66/Img-for-md/master/img/image-20220829172635777.png" alt="image-20220829172635777" style="zoom:67%;" /> 
+
+优点：引入长宽比这个参数
 
 ## YOLOV5
 
