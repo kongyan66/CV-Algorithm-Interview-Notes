@@ -3,23 +3,11 @@ using namespace std;
 
 void test()
 {
-    int curVal = 0, val = 0;
-    dd;
-    
-    if (cin >> curVal){
-        int cnt = 1;
-        while(cin >> val){
-            if (val == curVal)
-                ++ cnt;
-            else{
-                cout << curVal << "occurs" << cnt << "times" << endl;
-                curVal = val;
-                cnt = 1;
-            }
-        }
-        cout << curVal << "occurs" << cnt << "times" << endl;
-    }
-
+    int a = 0, b = 1;
+    int *p1 = &a, *p2 = p1;
+    cout << *p2 << endl;
+    *p2 = b;
+    cout << *p2 << endl;
 }
 
 
