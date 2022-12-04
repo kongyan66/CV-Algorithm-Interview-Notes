@@ -389,14 +389,55 @@ void test23(int *ip)
   ip = 0;
 }
 
+int test24(int val)
+{
+  if(val < 0)
+  {
+    return -1;
+  }
+  int res = 1;
+  for (int i = 1; i != val + 1; ++i)
+  {
+    res *= i;
+  }
+  return res;
+}
 
+void test25(int p, int q)
+{
+  int tem = p;
+  p = q;
+  q = tem;
+}
 
+void test26(int &i)
+{
+  i = 0;
+}
+
+string::size_type test27(const string &s, char c, const int &occurs)
+{
+  auto ret = s.size();
+  // occurs = 0;
+  for (decltype(ret) i = 0; i != s.size(); ++i)
+  {
+    if(s[i] == c)
+    {
+      if(ret == s.size())
+      {
+        ret = i;
+      }
+      //++occurs;
+    }
+  }
+  return ret;
+}
+void test27(int &a, char b)
+{
+ cout << "SSS" << endl;
+}
 int main()
 {
-  int i = 42;
-  cout << &i << endl;
-  test23(&i);
-  cout << &i << endl;
-  cout << "i=" << i << endl;
+  test27(1, 'a');
   return 0;
 }
