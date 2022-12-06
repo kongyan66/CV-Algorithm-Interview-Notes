@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <typeinfo>
+#include <cassert>
+
 using namespace std;
 
 void test1()
@@ -432,12 +434,68 @@ string::size_type test27(const string &s, char c, const int &occurs)
   }
   return ret;
 }
-void test27(int &a, char b)
+
+int &test27(int *arry, int index)
 {
- cout << "SSS" << endl;
+ return arry[index];
 }
+
+void test28(vector<int> vInt, unsigned index)
+{
+  unsigned sz = vInt.size();
+  #ifdef DEBUG
+ 
+    cout << "nihao" << endl;
+  #endif
+  if(!vInt.empty() && index < sz)
+  {
+    cout << vInt[index] << endl;
+    test28(vInt, index + 1);
+  } 
+}
+
+void test29()
+{
+  cout << "该函数无需参数" << endl;
+}
+void test29(int)
+{
+  cout << "该函数需要一个int参数" << endl;
+}
+void test29(int, int)
+{
+  cout << "该函数需要两个int参数" << endl;
+}
+void test29(double, double = 3.14)
+{
+  cout << "该函数需要两个浮点数" << endl;
+}
+
+int test30(int a, int b)
+{
+  cout << a << endl;
+  cout << b << endl;
+  return 1;
+}
+
+int add(int a, int b)
+{
+  return a + b;
+}
+
+int sub(int a, int b)
+{
+  return a - b;
+}
+
 int main()
 {
-  test27(1, 'a');
+  vector<decltype(add)*> v;
+  v.push_back(add);
+  v.push_back(sub);
+  for(auto f : v)
+  {
+    cout << f(2, 2) << endl;
+  }
   return 0;
 }
