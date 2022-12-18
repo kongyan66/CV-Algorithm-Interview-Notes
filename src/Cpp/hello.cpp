@@ -3,7 +3,7 @@
 #include <vector>
 #include <typeinfo>
 #include <cassert>
-
+#include <fstream>
 using namespace std;
 
 void test1()
@@ -488,14 +488,183 @@ int sub(int a, int b)
   return a - b;
 }
 
-int main()
+// void test30()
+// {
+//   Sales_data total;
+//   if(cin >> total.bookNo >> total.units_sold >> total.revenue)
+//   {
+//     Sales_data trans;
+//     while(cin >> trans.bookNo >> trans.units_sold >> trans.revenue)
+//     {
+//       if (total.bookNo == trans.bookNo)
+//       {
+//         total.units_sold += trans.units_sold;
+//         total.revenue ++ trans.revenue;
+//       }
+//       else
+//       {
+//         cout << total << endl;
+//         total = trans;
+//       }
+//     }
+//     cout << total << endl;
+//   }
+//   else
+//   {
+//     cerr << "NO DATA" << endl;
+//     return -1;
+//   }
+//   return 0;
+// }
+
+// void test31()
+// {
+//   class Sales_data
+//   {
+//     private:
+//       string booNo;
+//       unsigned units_sold = 0;
+//     public:
+//       // 定义isbn()函数
+//       string isbn() const 
+//       {
+//         return bookNo;
+//       }
+//       // 定义combin函数
+//       Sales_data& combine(const Sales_data &rhs)
+//       {
+//         units_sold += rhs.units_sold;
+//         return *this;
+//       }
+
+//   }
+// }
+
+// void test32()
+// {
+//   class Person
+//   {
+//     friend istream &read(istream &is, Person &item);
+//     friend ostream &print(ostream &os, const Person &rhs);
+//     private:
+//       string name;
+//       string address;
+//     public:
+//       Person() = default;
+//       Person(const string &name_, const string &add_):name(name_), address(add_) {}
+//       Person(istream &is) {read(is, *this);}
+//     public:
+//       string getName() const { return name;}  // 定义为
+//       string getAddress() const { return address;}
+    
+
+//   };
+//   istream &read(istream &is, Person &person)
+//   {
+//     return is >> person.name >> person.address;
+//   }
+//   ostream &print(ostream &os, const Person &person)
+//   {
+//     return os << person.name << " " << person.address;
+//   }
+
+// }
+// void test33()
+// {
+// class Sales_data
+// {
+//   public:
+//     Sales_data() = default;
+//     Sales_data(const string &book) : bookNo(book) {}
+//     Sales_data(const string &book, const unsigned num,
+//       const double sellp, const double salep);
+//     Sales_data(std::istream &is);
+//   public:
+//     string bookNo;
+//     unsigned units_sold = 0;
+//     double sellingprice = 0.0;
+//     double saleprice = 0.0;
+//     double discount = 0.0;
+// };
+
+//   Sales_data data1;
+//   Sales_data data2("90-998-1");
+//   Sales_data data3("887-99", 100, 128, 109);
+//   cout << data1 << endl;
+
+// }
+
+// void test34()
+// {
+//   class Screen{
+//     public:
+//       typedef string::size_type pos;
+//       // 构造函数
+//       Screen() = default;
+//       // Screen(pos ht, pos wd, char c) : height(ht), width(wd), contents(ht * wd, ' ') { }
+//       Screen(pos ht, pos wd, char c) : height(ht), width(wd), contents(ht * wd, c) { }
+//       // 成员函数
+//       char get() const {return contents[cursor];}
+//       char get(pos r, pos c) const {return contents[r * width + c];}
+//       void display(ostream &os) const {os << contents << endl;}
+//       void move(pos r, pos c)  {cursor = r * width + c;}
+//       void set(char ch) {contents[cursor] = ch;}
+//     public:
+//       pos cursor = 0;
+//       pos height = 0, width = 1;
+//       string contents;
+//   };
+
+//   Screen myscreen(3, 3, 'X');
+//   myscreen.move(12, 0);
+//   cout << myscreen.cursor << endl;
+//   myscreen.set('*');
+//   myscreen.display(cout);
+
+// }
+
+// void test35()
+// {
+//   class Book
+//   {
+//     private:
+//       string Name, ISBN, Author, publisher;
+//       double Price = 0;
+//     public:
+//       Book(const string n):Name(n) {}
+//       Book(istream &is) {is >> *this;}
+//       void print(){cout << Name << endl;}
+
+//   };
+
+//   Book book(cin);
+//   book.print();
+// }
+
+int test36()
 {
-  vector<decltype(add)*> v;
-  v.push_back(add);
-  v.push_back(sub);
-  for(auto f : v)
+  ifstream in("test.txt");
+  if (!in){
+    cerr << "无法打开输入文件" << endl;
+    return -1;
+  }
+  string line;
+  vector<string> words;
+  while(in >> line)
   {
-    cout << f(2, 2) << endl;
+    words.push_back(line);
+  }
+  in.close();
+  auto it = words.begin();
+  while(it != words.end())
+  {
+    cout << *it << endl;
+    ++it;
   }
   return 0;
+}
+int main()
+{  
+  test36();
+
 }
