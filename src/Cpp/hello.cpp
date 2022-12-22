@@ -4,6 +4,9 @@
 #include <typeinfo>
 #include <cassert>
 #include <fstream>
+#include <deque>
+#include <list>
+#include <forward_list>
 using namespace std;
 
 void test1()
@@ -663,8 +666,121 @@ int test36()
   }
   return 0;
 }
+vector<int>::const_iterator test37(vector<int>::const_iterator begin, vector<int>::const_iterator end, int i)
+{
+  while(begin != end)
+  {
+    if(*begin == i)
+    {
+      return begin;
+    }
+    ++begin;
+  }
+  return end;
+}
+
+void test38()
+{
+  list<string> input;
+  for(string str; cin >> str; input.push_back(str));
+  for(auto iter = input.cbegin(); iter != input.cend(); ++iter)
+    cout << *iter << endl;
+}
+
+void test39()
+{
+  list<int> l{1, 2, 3, 4, 5, 6, 7, 8, 9};
+  deque<int> odd, even;
+  for(auto i : l)
+  {
+    (i % 2 ? odd : even).push_back(i);
+  }
+  for(auto i : odd) cout << i << " ";
+  cout << endl;
+  for(auto i : even) cout << i << " ";
+  cout << endl;
+}
+
+void test40()
+{
+  vector<int> iv{1, 2};
+  cout << iv.at(0) << endl;
+  cout << iv[0] << endl;
+  cout << iv.front() << endl;
+  cout << *(iv.begin()) << endl;
+}
+
+void test41()
+{
+  int a[] = { 0, 1, 1, 2, 3, 5, 8, 13, 21, 55, 89 };
+  vector<int> vec(begin(a), end(a));
+  list<int> lst(begin(a), end(a));
+  for (auto it = lst.begin(); it != lst.end();)
+  {
+    if (*it & 0x1)
+    {
+      it = lst.erase(it);
+    }
+    else
+      ++it;
+  }
+  for (auto it = vec.begin(); it != vec.end();)
+  {
+    if (!(*it & 0x1))
+    {
+      it = vec.erase(it);
+    }
+    else
+      ++it;
+  }
+
+  for(auto i:lst){
+    cout << i << " ";
+  }
+  cout << endl;
+  for(auto i:vec){
+  cout << i << " ";
+  }
+  cout << endl;
+ 
+}
+
+void test42()
+{
+  forward_list<int> iflst = {1, 2, 3, 4, 5, 6, 7, 8};
+  auto pre = iflst.before_begin();
+  auto cur = iflst.begin();
+
+  while(cur != iflst.end())
+  {
+    if (*cur & 0x1)
+    {
+      cur = iflst.erase_after(pre);
+    }
+    else
+    {
+      pre = cur;
+      ++cur;
+    }
+  }
+  for(auto v : iflst)
+  {
+    cout << v << " ";
+  }
+  cout << endl;
+}
+void test43()
+{
+  vector<int> v;
+  for(int i = 0; i < 10; i++)
+  {
+    cout << "capactity: " << v.capacity() << "  size: " << v.size() << endl;
+    v.push_back(i);
+    
+  }
+}
 int main()
 {  
-  test36();
+  test43();
 
 }
