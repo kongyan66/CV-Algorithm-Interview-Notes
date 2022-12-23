@@ -7,6 +7,9 @@
 #include <deque>
 #include <list>
 #include <forward_list>
+#include <algorithm>
+#include <numeric>
+
 using namespace std;
 
 void test1()
@@ -779,8 +782,58 @@ void test43()
     
   }
 }
+
+void test44()
+{
+  vector<int> v = {1, 2, 3, 4, 5, 6, 6, 6, 2};
+  cout << count(v.cbegin(), v.cend(), 6) << endl;
+
+  list<string> l = {"aa", "aaa", "aa", "cc"};
+  cout << count(l.cbegin(), l.cend(), "aa") << endl;
+}
+
+void test45()
+{
+  vector<double> v = {1.1, 2.1, 3.1};
+  cout << accumulate(v.cbegin(), v.cend(), 0) << endl;
+}
+
+void output_words(vector<string> &words)
+{
+  for(auto iter = words.begin(); iter != words.end(); iter++)
+  {
+    cout << *iter << " ";
+  }
+  cout << endl;
+}
+
+void test46(vector<string> &words)
+{
+  output_words(words);
+  sort(words.begin(), words.end());
+  output_words(words);
+
+  auto end_unique = unique(words.begin(), words.end());
+  output_words(words);
+
+  words.erase(end_unique, words.end());
+  output_words(words);
+
+}
+
+bool is_shorter(const string &s1, const string &s2)
+{
+  return s1.size() < s2.size();
+}
+
+void add(int a)
+{
+  auto sum = [a] (int b) {return a + b;};
+  cout << sum(1) << endl;
+}
+
 int main()
 {  
-  test43();
-
+  add(1);
+  add(2);
 }
