@@ -9,8 +9,12 @@
 #include <forward_list>
 #include <algorithm>
 #include <numeric>
-
+#include <functional>
+#include <iterator>
+#include <map>
+#include <sstream>
 using namespace std;
+using namespace std::placeholders;
 
 void test1()
 {
@@ -832,8 +836,114 @@ void add(int a)
   cout << sum(1) << endl;
 }
 
-int main()
+void test47()
+{
+  int i = 5;
+  auto f = [i] () mutable -> bool {if(i > 0){i--; return false;} else return true;};
+  for(int j = 0; j < 6; j++)
+    cout << f() << " ";
+  cout << endl;
+}
+
+bool check_size(const string &s, string::size_type sz)
+{
+  return s.size() <= sz;
+}
+
+void test48(vector<int> &vc, const string &s)
+{
+  auto p = find_if(vc.begin(), vc.end(), bind(check_size, s, _1));
+  cout << "第" << p - vc.begin() + 1 << "个数" << *p << "大于等于" << s << "的长度" << endl;
+}
+
+void test49()
+{
+  vector<int> vc{1, 1, 3, 3, 4};
+  list<int> ls;
+
+  unique_copy(vc.begin(), vc.end(), back_inserter(ls));
+  for(auto i : ls)
+  {
+    cout << i << " ";
+  }
+  cout << endl;
+}
+
+void print(const vector<string>& ls)
+{
+  for(auto i : ls)
+  {
+    cout << i << " ";
+  }
+  cout << endl;
+}
+
+void test50()
+{
+  istream_iterator<int> int_it(cin), int_eof;
+
+  vector<int> v;
+  copy(int_it, int_eof, back_inserter(v));
+  sort(v.begin(), v.end());
+  
+  ostream_iterator<int> out_iter(cout, " ");
+  cout << endl;
+  unique_copy(v.begin(), v.end(), out_iter);
+  
+}
+
+string &trans(string &s)
+{
+  for (int p = 0; p < s.size(); p++)
+  {
+    if (s[p] >= 'A' && s[p] <= 'Z')
+    {
+      s[p] -= ('A' - 'a');
+    }
+    else if(s[p] == ',' || s[p] == '.')
+      s.erase(p, 1);
+  }
+  return s;
+}
+
+void test51()
+{
+  map<string, int> word_cout;
+  string tmp;
+  while(cin >> tmp)
+  {
+    word_cout[trans(tmp)] += 1;
+  }
+  for(const auto& elem:word_cout)
+  {
+    cout << elem.first << ":" << elem.second << endl;
+  }
+
+}
+
+void add_family(map<string, vector<string>> &families, const string &family)
+{
+    families[family];
+}
+
+void add_child(map<string, vector<string>> &families, const string &family, const string &child)
+{
+  families[family].push_back(child);
+}
+
+
+int main(int argc, char **argv)
 {  
-  add(1);
-  add(2);
+  ifstream in(argv[1]);  //打开文件
+  vector<pair<string, int>> data;
+  string s;
+  int v;
+
+  while(in >> s && in >> v)
+  {
+    data.push_back(pair<string, int>(s, v));
+  }
+
+  for(const auto &d : data)
+    cout << d.first << " " << d.second << endl;
 }
