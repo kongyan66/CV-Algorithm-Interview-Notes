@@ -926,24 +926,73 @@ void add_family(map<string, vector<string>> &families, const string &family)
     families[family];
 }
 
-void add_child(map<string, vector<string>> &families, const string &family, const string &child)
+void add_child1(map<string, vector<string>> &families, const string &family, const string &child)
 {
   families[family].push_back(child);
 }
 
-
-int main(int argc, char **argv)
-{  
-  ifstream in(argv[1]);  //打开文件
-  vector<pair<string, int>> data;
-  string s;
-  int v;
-
-  while(in >> s && in >> v)
+void test52()
+{
+  map<string, int> counts;
+  for(string word; cin >> word;)
   {
-    data.push_back(pair<string, int>(s, v));
+    auto result = counts.insert({word, 1});
+    if(!result.second)
+      ++result.first->second;
   }
 
-  for(const auto &d : data)
-    cout << d.first << " " << d.second << endl;
+  for(const auto& count : counts){
+    cout << count.first << " " << count.second << ((count.second > 1) ? " times\n" : " time\n");
+  }
+}
+
+void add_child(multimap<string, string> &families, const string &family, const string &child)
+{
+  families.insert({family, child});
+}
+
+void print_books(multimap<string, string>& books){
+  for(auto book : books)
+  {
+    cout << book.first << "的书：" << book.second << endl << endl;
+  }
+}
+
+void remove_author(multimap<string, string> &books, const string &author)
+{
+  auto pos = books.equal_range(author);
+  if(pos.first == pos.second)
+  {
+    cout << "没有" << author << "这个作者" << endl;
+  }
+  else
+    books.erase(pos.first, pos.second);
+}
+
+map<string, string> buildMap(ifstream &map_file)
+{
+  map<string, string> trans_map;
+  string key;
+  string value;
+  while (map_file >> key && getline(map_file, value))
+  {
+    if(value.size() > 1)
+      trans_map[key] = value.substr(1);
+  }
+  return trans_map;
+}
+
+const string &transform(const string &s, const map<string, string> &m)
+{
+  auto map_it = m.find(s);
+  if(map_it != m.cend())
+  {
+    return map_it ->sencond;
+  }
+  else 
+    return s;
+}
+int main(int argc, char **argv)
+{  
+
 }
