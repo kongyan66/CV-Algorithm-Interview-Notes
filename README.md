@@ -24,7 +24,7 @@ github上直接看的话很多公式和图片看不了，**请 clone 到本地�
 
 ### leetcode
 
-由于内容太杂，主要放在notion上进行统一管理，链接见此处：[【notion传送门】](https://www.notion.so/4c954e2029e34f069db5cacec36eaf1b?v=f545973af32143c6864237c7291ae70a)
+由于内容太杂，主要放在notion上进行统一管理，链接见此处：[【notion传送门】](https://continuous-lettuce-a13.notion.site/f66f1ad4f89146d1baf216155172416e)
 
 ### 图像处理
 
