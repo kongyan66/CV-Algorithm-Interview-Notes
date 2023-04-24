@@ -1,3 +1,0 @@
-name age height weight
-Jack 26 185 80
-Rose 22 165 50
